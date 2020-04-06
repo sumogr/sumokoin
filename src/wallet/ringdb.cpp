@@ -1,21 +1,21 @@
 // Copyright (c) 2018, The Monero Project
-// 
+//
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-// 
+//
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -35,6 +35,7 @@
 #include "misc_language.h"
 #include "wallet_errors.h"
 #include "ringdb.h"
+#include "cryptonote_config.h"
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "wallet.ringdb"
@@ -95,12 +96,11 @@ std::string get_rings_filename(boost::filesystem::path filename)
 
 static crypto::chacha_iv make_iv(const crypto::key_image &key_image, const crypto::chacha_key &key)
 {
-  static const char salt[] = "ringdsb";
-
-  uint8_t buffer[sizeof(key_image) + sizeof(key) + sizeof(salt)];
+  uint8_t buffer[sizeof(key_image) + sizeof(key) + sizeof(config::HASH_KEY_RINGDB) + sizeof(field)];
   memcpy(buffer, &key_image, sizeof(key_image));
   memcpy(buffer + sizeof(key_image), &key, sizeof(key));
-  memcpy(buffer + sizeof(key_image) + sizeof(key), salt, sizeof(salt));
+  memcpy(buffer + sizeof(key_image) + sizeof(key), config::HASH_KEY_RINGDB, sizeof(config::HASH_KEY_RINGDB));
+  memcpy(buffer + sizeof(key_image) + sizeof(key) + sizeof(config::HASH_KEY_RINGDB), &field, sizeof(field));
   crypto::hash hash;
   crypto::cn_fast_hash(buffer, sizeof(buffer), hash.data);
   static_assert(sizeof(hash) >= CHACHA_IV_SIZE, "Incompatible hash and chacha IV sizes");
@@ -211,7 +211,7 @@ ringdb::ringdb(std::string filename, const std::string &genesis):
   THROW_WALLET_EXCEPTION_IF(dbr, tools::error::wallet_internal_error, "Failed to create LDMB environment: " + std::string(mdb_strerror(dbr)));
   dbr = mdb_env_set_maxdbs(env, 2);
   THROW_WALLET_EXCEPTION_IF(dbr, tools::error::wallet_internal_error, "Failed to set max env dbs: " + std::string(mdb_strerror(dbr)));
-  const std::string actual_filename = get_rings_filename(filename); 
+  const std::string actual_filename = get_rings_filename(filename);
   dbr = mdb_env_open(env, actual_filename.c_str(), 0, 0664);
   THROW_WALLET_EXCEPTION_IF(dbr, tools::error::wallet_internal_error, "Failed to open rings database file '"
       + actual_filename + "': " + std::string(mdb_strerror(dbr)));
