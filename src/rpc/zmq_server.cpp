@@ -28,6 +28,16 @@
 
 #include "zmq_server.h"
 
+<<<<<<< HEAD
+=======
+#include <boost/utility/string_ref.hpp>
+#include <chrono>
+#include <cstdint>
+#include <system_error>
+
+#include "byte_slice.h"
+
+>>>>>>> 33010a9d... [zmq] use byte_slice for sending zmq messages - removes data copy within zmq
 namespace cryptonote
 {
 
@@ -54,6 +64,7 @@ void ZmqServer::serve()
     {
       zmq::message_t message;
 
+<<<<<<< HEAD
       if (!rep_socket)
       {
         throw std::runtime_error("ZMQ RPC server reply socket is null");
@@ -73,6 +84,17 @@ void ZmqServer::serve()
         MDEBUG(std::string("Sent RPC reply: \"") + response + "\"");
 
       }
+=======
+    while (1)
+    {
+      const std::string message = MONERO_UNWRAP(net::zmq::receive(socket.get()));
+      MDEBUG("Received RPC request: \"" << message << "\"");
+      epee::byte_slice response = handler.handle(message);
+
+      const boost::string_ref response_view{reinterpret_cast<const char*>(response.data()), response.size()};
+      MDEBUG("Sending RPC reply: \"" << response_view << "\"");
+      MONERO_UNWRAP(net::zmq::send(std::move(response), socket.get()));
+>>>>>>> 33010a9d... [zmq] use byte_slice for sending zmq messages - removes data copy within zmq
     }
     catch (const boost::thread_interrupted& e)
     {
