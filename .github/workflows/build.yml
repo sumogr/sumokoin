@@ -18,11 +18,8 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-<<<<<<< HEAD
-=======
     - name: update submodules
       run: git submodule update --init --force
->>>>>>> pr/889
     - uses: numworks/setup-msys2@v1
     - name: update submodules
       run: git submodule update --init --force
@@ -119,7 +116,3 @@ jobs:
       env:
         CTEST_OUTPUT_ON_FAILURE: ON
       run: make release-test -j2
-<<<<<<< HEAD
-
-=======
->>>>>>> pr/889
