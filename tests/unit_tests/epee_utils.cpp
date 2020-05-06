@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -45,6 +45,8 @@
 #include "boost/archive/portable_binary_iarchive.hpp"
 #include "boost/archive/portable_binary_oarchive.hpp"
 #include "byte_slice.h"
+#include "byte_stream.h"
+#include "crypto/crypto.h"
 #include "hex.h"
 #include "net/net_utils_base.h"
 #include "net/local_ip.h"
@@ -1099,61 +1101,6 @@ TEST(ByteStream, ToByteSlice)
   EXPECT_EQ(nullptr, stream.data());
   EXPECT_EQ(nullptr, stream.tellp());
   EXPECT_TRUE(equal(source, slice));
-
-  stream = epee::byte_stream{};
-  stream.reserve(1);
-  EXPECT_NE(nullptr, stream.data());
-  EXPECT_NE(nullptr, stream.tellp());
-
-  const epee::byte_slice empty_slice{std::move(stream)};
-  EXPECT_TRUE(empty_slice.empty());
-  EXPECT_EQ(0u, empty_slice.size());
-  EXPECT_EQ(nullptr, empty_slice.begin());
-  EXPECT_EQ(nullptr, empty_slice.cbegin());
-  EXPECT_EQ(nullptr, empty_slice.end());
-  EXPECT_EQ(nullptr, empty_slice.cend());
-  EXPECT_EQ(nullptr, empty_slice.data());
-}
-
-TEST(ByteStream, Clear)
-{
-  static constexpr const std::uint8_t source[] =
-    {0xde, 0xad, 0xbe, 0xef, 0xef};
-
-  epee::byte_stream stream{4};
-
-  EXPECT_EQ(4u, stream.increase_size());
-
-  EXPECT_EQ(nullptr, stream.data());
-  EXPECT_EQ(nullptr, stream.tellp());
-  EXPECT_EQ(0u, stream.size());
-  EXPECT_EQ(0u, stream.available());
-  EXPECT_EQ(0u, stream.capacity());
-
-  stream.clear();
-
-  EXPECT_EQ(nullptr, stream.data());
-  EXPECT_EQ(nullptr, stream.tellp());
-  EXPECT_EQ(0u, stream.size());
-  EXPECT_EQ(0u, stream.available());
-  EXPECT_EQ(0u, stream.capacity());
-
-  stream.write({source, 3});
-  std::uint8_t const* const loc = stream.data();
-
-  EXPECT_EQ(loc, stream.data());
-  EXPECT_EQ(loc + 3, stream.tellp());
-  EXPECT_EQ(3u, stream.size());
-  EXPECT_EQ(1u, stream.available());
-  EXPECT_EQ(4u, stream.capacity());
-
-  stream.clear();
-
-  EXPECT_EQ(loc, stream.data());
-  EXPECT_EQ(loc, stream.tellp());
-  EXPECT_EQ(0u, stream.size());
-  EXPECT_EQ(4u, stream.available());
-  EXPECT_EQ(4u, stream.capacity());
 }
 
 TEST(ToHex, String)

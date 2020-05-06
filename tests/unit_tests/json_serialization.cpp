@@ -2,11 +2,11 @@
 #include <boost/range/adaptor/indexed.hpp>
 #include <gtest/gtest.h>
 #include <rapidjson/document.h>
-#include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 #include <vector>
 #include <optional>
 
+#include "byte_stream.h"
 #include "crypto/hash.h"
 #include "cryptonote_basic/account.h"
 #include "cryptonote_basic/cryptonote_basic.h"
@@ -15,7 +15,7 @@
 #include "serialization/json_object.h"
 
 
-namespace test
+namespace
 {
     cryptonote::transaction
     make_miner_transaction(cryptonote::account_public_address const& to)
@@ -89,14 +89,14 @@ namespace
     template<typename T>
     T test_json(const T& value)
     {
-      rapidjson::StringBuffer buffer;
+      epee::byte_stream buffer;
       {
-        rapidjson::Writer<rapidjson::StringBuffer> dest{buffer};
+        rapidjson::Writer<epee::byte_stream> dest{buffer};
         cryptonote::json::toJsonValue(dest, value);
       }
 
       rapidjson::Document doc;
-      doc.Parse(buffer.GetString());
+      doc.Parse(reinterpret_cast<const char*>(buffer.data()), buffer.size());
       if (doc.HasParseError() || !doc.IsObject())
       {
         throw cryptonote::json::PARSE_FAIL();

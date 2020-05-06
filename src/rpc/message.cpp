@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020, The Monero Project
+// Copyright (c) 2016-2019, The Monero Project
 //
 // All rights reserved.
 //
@@ -52,7 +52,7 @@ constexpr const char params_field[] = "params";
 constexpr const char result_field[] = "result";
 }
 
-void Message::toJson(rapidjson::Writer<rapidjson::StringBuffer>& dest) const
+void Message::toJson(rapidjson::Writer<epee::byte_stream>& dest) const
 {
   dest.StartObject();
   INSERT_INTO_JSON_OBJECT(dest, status, status);
@@ -145,9 +145,9 @@ cryptonote::rpc::error FullMessage::getError()
 
 std::string FullMessage::getRequest(const std::string& request, const Message& message, const unsigned id)
 {
-  rapidjson::StringBuffer buffer;
+  epee::byte_stream buffer;
   {
-    rapidjson::Writer<rapidjson::StringBuffer> dest{buffer};
+    rapidjson::Writer<epee::byte_stream> dest{buffer};
 
     dest.StartObject();
     INSERT_INTO_JSON_OBJECT(dest, jsonrpc, (boost::string_ref{"2.0", 3}));
@@ -166,15 +166,15 @@ std::string FullMessage::getRequest(const std::string& request, const Message& m
     if (!dest.IsComplete())
       throw std::logic_error{"Invalid JSON tree generated"};
   }
-  return std::string{buffer.GetString(), buffer.GetSize()};
+  return epee::byte_slice{std::move(buffer)};
 }
 
 
 std::string FullMessage::getResponse(const Message& message, const rapidjson::Value& id)
 {
-  rapidjson::StringBuffer buffer;
+  epee::byte_stream buffer;
   {
-    rapidjson::Writer<rapidjson::StringBuffer> dest{buffer};
+    rapidjson::Writer<epee::byte_stream> dest{buffer};
 
     dest.StartObject();
     INSERT_INTO_JSON_OBJECT(dest, jsonrpc, (boost::string_ref{"2.0", 3}));
@@ -201,7 +201,7 @@ std::string FullMessage::getResponse(const Message& message, const rapidjson::Va
     if (!dest.IsComplete())
       throw std::logic_error{"Invalid JSON tree generated"};
   }
-  return std::string{buffer.GetString(), buffer.GetSize()};
+  return epee::byte_slice{std::move(buffer)};
 }
 
 // convenience functions for bad input
