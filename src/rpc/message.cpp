@@ -172,7 +172,11 @@ epee::byte_slice FullMessage::getRequest(const std::string& request, const Messa
     if (!dest.IsComplete())
       throw std::logic_error{"Invalid JSON tree generated"};
   }
+<<<<<<< HEAD
   return epee::byte_slice{std::move(buffer)};
+=======
+  return epee::byte_slice{{buffer.GetString(), buffer.GetSize()}};
+>>>>>>> dev
 }
 
 
@@ -207,7 +211,11 @@ epee::byte_slice FullMessage::getResponse(const Message& message, const rapidjso
     if (!dest.IsComplete())
       throw std::logic_error{"Invalid JSON tree generated"};
   }
+<<<<<<< HEAD
   return epee::byte_slice{std::move(buffer)};
+=======
+  return epee::byte_slice{{buffer.GetString(), buffer.GetSize()}};
+>>>>>>> dev
 }
 
 // convenience functions for bad input

@@ -232,6 +232,7 @@ namespace epee
     portion_ = nullptr;
     return out;
   }
+<<<<<<< HEAD
 
   byte_buffer byte_buffer_resize(byte_buffer buf, const std::size_t length) noexcept
   {
@@ -257,4 +258,6 @@ namespace epee
       throw std::range_error{"byte_buffer_increase size_t overflow"};
     return byte_buffer_resize(std::move(buf), current + more);
   }
+=======
+>>>>>>> dev
 } // epee

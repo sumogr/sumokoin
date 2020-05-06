@@ -49,12 +49,15 @@ namespace epee
     {
       call(nullptr, ptr);
     }
+<<<<<<< HEAD
   };
 
   //! Frees ref count + buffer allocated internally by `byte_buffer`.
   struct release_byte_buffer
   {
     void operator()(std::uint8_t* buf) const noexcept;
+=======
+>>>>>>> dev
   };
 
   /*! Inspired by slices in golang. Storage is thread-safe reference counted,

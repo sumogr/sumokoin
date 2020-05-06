@@ -142,14 +142,26 @@ namespace zmq
         for sending, or until `zmq_term` is called on the `zmq_context`
         associated with `socket`. If the context is terminated,
         `make_error_code(ETERM)` is returned.
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
         \note This will automatically retry on `EINTR`, so exiting on
             interrupts requires context termination.
         \note If non-blocking behavior is requested on `socket` or by `flags`,
             then `net::zmq::make_error_code(EAGAIN)` will be returned if this
             would block.
+<<<<<<< HEAD
         \param payload sent as one message on `socket`.
         \param socket Handle created with `zmq_socket`.
         \param flags See `zmq_msg_send` for possible flags.
+=======
+
+        \param payload sent as one message on `socket`.
+        \param socket Handle created with `zmq_socket`.
+        \param flags See `zmq_msg_send` for possible flags.
+
+>>>>>>> dev
         \post `payload.emtpy()` - ownership is transferred to zmq.
         \return `success()` if sent, otherwise ZMQ error. */
     expect<void> send(epee::byte_slice&& payload, void* socket, int flags = 0) noexcept;
