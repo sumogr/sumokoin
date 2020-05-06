@@ -33,10 +33,7 @@
 #include <string>
 
 #include "byte_slice.h"
-<<<<<<< HEAD
 #include "byte_stream.h"
-=======
->>>>>>> dev
 #include "rpc/message_data_structs.h"
 
 namespace cryptonote
