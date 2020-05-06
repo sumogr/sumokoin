@@ -152,7 +152,6 @@ namespace zmq
         \param payload sent as one message on `socket`.
         \param socket Handle created with `zmq_socket`.
         \param flags See `zmq_msg_send` for possible flags.
-
         \post `payload.emtpy()` - ownership is transferred to zmq.
         \return `success()` if sent, otherwise ZMQ error. */
     expect<void> send(epee::byte_slice&& payload, void* socket, int flags = 0) noexcept;
