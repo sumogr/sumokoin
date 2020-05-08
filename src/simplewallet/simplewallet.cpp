@@ -54,8 +54,8 @@
 #include <boost/thread/thread.hpp>
 >>>>>>> 028b0101... [std] replace std::this_thread::sleep instances with its boost equivalent
 #include "include_base_utils.h"
-#include "console_handler.h"
-#include "common/i18n.h"
+// #include "console_handler.h" // already #included in simplewallet/simplewallet.h
+// #include "common/i18n.h" // already #included in simplewallet/simplewallet.h
 #include "common/command_line.h"
 #include "common/util.h"
 #include "common/dns_utils.h"
@@ -67,7 +67,7 @@
 #include "storages/http_abstract_invoke.h"
 #include "rpc/core_rpc_server_commands_defs.h"
 #include "rpc/rpc_payment_signature.h"
-#include "crypto/crypto.h"  // for crypto::secret_key definition
+// #include "crypto/crypto.h"  // for crypto::secret_key definition // already #included in simplewallet/simplewallet.h
 #include "mnemonics/electrum-words.h"
 #include "rapidjson/document.h"
 #include "common/json_util.h"
