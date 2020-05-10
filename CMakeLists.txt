@@ -198,7 +198,10 @@ if(NOT MANUAL_SUBMODULES)
     endfunction ()
     
     message(STATUS "Checking submodules")
+<<<<<<< HEAD
     check_submodule(external/unbound)
+=======
+>>>>>>> fa4b8ca4... bring unbound monero branch in
     check_submodule(external/rapidjson)
   endif()
 endif()
