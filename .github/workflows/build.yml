@@ -92,4 +92,3 @@ jobs:
       env:
         CTEST_OUTPUT_ON_FAILURE: ON
       run: make release-test -j2
-
