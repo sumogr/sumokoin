@@ -1070,6 +1070,7 @@ namespace nodetool
 
         pi = context.peer_id = rsp.node_data.peer_id;
         context.m_rpc_port = rsp.node_data.rpc_port;
+        context.m_difficulty = rsp.node_data.difficulty;
         context.m_rpc_credits_per_hash = rsp.node_data.rpc_credits_per_hash;
         network_zone& zone = m_network_zones.at(context.m_remote_address.get_zone());
         zone.m_peerlist.set_peer_just_seen(rsp.node_data.peer_id, context.m_remote_address, context.m_pruning_seed, context.m_rpc_port, context.m_rpc_credits_per_hash);
@@ -1951,6 +1952,7 @@ namespace nodetool
       node_data.my_port = 0;
     node_data.rpc_port = zone.m_can_pingback ? m_rpc_port : 0;
     node_data.rpc_credits_per_hash = zone.m_can_pingback ? m_rpc_credits_per_hash : 0;
+    node_data.difficulty = m_difficulty;
     node_data.network_id = m_network_id;
     return true;
   }

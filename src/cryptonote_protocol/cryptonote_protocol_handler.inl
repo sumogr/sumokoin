@@ -232,7 +232,8 @@ namespace cryptonote
       auto timestamp = time(NULL);
 
       cnx.incoming = cntxt.m_is_income ? true : false;
-
+      uint64_t m_difficulty = m_core.get_blockchain_storage().get_difficulty_for_next_block();
+      cnx.difficulty = cntxt.m_difficulty;
       cnx.address = cntxt.m_remote_address.str();
       cnx.host = cntxt.m_remote_address.host_str();
       cnx.ip = "";

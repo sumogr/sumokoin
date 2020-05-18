@@ -796,6 +796,7 @@ bool t_rpc_command_executor::mining_status() {
 bool t_rpc_command_executor::print_connections() {
   cryptonote::COMMAND_RPC_GET_CONNECTIONS::request req;
   cryptonote::COMMAND_RPC_GET_CONNECTIONS::response res;
+
   epee::json_rpc::error error_resp;
 
   std::string fail_message = "Unsuccessful";
@@ -821,8 +822,7 @@ bool t_rpc_command_executor::print_connections() {
       << std::setw(4) << "SSL"
       << std::setw(8) << "RPC"
       << std::setw(8) << "Height"
-      << std::setw(18) << "Peer id"
-      << std::setw(6) << "Flags"
+      << std::setw(18) << "Difficulty"
       << std::setw(26) << "Recv/Sent (inactive,s)"
       << std::setw(18) << "State"
       << std::setw(22) << "Down |  Up (kB/s/now)"
@@ -842,8 +842,7 @@ bool t_rpc_command_executor::print_connections() {
      << std::setw(4) << (info.ssl ? "yes" : "no")
      << std::setw(8) << rpc_port
      << std::setw(8) << info.height
-     << std::setw(18) << info.peer_id
-     << std::setw(6) << info.support_flags
+     << std::setw(18) << info.difficulty
      << std::setw(26) << std::to_string(info.recv_count) + "("  + std::to_string(info.recv_idle_time) + ")/" + std::to_string(info.send_count) + "(" + std::to_string(info.send_idle_time) + ")"
      << std::setw(18) << info.state
      << std::setw(22) << std::to_string(info.avg_download) + "/" + std::to_string(info.current_download) + "  |  "+ std::to_string(info.avg_upload) + "/" + std::to_string(info.current_upload)

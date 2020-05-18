@@ -247,6 +247,7 @@ namespace nodetool
         m_hide_my_port(false),
         m_igd(no_igd),
         m_offline(false),
+        m_difficulty(),
         is_closing(false),
         m_network_id()
     {}
@@ -446,6 +447,7 @@ namespace nodetool
     uint32_t m_rpc_credits_per_hash;
     bool m_allow_local_ip;
     bool m_hide_my_port;
+    uint64_t m_difficulty;
     igd_t m_igd;
     bool m_offline;
     bool m_use_ipv6;

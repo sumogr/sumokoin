@@ -57,6 +57,7 @@ namespace cryptonote
     std::string port;
     uint16_t rpc_port;
     uint32_t rpc_credits_per_hash;
+    uint64_t difficulty;
 
     std::string peer_id;
 
@@ -112,6 +113,7 @@ namespace cryptonote
       KV_SERIALIZE(height)
       KV_SERIALIZE(pruning_seed)
       KV_SERIALIZE(address_type)
+      KV_SERIALIZE(difficulty)
     END_KV_SERIALIZE_MAP()
   };
 
