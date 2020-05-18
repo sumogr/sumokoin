@@ -500,7 +500,7 @@ namespace nodetool
     boost::mutex m_used_stripe_peers_mutex;
     std::array<std::list<epee::net_utils::network_address>, 1 << CRYPTONOTE_PRUNING_LOG_STRIPES> m_used_stripe_peers;
 
-    uint64_t m_difficulty = difficulty_type m_difficulty_for_next_block;
+    uint64_t m_difficulty = m_difficulty_for_next_block;
     boost::uuids::uuid m_network_id;
     cryptonote::network_type m_nettype;
 
