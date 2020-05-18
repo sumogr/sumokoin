@@ -448,7 +448,6 @@ namespace nodetool
     uint32_t m_rpc_credits_per_hash;
     bool m_allow_local_ip;
     bool m_hide_my_port;
-    uint64_t m_difficulty;
     igd_t m_igd;
     bool m_offline;
     bool m_use_ipv6;
@@ -501,7 +500,7 @@ namespace nodetool
     boost::mutex m_used_stripe_peers_mutex;
     std::array<std::list<epee::net_utils::network_address>, 1 << CRYPTONOTE_PRUNING_LOG_STRIPES> m_used_stripe_peers;
 
-    uint64_t m_difficulty = get_difficulty_target();
+    uint64_t m_difficulty = Blockchain::get_difficulty_target();
     boost::uuids::uuid m_network_id;
     cryptonote::network_type m_nettype;
 
