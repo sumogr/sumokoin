@@ -46,7 +46,7 @@
 #include "cryptonote_config.h"
 #include "cryptonote_protocol/fwd.h"
 #include "cryptonote_protocol/levin_notify.h"
-#include "cryptonote_core/blockchain.h"
+#include "cryptonote_basic/difficulty.h"
 #include "warnings.h"
 #include "net/abstract_tcp_server2.h"
 #include "net/levin_protocol_handler.h"
@@ -500,7 +500,7 @@ namespace nodetool
     boost::mutex m_used_stripe_peers_mutex;
     std::array<std::list<epee::net_utils::network_address>, 1 << CRYPTONOTE_PRUNING_LOG_STRIPES> m_used_stripe_peers;
 
-    uint64_t m_difficulty = Blockchain::get_difficulty_target();
+    uint64_t m_difficulty = cryptonote::difficulty_type difficulty;
     boost::uuids::uuid m_network_id;
     cryptonote::network_type m_nettype;
 
