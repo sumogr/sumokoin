@@ -1158,7 +1158,7 @@ namespace cryptonote
     if (get_current_blockchain_height() <= ((95 * m_target_blockchain_height) / 100))
     return BLOCKS_SYNCHRONIZING_DEFAULT_COUNT;
     else
-    return BLOCKS_SYNCHRONIZING_DEFAULT_COUNT_V4;
+    return BLOCKS_SYNCHRONIZING_DEFAULT_COUNT_END;
   }
   //-----------------------------------------------------------------------------------------------
   bool core::are_key_images_spent_in_pool(const std::vector<crypto::key_image>& key_im, std::vector<bool> &spent) const
