@@ -480,7 +480,7 @@ static void mlog(el::Level level, const char *category, const char *format, va_l
 
   /* Determine required size */
   va_copy(apc, ap);
-  size = vsnprintf(p, size, format, apc);
+  size = vsnprintf(size, format, apc);
   va_end(apc);
   if (size < 0)
     return;
