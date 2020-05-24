@@ -37,7 +37,6 @@ Test the following RPCs:
 """
 
 from __future__ import print_function
-import os
 from framework.daemon import Daemon
 
 class DaemonGetInfoTest():
@@ -64,7 +63,7 @@ class DaemonGetInfoTest():
 
         # difficulty should be set to 1 for this test
         assert 'difficulty' in res.keys()
-        assert res.difficulty == int(os.environ['DIFFICULTY'])
+        assert res.difficulty == 1;
 
         # nettype should not be TESTNET
         assert 'testnet' in res.keys()

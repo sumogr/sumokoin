@@ -160,6 +160,7 @@
 
 #define RPC_IP_FAILS_BEFORE_BLOCK                       3
 
+<<<<<<< HEAD
 #define CRYPTONOTE_NAME                                 "sumokoin"
 #define CRYPTONOTE_POOLDATA_FILENAME                    "poolstate.bin"
 #define CRYPTONOTE_BLOCKCHAINDATA_FILENAME              "data.mdb"
@@ -167,6 +168,16 @@
 #define P2P_NET_DATA_FILENAME                           "p2pstate.bin"
 #define RPC_PAYMENTS_DATA_FILENAME                      "rpcpayments.bin"
 #define MINER_CONFIG_FILE_NAME                          "miner_conf.json"
+=======
+#define ALLOW_DEBUG_COMMANDS
+
+#define CRYPTONOTE_NAME                         "sumokoin"
+#define CRYPTONOTE_POOLDATA_FILENAME            "poolstate.bin"
+#define CRYPTONOTE_BLOCKCHAINDATA_FILENAME      "data.mdb"
+#define CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME "lock.mdb"
+#define P2P_NET_DATA_FILENAME                   "p2pstate.bin"
+#define MINER_CONFIG_FILE_NAME                  "miner_conf.json"
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 
 
 // coin emission change interval/speed configs
@@ -201,8 +212,11 @@
 #define CRYPTONOTE_PRUNING_LOG_STRIPES                   3 // the higher, the more space saved
 #define CRYPTONOTE_PRUNING_TIP_BLOCKS                    5500 // the smaller, the more space saved
 
+<<<<<<< HEAD
 #define RPC_CREDITS_PER_HASH_SCALE                       ((float)(1<<24))
 
+=======
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 // New constants are intended to go here
 namespace config
 {

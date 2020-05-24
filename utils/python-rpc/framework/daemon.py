@@ -38,11 +38,10 @@ class Daemon(object):
         self.port = port
         self.rpc = JSONRPC('{protocol}://{host}:{port}'.format(protocol=protocol, host=host, port=port if port else base+idx))
 
-    def getblocktemplate(self, address, prev_block = "", client = ""):
+    def getblocktemplate(self, address, prev_block = ""):
         getblocktemplate = {
             'method': 'getblocktemplate',
             'params': {
-                'client': client,
                 'wallet_address': address,
                 'reserve_size' : 1,
                 'prev_block' : prev_block,
@@ -53,9 +52,8 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getblocktemplate)
     get_block_template = getblocktemplate
 
-    def send_raw_transaction(self, tx_as_hex, do_not_relay = False, do_sanity_checks = True, client = ""):
+    def send_raw_transaction(self, tx_as_hex, do_not_relay = False, do_sanity_checks = True):
         send_raw_transaction = {
-            'client': client,
             'tx_as_hex': tx_as_hex,
             'do_not_relay': do_not_relay,
             'do_sanity_checks': do_sanity_checks,
@@ -73,11 +71,10 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(submitblock)
     submit_block = submitblock
 
-    def getblock(self, hash = '', height = 0, fill_pow_hash = False, client = ""):
+    def getblock(self, hash = '', height = 0, fill_pow_hash = False):
         getblock = {
             'method': 'getblock',
             'params': {
-                'client': client,
                 'hash': hash,
                 'height': height,
                 'fill_pow_hash': fill_pow_hash,
@@ -88,11 +85,10 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getblock)
     get_block = getblock
 
-    def getlastblockheader(self, client = ""):
+    def getlastblockheader(self):
         getlastblockheader = {
             'method': 'getlastblockheader',
             'params': {
-                'client': client,
             },
             'jsonrpc': '2.0',
             'id': '0'
@@ -100,11 +96,10 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getlastblockheader)
     get_last_block_header = getlastblockheader
 
-    def getblockheaderbyhash(self, hash = "", hashes = [], client = ""):
+    def getblockheaderbyhash(self, hash = "", hashes = []):
         getblockheaderbyhash = {
             'method': 'getblockheaderbyhash',
             'params': {
-                'client': client,
                 'hash': hash,
                 'hashes': hashes,
             },
@@ -114,11 +109,10 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getblockheaderbyhash)
     get_block_header_by_hash = getblockheaderbyhash
 
-    def getblockheaderbyheight(self, height, client = ""):
+    def getblockheaderbyheight(self, height):
         getblockheaderbyheight = {
             'method': 'getblockheaderbyheight',
             'params': {
-                'client': client,
                 'height': height,
             },
             'jsonrpc': '2.0',
@@ -127,11 +121,10 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getblockheaderbyheight)
     get_block_header_by_height = getblockheaderbyheight
 
-    def getblockheadersrange(self, start_height, end_height, fill_pow_hash = False, client = ""):
+    def getblockheadersrange(self, start_height, end_height, fill_pow_hash = False):
         getblockheadersrange = {
             'method': 'getblockheadersrange',
             'params': {
-                'client': client,
                 'start_height': start_height,
                 'end_height': end_height,
                 'fill_pow_hash': fill_pow_hash,
@@ -142,17 +135,17 @@ class Daemon(object):
         return self.rpc.send_json_rpc_request(getblockheadersrange)
     get_block_headers_range = getblockheadersrange
 
-    def get_connections(self, client = ""):
+    def get_connections(self):
         get_connections = {
-            'client': client,
             'method': 'get_connections',
             'jsonrpc': '2.0',
             'id': '0'
         }
         return self.rpc.send_json_rpc_request(get_connections)
 
-    def get_info(self, client = ""):
+    def get_info(self):
         get_info = {
+<<<<<<< HEAD
             'method': 'get_info',
             'params': {
                 'client': client,
@@ -160,11 +153,18 @@ class Daemon(object):
             'jsonrpc': '2.0',
             'id': '0'
         }
+=======
+                'method': 'get_info',
+                'jsonrpc': '2.0', 
+                'id': '0'
+        }    
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
         return self.rpc.send_json_rpc_request(get_info)
     getinfo = get_info
 
-    def hard_fork_info(self, client = ""):
+    def hard_fork_info(self):
         hard_fork_info = {
+<<<<<<< HEAD
             'method': 'hard_fork_info',
             'params': {
                 'client': client,
@@ -172,6 +172,12 @@ class Daemon(object):
             'jsonrpc': '2.0',
             'id': '0'
         }
+=======
+                'method': 'hard_fork_info',
+                'jsonrpc': '2.0', 
+                'id': '0'
+        }    
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
         return self.rpc.send_json_rpc_request(hard_fork_info)
 
     def generateblocks(self, address, blocks=1, prev_block = "", starting_nonce = 0):
@@ -189,7 +195,7 @@ class Daemon(object):
         }
         return self.rpc.send_json_rpc_request(generateblocks)
 
-    def get_height(self, client = ""):
+    def get_height(self):
         get_height = {
                 'method': 'get_height',
                 'jsonrpc': '2.0',
@@ -223,21 +229,18 @@ class Daemon(object):
         }
         return self.rpc.send_request('/mining_status', mining_status)
 
-    def get_transaction_pool(self, client = ""):
+    def get_transaction_pool(self):
         get_transaction_pool = {
-            'client': client,
         }
         return self.rpc.send_request('/get_transaction_pool', get_transaction_pool)
 
-    def get_transaction_pool_hashes(self, client = ""):
+    def get_transaction_pool_hashes(self):
         get_transaction_pool_hashes = {
-            'client': client,
         }
         return self.rpc.send_request('/get_transaction_pool_hashes', get_transaction_pool_hashes)
 
-    def get_transaction_pool_stats(self, client = ""):
+    def get_transaction_pool_stats(self):
         get_transaction_pool_stats = {
-            'client': client,
         }
         return self.rpc.send_request('/get_transaction_pool_stats', get_transaction_pool_stats)
 
@@ -281,6 +284,7 @@ class Daemon(object):
         }
         return self.rpc.send_json_rpc_request(set_bans)
 
+<<<<<<< HEAD
     def banned(self, address = ''):
         banned = {
             'method': 'banned',
@@ -308,8 +312,10 @@ class Daemon(object):
         return self.rpc.send_request('/get_public_nodes', get_public_nodes)
 
     def get_transactions(self, txs_hashes = [], decode_as_json = False, prune = False, split = False, client = ""):
+=======
+    def get_transactions(self, txs_hashes = [], decode_as_json = False, prune = False, split = False):
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
         get_transactions = {
-            'client': client,
             'txs_hashes': txs_hashes,
             'decode_as_json': decode_as_json,
             'prune': prune,
@@ -318,19 +324,17 @@ class Daemon(object):
         return self.rpc.send_request('/get_transactions', get_transactions)
     gettransactions = get_transactions
 
-    def get_outs(self, outputs = [], get_txid = False, client = ""):
+    def get_outs(self, outputs = [], get_txid = False):
         get_outs = {
-            'client': client,
             'outputs': outputs,
             'get_txid': get_txid,
         }
         return self.rpc.send_request('/get_outs', get_outs)
 
-    def get_coinbase_tx_sum(self, height, count, client = ""):
+    def get_coinbase_tx_sum(self, height, count):
         get_coinbase_tx_sum = {
             'method': 'get_coinbase_tx_sum',
             'params': {
-                'client': client,
                 'height': height,
                 'count': count,
             },
@@ -339,11 +343,10 @@ class Daemon(object):
         }
         return self.rpc.send_json_rpc_request(get_coinbase_tx_sum)
 
-    def get_output_distribution(self, amounts = [], from_height = 0, to_height = 0, cumulative = False, binary = False, compress = False, client = ""):
+    def get_output_distribution(self, amounts = [], from_height = 0, to_height = 0, cumulative = False, binary = False, compress = False):
         get_output_distribution = {
             'method': 'get_output_distribution',
             'params': {
-                'client': client,
                 'amounts': amounts,
                 'from_height': from_height,
                 'to_height': to_height,
@@ -356,11 +359,10 @@ class Daemon(object):
         }
         return self.rpc.send_json_rpc_request(get_output_distribution)
 
-    def get_output_histogram(self, amounts = [], min_count = 0, max_count = 0, unlocked = False, recent_cutoff = 0, client = ""):
+    def get_output_histogram(self, amounts = [], min_count = 0, max_count = 0, unlocked = False, recent_cutoff = 0):
         get_output_histogram = {
             'method': 'get_output_histogram',
             'params': {
-                'client': client,
                 'amounts': amounts,
                 'min_count': min_count,
                 'max_count': max_count,
@@ -384,17 +386,15 @@ class Daemon(object):
         }
         return self.rpc.send_request('/set_log_categories', set_log_categories)
 
-    def get_alt_blocks_hashes(self, client = ""):
+    def get_alt_blocks_hashes(self):
         get_alt_blocks_hashes = {
-            'client': client,
         }
         return self.rpc.send_request('/get_alt_blocks_hashes', get_alt_blocks_hashes)
 
-    def get_alternate_chains(self, client = ""):
+    def get_alternate_chains(self):
         get_alternate_chains = {
             'method': 'get_alternate_chains',
             'params': {
-                'client': client,
             },
             'jsonrpc': '2.0',
             'id': '0'
@@ -412,10 +412,9 @@ class Daemon(object):
         }
         return self.rpc.send_json_rpc_request(get_fee_estimate)
 
-    def is_key_image_spent(self, key_images = [], client = ""):
+    def is_key_image_spent(self, key_images = []):
         is_key_image_spent = {
             'key_images': key_images,
-            'client': client,
         }
         return self.rpc.send_request('/is_key_image_spent', is_key_image_spent)
 
@@ -465,7 +464,7 @@ class Daemon(object):
 
     def in_peers(self, in_peers):
         in_peers = {
-            'client': client,
+            'in_peers': in_peers,
         }
         return self.rpc.send_request('/in_peers', in_peers)
 
@@ -498,34 +497,31 @@ class Daemon(object):
     on_get_block_hash = get_block_hash
     on_getblockhash = get_block_hash
 
-    def relay_tx(self, txids = [], client = ""):
+    def relay_tx(self, txids = []):
         relay_tx = {
             'method': 'relay_tx',
             'params': {
                 'txids': txids,
-                'client': client,
             },
             'jsonrpc': '2.0',
             'id': '0'
         }
         return self.rpc.send_json_rpc_request(relay_tx)
 
-    def sync_info(self, client = ""):
+    def sync_info(self):
         sync_info = {
             'method': 'sync_info',
             'params': {
-                'client': client,
             },
             'jsonrpc': '2.0',
             'id': '0'
         }
         return self.rpc.send_json_rpc_request(sync_info)
 
-    def get_txpool_backlog(self, client = ""):
+    def get_txpool_backlog(self):
         get_txpool_backlog = {
             'method': 'get_txpool_backlog',
             'params': {
-                'client': client,
             },
             'jsonrpc': '2.0',
             'id': '0'
@@ -552,6 +548,7 @@ class Daemon(object):
             'jsonrpc': '2.0',
             'id': '0'
         }
+<<<<<<< HEAD
         return self.rpc.send_json_rpc_request(flush_cache)
 
     def rpc_access_info(self, client):
@@ -623,3 +620,6 @@ class Daemon(object):
             'id': '0'
         }
         return self.rpc.send_json_rpc_request(rpc_access_account)
+=======
+        return self.rpc.send_json_rpc_request(get_block_rate)
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage

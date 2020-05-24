@@ -173,10 +173,13 @@ public:
     const std::string &address,
     const std::string &username,
     const std::string &password);
+<<<<<<< HEAD
 
   bool rpc_payments();
 
   bool flush_cache(bool bad_txs, bool invalid_blocks);
+=======
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 };
 
 } // namespace daemonize

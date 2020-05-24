@@ -266,11 +266,6 @@ namespace math_helper
       set_next_interval();
 		}
 
-    void trigger()
-    {
-      m_last_worked_time = 0;
-    }
-
 		template<class functor_t>
 		bool do_call(functor_t functr)
 		{

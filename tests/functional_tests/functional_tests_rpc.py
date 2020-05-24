@@ -10,7 +10,7 @@ import string
 import os
 
 USAGE = 'usage: functional_tests_rpc.py <python> <srcdir> <builddir> [<tests-to-run> | all]'
-DEFAULT_TESTS = ['address_book', 'bans', 'blockchain', 'cold_signing', 'daemon_info', 'get_output_distribution', 'integrated_address', 'mining', 'multisig', 'proofs', 'rpc_payment', 'sign_message', 'transfer', 'txpool', 'uri', 'validate_address', 'wallet']
+DEFAULT_TESTS = ['address_book', 'bans', 'blockchain', 'cold_signing', 'daemon_info', 'get_output_distribution', 'integrated_address', 'mining', 'multisig', 'proofs', 'sign_message', 'transfer', 'txpool', 'uri', 'validate_address', 'wallet']
 try:
   python = sys.argv[1]
   srcdir = sys.argv[2]
@@ -34,11 +34,15 @@ try:
 except:
   tests = DEFAULT_TESTS
 
+<<<<<<< HEAD
 N_sumokoinDS = 2
+=======
+N_MONERODS = 1
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 N_WALLETS = 4
 WALLET_DIRECTORY = builddir + "/functional-tests-directory"
-DIFFICULTY = 10
 
+<<<<<<< HEAD
 sumokoind_base = [builddir + "/bin/sumokoind", "--regtest", "--fixed-difficulty", str(DIFFICULTY), "--offline", "--no-igd", "--p2p-bind-port", "sumokoind_p2p_port", "--rpc-bind-port", "sumokoind_rpc_port", "--zmq-rpc-bind-port", "sumokoind_zmq_port", "--non-interactive", "--disable-dns-checkpoints", "--check-updates", "disabled", "--rpc-ssl", "disabled", "--log-level", "1"]
 sumokoind_extra = [
   [],
@@ -47,23 +51,32 @@ sumokoind_extra = [
 wallet_base = [builddir + "/bin/sumo-wallet-rpc", "--wallet-dir", WALLET_DIRECTORY, "--rpc-bind-port", "wallet_port", "--disable-rpc-login", "--rpc-ssl", "disabled", "--daemon-ssl", "disabled", "--daemon-port", "19733", "--log-level", "1"]
 wallet_extra = [
 ]
+=======
+monerod_base = [builddir + "/bin/monerod", "--regtest", "--fixed-difficulty", "1", "--offline", "--no-igd", "--p2p-bind-port", "monerod_p2p_port", "--rpc-bind-port", "monerod_rpc_port", "--zmq-rpc-bind-port", "monerod_zmq_port", "--non-interactive", "--disable-dns-checkpoints", "--check-updates", "disabled", "--rpc-ssl", "disabled", "--log-level", "1"]
+wallet_base = [builddir + "/bin/monero-wallet-rpc", "--wallet-dir", WALLET_DIRECTORY, "--rpc-bind-port", "wallet_port", "--disable-rpc-login", "--rpc-ssl", "disabled", "--daemon-ssl", "disabled", "--daemon-port", "18180", "--log-level", "1"]
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 
 command_lines = []
 processes = []
 outputs = []
 ports = []
 
+<<<<<<< HEAD
 for i in range(N_sumokoinDS):
   command_lines.append([str(19733+i) if x == "sumokoind_rpc_port" else str(18280+i) if x == "sumokoind_p2p_port" else str(18380+i) if x == "sumokoind_zmq_port" else x for x in sumokoind_base])
   if i < len(sumokoind_extra):
     command_lines[-1] += sumokoind_extra[i]
   outputs.append(open(builddir + '/tests/functional_tests/sumokoind' + str(i) + '.log', 'a+'))
   ports.append(19733+i)
+=======
+for i in range(N_MONERODS):
+  command_lines.append([str(18180+i) if x == "monerod_rpc_port" else str(18280+i) if x == "monerod_p2p_port" else str(18380+i) if x == "monerod_zmq_port" else x for x in monerod_base])
+  outputs.append(open(builddir + '/tests/functional_tests/monerod' + str(i) + '.log', 'a+'))
+  ports.append(18180+i)
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 
 for i in range(N_WALLETS):
   command_lines.append([str(18090+i) if x == "wallet_port" else x for x in wallet_base])
-  if i < len(wallet_extra):
-    command_lines[-1] += wallet_extra[i]
   outputs.append(open(builddir + '/tests/functional_tests/wallet' + str(i) + '.log', 'a+'))
   ports.append(18090+i)
 
@@ -76,8 +89,6 @@ try:
   os.environ['PYTHONPATH'] = PYTHONPATH
   os.environ['WALLET_DIRECTORY'] = WALLET_DIRECTORY
   os.environ['PYTHONIOENCODING'] = 'utf-8'
-  os.environ['DIFFICULTY'] = str(DIFFICULTY)
-  os.environ['MAKE_TEST_SIGNATURE'] = builddir + '/tests/functional_tests/make_test_signature'
   for i in range(len(command_lines)):
     #print('Running: ' + str(command_lines[i]))
     processes.append(subprocess.Popen(command_lines[i], stdout = outputs[i]))

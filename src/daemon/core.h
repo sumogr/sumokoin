@@ -59,6 +59,16 @@ public:
     : m_core{nullptr}
     , m_vm_HACK{vm}
   {
+  }
+
+  // TODO - get rid of circular dependencies in internals
+  void set_protocol(t_protocol_raw & protocol)
+  {
+    m_core.set_cryptonote_protocol(&protocol);
+  }
+
+  bool run()
+  {
     //initialize core here
     MGINFO("Initializing core...");
 #if defined(PER_BLOCK_CHECKPOINT)
@@ -68,10 +78,15 @@ public:
 #endif
     if (!m_core.init(m_vm_HACK, nullptr, get_checkpoints))
     {
-      throw std::runtime_error("Failed to initialize core");
+      return false;
     }
     MGINFO("Core initialized OK");
+<<<<<<< HEAD
     std::cout << std::endl << 
+=======
+   
+    MGINFO_CYAN(std::endl << "\n \n" 
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
     "\033[1;36m	  ___                        _         _               \033[0m" << std::endl <<
     "\033[1;36m	/ ___| _   _ _ __ ___   ___ | | _____ (_)_ __          \033[0m" << std::endl <<
     "\033[1;36m	\\___ \\| | | | '_ ` _ \\ / _ \\| |/ / _ \\| | '_ \\   \033[0m" << std::endl <<
@@ -79,6 +94,7 @@ public:
     "\033[1;36m	|____/ \\__,_|_| |_| |_|\\___/|_|\\_\\___/|_|_| |_|    \033[0m" << std::endl <<
     std::endl <<
     "\033[1;36m                 PRIVACY WITHOUT COMPROMISE             \033[0m" << std::endl <<
+<<<<<<< HEAD
     std::endl;
   }
 
@@ -90,6 +106,10 @@ public:
 
   bool run()
   {
+=======
+    std::endl);                                              
+                                  
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
     return true;
   }
 

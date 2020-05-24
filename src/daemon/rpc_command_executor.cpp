@@ -38,8 +38,11 @@
 #include "cryptonote_basic/difficulty.h"
 #include "cryptonote_basic/hardfork.h"
 #include "version.h"
+<<<<<<< HEAD
 #include "rpc/rpc_payment_signature.h"
 #include "rpc/rpc_version_str.h"
+=======
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 #include <boost/format.hpp>
 #include <ctime>
 #include <string>
@@ -63,13 +66,6 @@ namespace {
     }
   }
 
-  std::string print_float(float f, int prec)
-  {
-    char buf[16];
-    snprintf(buf, sizeof(buf), "%*.*f", prec, prec, f);
-    return buf;
-  }
-
   void print_peer(std::string const & prefix, cryptonote::peer const & peer, bool pruned_only, bool publicrpc_only)
   {
     if (pruned_only && peer.pruning_seed == 0)
@@ -87,9 +83,8 @@ namespace {
     epee::string_tools::xtype_to_string(peer.port, port_str);
     std::string addr_str = peer.host + ":" + port_str;
     std::string rpc_port = peer.rpc_port ? std::to_string(peer.rpc_port) : "-";
-    std::string rpc_credits_per_hash = peer.rpc_credits_per_hash ? print_float(peer.rpc_credits_per_hash / RPC_CREDITS_PER_HASH_SCALE, 2) : "-";
     std::string pruning_seed = epee::string_tools::to_string_hex(peer.pruning_seed);
-    tools::msg_writer() << boost::format("%-10s %-25s %-25s %-5s %-5s %-4s %s") % prefix % id_str % addr_str % rpc_port % rpc_credits_per_hash % pruning_seed % elapsed;
+    tools::msg_writer() << boost::format("%-10s %-25s %-25s %-5s %-4s %s") % prefix % id_str % addr_str % rpc_port % pruning_seed % elapsed;
   }
 
   void print_block_header(cryptonote::block_header_response const & header)
@@ -2608,6 +2603,7 @@ bool t_rpc_command_executor::set_bootstrap_daemon(
     return true;
 }
 
+<<<<<<< HEAD
 bool t_rpc_command_executor::flush_cache(bool bad_txs, bool bad_blocks)
 {
     cryptonote::COMMAND_RPC_FLUSH_CACHE::request req;
@@ -2713,4 +2709,6 @@ bool t_rpc_command_executor::version()
     return true;
 }
 
+=======
+>>>>>>> parent of a652cb99... [DAEMON + WALLET] Payment system for RPC usage
 }// namespace daemonize
