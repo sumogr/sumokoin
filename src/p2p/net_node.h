@@ -243,6 +243,7 @@ namespace nodetool
         m_external_port(0),
         m_rpc_port(0),
         m_rpc_credits_per_hash(0),
+        m_cumulative_difficulty(0),
         m_allow_local_ip(false),
         m_hide_my_port(false),
         m_igd(no_igd),
@@ -444,6 +445,7 @@ namespace nodetool
     uint32_t m_external_port;
     uint16_t m_rpc_port;
     uint32_t m_rpc_credits_per_hash;
+    uint64_t m_cumulative_difficulty;
     bool m_allow_local_ip;
     bool m_hide_my_port;
     igd_t m_igd;

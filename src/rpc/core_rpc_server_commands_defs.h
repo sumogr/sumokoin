@@ -1221,6 +1221,7 @@ namespace cryptonote
     uint32_t ip;
     uint16_t port;
     uint16_t rpc_port;
+    uint64_t cumulative_difficulty;
     uint32_t rpc_credits_per_hash;
     uint64_t last_seen;
     uint32_t pruning_seed;
@@ -1228,13 +1229,13 @@ namespace cryptonote
     peer() = default;
 
     peer(uint64_t id, const std::string &host, uint64_t last_seen, uint32_t pruning_seed, uint16_t rpc_port, uint32_t rpc_credits_per_hash)
-      : id(id), host(host), ip(0), port(0), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed)
+      : id(id), host(host), ip(0), port(0), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed), cumulative_difficulty(0)
     {}
     peer(uint64_t id, const std::string &host, uint16_t port, uint64_t last_seen, uint32_t pruning_seed, uint16_t rpc_port, uint32_t rpc_credits_per_hash)
-      : id(id), host(host), ip(0), port(port), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed)
+      : id(id), host(host), ip(0), port(port), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed), cumulative_difficulty(0)
     {}
     peer(uint64_t id, uint32_t ip, uint16_t port, uint64_t last_seen, uint32_t pruning_seed, uint16_t rpc_port, uint32_t rpc_credits_per_hash)
-      : id(id), host(epee::string_tools::get_ip_string_from_int32(ip)), ip(ip), port(port), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed)
+      : id(id), host(epee::string_tools::get_ip_string_from_int32(ip)), ip(ip), port(port), rpc_port(rpc_port), rpc_credits_per_hash(rpc_credits_per_hash), last_seen(last_seen), pruning_seed(pruning_seed), cumulative_difficulty(0)
     {}
 
     BEGIN_KV_SERIALIZE_MAP()
@@ -1242,6 +1243,7 @@ namespace cryptonote
       KV_SERIALIZE(host)
       KV_SERIALIZE(ip)
       KV_SERIALIZE(port)
+      KV_SERIALIZE(cumulative_difficulty)
       KV_SERIALIZE_OPT(rpc_port, (uint16_t)0)
       KV_SERIALIZE_OPT(rpc_credits_per_hash, (uint32_t)0)
       KV_SERIALIZE(last_seen)
@@ -1281,18 +1283,20 @@ namespace cryptonote
     std::string host;
     uint64_t last_seen;
     uint16_t rpc_port;
+    uint64_t cumulative_difficulty;
     uint32_t rpc_credits_per_hash;
 
-    public_node(): last_seen(0), rpc_port(0), rpc_credits_per_hash(0) {}
+    public_node(): last_seen(0), rpc_port(0), cumulative_difficulty(0), rpc_credits_per_hash(0) {}
 
     public_node(const peer &peer)
-      : host(peer.host), last_seen(peer.last_seen), rpc_port(peer.rpc_port), rpc_credits_per_hash(peer.rpc_credits_per_hash)
+      : host(peer.host), last_seen(peer.last_seen), rpc_port(peer.rpc_port), cumulative_difficulty(peer.cumulative_difficulty), rpc_credits_per_hash(peer.rpc_credits_per_hash)
     {}
 
     BEGIN_KV_SERIALIZE_MAP()
       KV_SERIALIZE(host)
       KV_SERIALIZE(last_seen)
       KV_SERIALIZE(rpc_port)
+      KV_SERIALIZE(cumulative_difficulty)
       KV_SERIALIZE(rpc_credits_per_hash)
     END_KV_SERIALIZE_MAP()
   };

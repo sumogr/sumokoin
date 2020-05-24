@@ -57,6 +57,7 @@ namespace cryptonote
     std::string port;
     uint16_t rpc_port;
     uint32_t rpc_credits_per_hash;
+    uint64_t cumulative_difficulty;
 
     std::string peer_id;
 
@@ -96,6 +97,7 @@ namespace cryptonote
       KV_SERIALIZE(port)
       KV_SERIALIZE(rpc_port)
       KV_SERIALIZE(rpc_credits_per_hash)
+      KV_SERIALIZE(cumulative_difficulty)
       KV_SERIALIZE(peer_id)
       KV_SERIALIZE(recv_count)
       KV_SERIALIZE(recv_idle_time)

@@ -88,8 +88,9 @@ namespace {
     std::string addr_str = peer.host + ":" + port_str;
     std::string rpc_port = peer.rpc_port ? std::to_string(peer.rpc_port) : "-";
     std::string rpc_credits_per_hash = peer.rpc_credits_per_hash ? print_float(peer.rpc_credits_per_hash / RPC_CREDITS_PER_HASH_SCALE, 2) : "-";
+    std::string cumulative_difficulty = peer.cumulative_difficulty ? std::to_string(peer.cumulative_difficulty) : "-";
     std::string pruning_seed = epee::string_tools::to_string_hex(peer.pruning_seed);
-    tools::msg_writer() << boost::format("%-10s %-25s %-25s %-5s %-5s %-4s %s") % prefix % id_str % addr_str % rpc_port % rpc_credits_per_hash % pruning_seed % elapsed;
+    tools::msg_writer() << boost::format("%-10s %-25s %-25s %-5s %-10s %-5s %-4s %s") % prefix % id_str % addr_str % rpc_port % cumulative_difficulty % rpc_credits_per_hash % pruning_seed % elapsed;
   }
 
   void print_block_header(cryptonote::block_header_response const & header)
@@ -821,8 +822,8 @@ bool t_rpc_command_executor::print_connections() {
       << std::setw(4) << "SSL"
       << std::setw(8) << "RPC"
       << std::setw(8) << "Height"
-      << std::setw(18) << "Peer id"
-      << std::setw(6) << "Flags"
+      << std::setw(16) << "Peer id"
+      << std::setw(18) << "Difficulty"
       << std::setw(26) << "Recv/Sent (inactive,s)"
       << std::setw(18) << "State"
       << std::setw(22) << "Down |  Up (kB/s/now)"
@@ -842,8 +843,8 @@ bool t_rpc_command_executor::print_connections() {
      << std::setw(4) << (info.ssl ? "yes" : "no")
      << std::setw(8) << rpc_port
      << std::setw(8) << info.height
-     << std::setw(18) << info.peer_id
-     << std::setw(6) << info.support_flags
+     << std::setw(12) << info.peer_id
+     << std::setw(18) << info.cumulative_difficulty
      << std::setw(26) << std::to_string(info.recv_count) + "("  + std::to_string(info.recv_idle_time) + ")/" + std::to_string(info.send_count) + "(" + std::to_string(info.send_idle_time) + ")"
      << std::setw(18) << info.state
      << std::setw(22) << std::to_string(info.avg_download) + "/" + std::to_string(info.current_download) + "  |  "+ std::to_string(info.avg_upload) + "/" + std::to_string(info.current_upload)

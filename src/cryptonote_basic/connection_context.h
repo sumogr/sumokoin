@@ -64,6 +64,7 @@ namespace cryptonote
     crypto::hash m_last_known_hash;
     uint32_t m_pruning_seed;
     uint16_t m_rpc_port;
+    uint64_t m_cumulative_difficulty;
     uint32_t m_rpc_credits_per_hash;
     bool m_anchor;
     //size_t m_score;  TODO: add score calculations
