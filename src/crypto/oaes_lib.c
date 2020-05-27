@@ -474,11 +474,19 @@ OAES_RET oaes_sprintf(
 #ifdef OAES_HAVE_ISAAC
 static void oaes_get_seed( char buf[RANDSIZ + 1] )
 {
+<<<<<<< HEAD
         #if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
 	struct timeb timer;
 	struct tm *gmTimer;
 	char * _test = NULL;
 	
+=======
+#if defined(__MINGW32__) || defined(__MINGW64__)
+	struct timeb timer;
+	struct tm *gmTimer;
+	char * _test = NULL;
+
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	ftime (&timer);
 	gmTimer = gmtime( &timer.time );
 	_test = (char *) calloc( sizeof( char ), timer.millitm );
@@ -486,19 +494,30 @@ static void oaes_get_seed( char buf[RANDSIZ + 1] )
 		gmTimer->tm_year + 1900, gmTimer->tm_mon + 1, gmTimer->tm_mday,
 		gmTimer->tm_hour, gmTimer->tm_min, gmTimer->tm_sec, timer.millitm,
 		_test + timer.millitm, GETPID() );
+<<<<<<< HEAD
 	#else
 	struct timeval timer;
+=======
+#else
+	struct timeval now;
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	struct tm *gmTimer;
 	char * _test = NULL;
 	
-	gettimeofday(&timer, NULL);
-	gmTimer = gmtime( &timer.tv_sec );
-	_test = (char *) calloc( sizeof( char ), timer.tv_usec/1000 );
+	gettimeofday(&now, NULL);
+	gmTimer = gmtime(&now.tv_sec);
+	_test = (char *) calloc( sizeof( char ), now.tv_usec/1000 );
 	sprintf( buf, "%04d%02d%02d%02d%02d%02d%03d%p%d",
 		gmTimer->tm_year + 1900, gmTimer->tm_mon + 1, gmTimer->tm_mday,
+<<<<<<< HEAD
 		gmTimer->tm_hour, gmTimer->tm_min, gmTimer->tm_sec, timer.tv_usec/1000,
 		_test + timer.tv_usec/1000, GETPID() );
 	#endif
+=======
+		gmTimer->tm_hour, gmTimer->tm_min, gmTimer->tm_sec, now.tv_usec/1000,
+		_test + now.tv_usec/1000, GETPID() );
+#endif
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 		
 	if( _test )
 		free( _test );
@@ -506,32 +525,51 @@ static void oaes_get_seed( char buf[RANDSIZ + 1] )
 #else
 static uint32_t oaes_get_seed(void)
 {
+<<<<<<< HEAD
         #if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__ANDROID__) && !defined(__NetBSD__)
+=======
+#if defined(__MINGW32__) || defined(__MINGW64__)
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	struct timeb timer;
 	struct tm *gmTimer;
 	char * _test = NULL;
 	uint32_t _ret = 0;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	ftime (&timer);
 	gmTimer = gmtime( &timer.time );
 	_test = (char *) calloc( sizeof( char ), timer.millitm );
 	_ret = gmTimer->tm_year + 1900 + gmTimer->tm_mon + 1 + gmTimer->tm_mday +
 			gmTimer->tm_hour + gmTimer->tm_min + gmTimer->tm_sec + timer.millitm +
 			(uintptr_t) ( _test + timer.millitm ) + GETPID();
+<<<<<<< HEAD
 	#else
 	struct timeval timer;
+=======
+#else
+	struct timeval now;
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	struct tm *gmTimer;
 	char * _test = NULL;
 	uint32_t _ret = 0;
 	
-	gettimeofday(&timer, NULL);
-	gmTimer = gmtime( &timer.tv_sec );
-	_test = (char *) calloc( sizeof( char ), timer.tv_usec/1000 );
+	gettimeofday(&now, NULL);
+	gmTimer = gmtime( &now.tv_sec );
+	_test = (char *) calloc( sizeof( char ), now.tv_usec/1000 );
 	_ret = gmTimer->tm_year + 1900 + gmTimer->tm_mon + 1 + gmTimer->tm_mday +
+<<<<<<< HEAD
 			gmTimer->tm_hour + gmTimer->tm_min + gmTimer->tm_sec + timer.tv_usec/1000 +
 			(uintptr_t) ( _test + timer.tv_usec/1000 ) + GETPID();
 	#endif
 
+=======
+			gmTimer->tm_hour + gmTimer->tm_min + gmTimer->tm_sec + now.tv_usec/1000 +
+			(uintptr_t) ( _test + now.tv_usec/1000 ) + GETPID();
+#endif
+>>>>>>> e3b7cea7... [crypto] oaes_lib fix for MINGW
 	if( _test )
 		free( _test );
 	
