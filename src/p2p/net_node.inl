@@ -58,6 +58,7 @@
 #include "crypto/crypto.h"
 #include "storages/levin_abstract_invoke2.h"
 #include "cryptonote_core/cryptonote_core.h"
+#include "cryptonote_basic/difficulty.h"
 #include "net/parse.h"
 
 #include <miniupnp/miniupnpc/miniupnpc.h>
@@ -1046,6 +1047,14 @@ namespace nodetool
         MINFO("Peer " << context.m_remote_address.str() << " has a different version than ours: " << remote_version);
       }
 
+      if (rsp.node_data.next_difficulty_v3_64 != 0)
+      {
+        MINFO("########### Remote Difficulty ######################" << "\n"
+             << "Peer " << context.m_remote_address.str() << " has a current difficulty: " << rsp.node_data.next_difficulty_v3_64 << "\n"
+             << "########### Remote Difficulty ######################");
+
+      }
+
       if(rsp.node_data.network_id != m_network_id)
       {
         LOG_WARNING_CC(context, "COMMAND_HANDSHAKE Failed, wrong network!  (" << rsp.node_data.network_id << "), closing connection and banning peer.");
@@ -1945,6 +1954,9 @@ namespace nodetool
   {
     node_data.peer_id = zone.m_config.m_peer_id;
     node_data.version = SUMOKOIN_VERSION;
+    //typecasting
+    uint64_t diffic = (uint64_t) cryptonote::next_difficulty_v3_64;
+    node_data.next_difficulty_v3_64 = diffic;
     if(!m_hide_my_port && zone.m_can_pingback)
       node_data.my_port = m_external_port ? m_external_port : m_listening_port;
     else
@@ -2267,6 +2279,13 @@ namespace nodetool
     if (arg.node_data.version.size() != 0 && arg.node_data.version != SUMOKOIN_VERSION)
     {
       MINFO("Peer " << context.m_remote_address.str() << " has a different version than ours: " << r_version);
+    }
+
+    if (arg.node_data.next_difficulty_v3_64 != 0)
+    {
+      MINFO("########### Remote Difficulty ######################" << "\n"
+           << "Peer " << context.m_remote_address.str() << " has a current difficulty: " << arg.node_data.next_difficulty_v3_64 << "\n"
+           << "########### Remote Difficulty ######################");
     }
 
     if(arg.node_data.network_id != m_network_id)

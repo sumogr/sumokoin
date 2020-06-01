@@ -40,6 +40,7 @@
 #include "string_tools.h"
 #include "time_helper.h"
 #include "cryptonote_config.h"
+#include "cryptonote_basic/difficulty.h"
 
 namespace nodetool
 {
@@ -167,12 +168,14 @@ namespace nodetool
     uint32_t rpc_credits_per_hash;
     peerid_type peer_id;
     std::string version;
+    uint64_t next_difficulty_v3_64;
    
     BEGIN_KV_SERIALIZE_MAP()
       KV_SERIALIZE_VAL_POD_AS_BLOB(network_id)
       KV_SERIALIZE(peer_id)
       KV_SERIALIZE(my_port)
-       KV_SERIALIZE(version)
+      KV_SERIALIZE(version)
+      KV_SERIALIZE(next_difficulty_v3_64)
       KV_SERIALIZE_OPT(rpc_port, (uint16_t)(0))
       KV_SERIALIZE_OPT(rpc_credits_per_hash, (uint32_t)0)
     END_KV_SERIALIZE_MAP()
