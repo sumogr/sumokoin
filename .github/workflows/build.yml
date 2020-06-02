@@ -68,7 +68,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        apt-key list | grep expired   
+        sudo apt-key list | grep expired   
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
@@ -198,7 +198,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        apt-key list | grep expired           
+        sudo apt-key list | grep expired           
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
@@ -220,7 +220,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        apt-key list | grep expired           
+        sudo apt-key list | grep expired           
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
