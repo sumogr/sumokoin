@@ -47,7 +47,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        wget http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/InRelease.key -O - | sudo apt-key add -   
+        apt-key list | grep expired
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
@@ -68,7 +68,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        wget http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/InRelease.key -O - | sudo apt-key add -   
+        apt-key list | grep expired   
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
@@ -198,7 +198,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        wget http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/InRelease.key -O - | sudo apt-key add -           
+        apt-key list | grep expired           
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
@@ -220,7 +220,7 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        wget http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/InRelease.key -O - | sudo apt-key add -           
+        apt-key list | grep expired           
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
