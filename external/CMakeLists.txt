@@ -35,7 +35,7 @@
 # ...except for FreeBSD, because FreeBSD is a special case that doesn't play well with
 # others.
 
-find_package(Miniupnpc REQUIRED)
+find_package(MiniUPnPc REQUIRED)
 
 message(STATUS "Using in-tree miniupnpc")
 add_subdirectory(miniupnp/miniupnpc)
