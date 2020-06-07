@@ -78,12 +78,18 @@ file(COPY
   data/signed_monero_tx
   DESTINATION data)
 
-add_subdirectory(core_tests)
-add_subdirectory(fuzz)
+# add_subdirectory(core_tests)
+# add_subdirectory(fuzz)
 add_subdirectory(crypto)
+<<<<<<< HEAD
 add_subdirectory(functional_tests)
 add_subdirectory(performance_tests)
 add_subdirectory(core_proxy)
+=======
+# add_subdirectory(functional_tests)
+# add_subdirectory(performance_tests)
+# add_subdirectory(core_proxy)
+>>>>>>> c6aa0a76... [tests] dont build the tests we dont run
 add_subdirectory(unit_tests)
 add_subdirectory(difficulty)
 add_subdirectory(block_weight)
