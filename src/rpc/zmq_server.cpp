@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // Copyright (c) 2016-2019, The Monero Project
 //
+=======
+// Copyright (c) 2016-2020, The Monero Project
+// 
+>>>>>>> fb1bd004... [licensing] update to 2020
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
