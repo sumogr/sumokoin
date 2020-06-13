@@ -10336,9 +10336,9 @@ int main(int argc, char* argv[])
 
   boost::optional<po::variables_map> vm;
   bool should_terminate = false;
-  for (int i = 0; i < 40; ++i)
-  std::cout << "\n";
-  message_writer(console_color_cyan, true) << "" << std::endl <<
+
+  tools::clear_screen();
+  message_writer(console_color_cyan, true) << "" << std::endl <<  
 		             "         	           " << "   	     " << "	  ___                        _         _              " << std::endl <<
                              "         	           " << "   	     " << "	/ ___| _   _ _ __ ___   ___ | | _____ (_)_ __         " << std::endl <<
                              "         	           " << "   	     " << "	\\___ \\| | | | '_ ` _ \\ / _ \\| |/ / _ \\| | '_ \\  " << std::endl <<
