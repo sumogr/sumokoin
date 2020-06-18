@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include "int-util.h"
 #include "hash-ops.h"
 #include "keccak.h"

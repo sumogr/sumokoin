@@ -28,9 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <stdint.h>
-#include <string.h>
 #include "aligned.h"
 
 static inline int is_power_of_2(size_t n) { return n && (n & (n-1)) == 0; }

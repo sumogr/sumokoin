@@ -33,7 +33,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
 
 #include "int-util.h"
 #include "hash-ops.h"
@@ -41,9 +40,6 @@
 #include "variant2_int_sqrt.h"
 #include "variant4_random_math.h"
 #include "CryptonightR_JIT.h"
-
-#include <errno.h>
-#include <string.h>
 
 #define MEMORY         (1 << 21) // 2MB scratchpad
 #define ITER           (1 << 20)
