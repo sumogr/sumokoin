@@ -34,7 +34,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/range/join.hpp>
 
-
+#include "net_peerlist_boost_serialization.h"
 
 namespace nodetool
 {
