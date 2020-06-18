@@ -1,11 +1,13 @@
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
 
 #if !(defined(_MSC_VER) || defined(__MINGW32__))
 #include <sys/mman.h>
 #endif
 
+#include "hash-ops.h"
 #include "variant4_random_math.h"
 #include "CryptonightR_JIT.h"
 #include "CryptonightR_template.h"

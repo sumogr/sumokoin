@@ -33,6 +33,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "int-util.h"
 #include "hash-ops.h"
