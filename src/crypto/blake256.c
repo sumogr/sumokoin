@@ -38,7 +38,6 @@
  */
 
 #include <string.h>
-#include <stdio.h>
 #include <stdint.h>
 #include "blake256.h"
 
