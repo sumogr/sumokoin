@@ -40,6 +40,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <openssl/evp.h>
+#include "include_base_utils.h"
 using namespace epee;
 
 #include "cryptonote_config.h"
