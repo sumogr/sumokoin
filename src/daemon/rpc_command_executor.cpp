@@ -36,8 +36,6 @@
 #include "version.h"
 #include "rpc/rpc_version_str.h"
 #include <boost/format.hpp>
-#include <ctime>
-#include <string>
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "daemon"
