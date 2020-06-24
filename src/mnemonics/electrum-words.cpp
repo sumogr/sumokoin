@@ -1,22 +1,22 @@
 // Copyright (c) 2017-2020, Sumokoin Project
 // Copyright (c) 2014-2020, The Monero Project
-// 
+//
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-// 
+//
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -29,9 +29,9 @@
 
 /*!
  * \file electrum-words.cpp
- * 
+ *
  * \brief Mnemonic seed generation and wallet restoration from them.
- * 
+ *
  * This file and its header file are for translating Electrum-style word lists
  * into their equivalent byte representations for cross-compatibility with
  * that method of "backing up" one's wallet keys.
@@ -304,14 +304,14 @@ namespace
 
 /*!
  * \namespace crypto
- * 
+ *
  * \brief crypto namespace.
  */
 namespace crypto
 {
   /*!
    * \namespace crypto::ElectrumWords
-   * 
+   *
    * \brief Mnemonic seed word generation and wallet restoration helper functions.
    */
   namespace ElectrumWords
@@ -344,7 +344,7 @@ namespace crypto
       {
         // error on non-compliant word list
         const size_t expected = len * 8 * 3 / 32;
-        if (seed.size() != expected && seed.size() != expected + 1 
+        if (seed.size() != expected && seed.size() != expected + 1
           && seed.size() != expected + 2)
         {
           MERROR("Invalid seed: unexpected number of words");
@@ -539,17 +539,6 @@ namespace crypto
       {
         languages.push_back(english ? (*it)->get_english_language_name() : (*it)->get_language_name());
       }
-    }
-
-    /*!
-     * \brief Tells if the seed passed is an old style seed or not.
-     * \param  seed The seed to check (a space delimited concatenated word list)
-     * \return      true if the seed passed is a old style seed false if not.
-     */
-    bool get_is_old_style_seed(const epee::wipeable_string &seed)
-    {
-      // Sumokoin not support old style seed
-      return false;
     }
 
     std::string get_english_name_for(const std::string &name)
