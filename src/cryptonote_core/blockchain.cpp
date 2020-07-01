@@ -38,7 +38,7 @@
 #include "cryptonote_basic/cryptonote_basic_impl.h"
 #include "tx_pool.h"
 #include "blockchain.h"
-// #include "blockchain_db/blockchain_db.h" // already #included in cryptonote_core/blockchain.h 
+// #include "blockchain_db/blockchain_db.h" // already #included in cryptonote_core/blockchain.h
 #include "cryptonote_basic/cryptonote_boost_serialization.h"
 #include "cryptonote_config.h"
 #include "cryptonote_basic/miner.h"
@@ -393,8 +393,8 @@ bool Blockchain::init(BlockchainDB* db, const network_type nettype, bool offline
 
   m_async_work_idle = std::unique_ptr < boost::asio::io_service::work > (new boost::asio::io_service::work(m_async_service));
   // we only need 1
-  m_async_pool.create_thread(boost::bind(&boost::asio::io_service::run, &m_async_service));
-
+  m_async_thread = boost::thread(boost::bind(&boost::asio::io_service::run, &m_async_service));
+  
 #if defined(PER_BLOCK_CHECKPOINT)
   if (m_nettype != FAKECHAIN)
     load_compiled_in_block_hashes(get_checkpoints);
@@ -515,7 +515,7 @@ bool Blockchain::deinit()
 
  // stop async service
   m_async_work_idle.reset();
-  m_async_pool.join_all();
+  m_async_thread.join();
   m_async_service.stop();
 
   // as this should be called if handling a SIGSEGV, need to check
