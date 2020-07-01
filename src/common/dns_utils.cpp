@@ -47,7 +47,7 @@ static const char *DEFAULT_DNS_PUBLIC_ADDR[] =
 // OpenNIC DNS Servers for more privacy https://www.opennic.org + https://dns.watch/index
 // As recently added as possible and with no logs kept declaration + DNScrypt, added many cause they are sponsored
   "89.40.116.230",       // Germany opennic
-  "104.238.186.189",     // UK opennic	
+  "104.238.186.189",     // UK opennic
   "192.71.245.208",      // Italy opennic
   "5.132.191.104",       // Austria opennic
   "162.248.241.94",      // US opennic
@@ -61,7 +61,7 @@ static const char *DEFAULT_DNS_PUBLIC_ADDR[] =
   "80.67.169.12",        // FDN (France - This is not OpenNIC but its still an independent anticensorship group https://www.fdn.fr/)
   "142.4.204.111",       // Canada opennic
   "5.189.170.196",       // Germany opennic
-  "51.15.98.97",         // Netherlands opennic	
+  "51.15.98.97",         // Netherlands opennic
   "142.4.205.47",        // Canada opennic
   "66.70.228.164",       // Canada opennic
   "50.116.17.96",        // US opennic
@@ -146,13 +146,12 @@ static const char *get_record_name(int record_type)
   }
 }
 
-// fuck it, I'm tired of dealing with getnameinfo()/inet_ntop/etc
-boost::optional<std::string> ipv4_to_string(const char* src, size_t len)
+std::optional<std::string> ipv4_to_string(const char* src, size_t len)
 {
   if (len < 4)
   {
     MERROR("Invalid IPv4 address: " << std::string(src, len));
-    return boost::none;
+    return std::nullopt;
   }
 
   std::stringstream ss;
@@ -171,12 +170,12 @@ boost::optional<std::string> ipv4_to_string(const char* src, size_t len)
 
 // this obviously will need to change, but is here to reflect the above
 // stop-gap measure and to make the tests pass at least...
-boost::optional<std::string> ipv6_to_string(const char* src, size_t len)
+std::optional<std::string> ipv6_to_string(const char* src, size_t len)
 {
   if (len < 8)
   {
     MERROR("Invalid IPv4 address: " << std::string(src, len));
-    return boost::none;
+    return std::nullopt;
   }
 
   std::stringstream ss;
@@ -197,10 +196,10 @@ boost::optional<std::string> ipv6_to_string(const char* src, size_t len)
   return ss.str();
 }
 
-boost::optional<std::string> txt_to_string(const char* src, size_t len)
+std::optional<std::string> txt_to_string(const char* src, size_t len)
 {
   if (len == 0)
-    return boost::none;
+    return std::nullopt;
   return std::string(src+1, len-1);
 }
 
@@ -330,7 +329,7 @@ DNSResolver::~DNSResolver()
   }
 }
 
-std::vector<std::string> DNSResolver::get_record(const std::string& url, int record_type, boost::optional<std::string> (*reader)(const char *,size_t), bool& dnssec_available, bool& dnssec_valid)
+std::vector<std::string> DNSResolver::get_record(const std::string& url, int record_type, std::optional<std::string> (*reader)(const char *,size_t), bool& dnssec_available, bool& dnssec_valid)
 {
   std::vector<std::string> addresses;
   dnssec_available = false;
@@ -353,7 +352,7 @@ std::vector<std::string> DNSResolver::get_record(const std::string& url, int rec
     {
       for (size_t i=0; result->data[i] != NULL; i++)
       {
-        boost::optional<std::string> res = (*reader)(result->data[i], result->len[i]);
+        std::optional<std::string> res = (*reader)(result->data[i], result->len[i]);
         if (res)
         {
           MINFO("Found \"" << *res << "\" in " << get_record_name(record_type) << " record for " << url);
@@ -543,7 +542,7 @@ bool load_txt_records_from_dns(std::vector<std::string> &good_records, const std
   for (size_t n = 0; n < dns_urls.size(); ++n)
   {
     tpool.submit(&waiter,[n, dns_urls, &records, &avail, &valid](){
-      records[n] = tools::DNSResolver::instance().get_txt_record(dns_urls[n], avail[n], valid[n]); 
+      records[n] = tools::DNSResolver::instance().get_txt_record(dns_urls[n], avail[n], valid[n]);
     });
   }
   waiter.wait(&tpool);
