@@ -37,7 +37,7 @@
 
 #include <time.h>
 #include <atomic>
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <boost/algorithm/string.hpp>
 #include "string_tools.h"
 #include "misc_os_dependent.h"
@@ -81,7 +81,7 @@ std::string mlog_get_default_log_path(const char *default_filename)
   else
     default_log_file = default_filename;
 
-  return (boost::filesystem::path(default_log_folder) / boost::filesystem::path(default_log_file)).string();
+  return (std::filesystem::path(default_log_folder) / std::filesystem::path(default_log_file)).string();
 }
 
 static void mlog_set_common_prefix()
@@ -172,11 +172,11 @@ void mlog_configure(const std::string &filename_base, bool console, const std::s
     }
     if (max_log_files != 0)
     {
-      std::vector<boost::filesystem::path> found_files;
-      const boost::filesystem::directory_iterator end_itr;
-      const boost::filesystem::path filename_base_path(filename_base);
-      const boost::filesystem::path parent_path = filename_base_path.has_parent_path() ? filename_base_path.parent_path() : ".";
-      for (boost::filesystem::directory_iterator iter(parent_path); iter != end_itr; ++iter)
+      std::vector<std::filesystem::path> found_files;
+      const std::filesystem::directory_iterator end_itr;
+      const std::filesystem::path filename_base_path(filename_base);
+      const std::filesystem::path parent_path = filename_base_path.has_parent_path() ? filename_base_path.parent_path() : ".";
+      for (std::filesystem::directory_iterator iter(parent_path); iter != end_itr; ++iter)
       {
         const std::string filename = iter->path().string();
         if (filename.size() >= filename_base.size() && std::memcmp(filename.data(), filename_base.data(), filename_base.size()) == 0)
@@ -186,15 +186,15 @@ void mlog_configure(const std::string &filename_base, bool console, const std::s
       }
       if (found_files.size() >= max_log_files)
       {
-        std::sort(found_files.begin(), found_files.end(), [](const boost::filesystem::path &a, const boost::filesystem::path &b) {
+        std::sort(found_files.begin(), found_files.end(), [](const std::filesystem::path &a, const std::filesystem::path &b) {
           boost::system::error_code ec;
-          std::time_t ta = boost::filesystem::last_write_time(boost::filesystem::path(a), ec);
+          std::time_t ta = std::filesystem::last_write_time(std::filesystem::path(a), ec);
           if (ec)
           {
             MERROR("Failed to get timestamp from " << a << ": " << ec);
             ta = std::time(nullptr);
           }
-          std::time_t tb = boost::filesystem::last_write_time(boost::filesystem::path(b), ec);
+          std::time_t tb = std::filesystem::last_write_time(std::filesystem::path(b), ec);
           if (ec)
           {
             MERROR("Failed to get timestamp from " << b << ": " << ec);
@@ -208,7 +208,7 @@ void mlog_configure(const std::string &filename_base, bool console, const std::s
           try
           {
             boost::system::error_code ec;
-            boost::filesystem::remove(found_files[i], ec);
+            std::filesystem::remove(found_files[i], ec);
             if (ec)
             {
               MERROR("Failed to remove " << found_files[i] << ": " << ec);

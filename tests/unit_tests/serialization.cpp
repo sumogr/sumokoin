@@ -620,7 +620,7 @@ TEST(Serialization, portability_wallet)
 {
   const cryptonote::network_type nettype = cryptonote::TESTNET;
   tools::wallet2 w(nettype);
-  const boost::filesystem::path wallet_file = unit_test::data_dir / "wallet_9svHk1";
+  const std::filesystem::path wallet_file = unit_test::data_dir / "wallet_9svHk1";
   string password = "test";
   bool r = false;
   try
@@ -743,7 +743,7 @@ TEST(Serialization, portability_wallet)
 TEST(Serialization, portability_outputs)
 {
   // read file
-  const boost::filesystem::path filename = unit_test::data_dir / "outputs";
+  const std::filesystem::path filename = unit_test::data_dir / "outputs";
   std::string data;
   bool r = epee::file_io_utils::load_file_to_string(filename.string(), data);
   ASSERT_TRUE(r);
@@ -869,7 +869,7 @@ inline void serialize(Archive &a, unsigned_tx_set &x, const boost::serialization
 #define UNSIGNED_TX_PREFIX "Monero unsigned tx set\003"
 TEST(Serialization, portability_unsigned_tx)
 {
-  const boost::filesystem::path filename = unit_test::data_dir / "unsigned_monero_tx";
+  const std::filesystem::path filename = unit_test::data_dir / "unsigned_monero_tx";
   std::string s;
   const cryptonote::network_type nettype = cryptonote::TESTNET;
   bool r = epee::file_io_utils::load_file_to_string(filename.string(), s);
@@ -1017,7 +1017,7 @@ TEST(Serialization, portability_unsigned_tx)
 #define SIGNED_TX_PREFIX "Monero signed tx set\003"
 TEST(Serialization, portability_signed_tx)
 {
-  const boost::filesystem::path filename = unit_test::data_dir / "signed_monero_tx";
+  const std::filesystem::path filename = unit_test::data_dir / "signed_monero_tx";
   const cryptonote::network_type nettype = cryptonote::TESTNET;
   std::string s;
   bool r = epee::file_io_utils::load_file_to_string(filename.string(), s);

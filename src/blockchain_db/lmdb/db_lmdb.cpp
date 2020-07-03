@@ -27,7 +27,7 @@
 
 #include "db_lmdb.h"
 
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <boost/format.hpp>
 #include <boost/circular_buffer.hpp>
 
@@ -517,8 +517,8 @@ void BlockchainLMDB::do_resize(uint64_t increase_size)
   // check disk capacity
   try
   {
-    boost::filesystem::path path(m_folder);
-    boost::filesystem::space_info si = boost::filesystem::space(path);
+    std::filesystem::path path(m_folder);
+    std::filesystem::space_info si = std::filesystem::space(path);
     if(si.available < add_size)
     {
       MERROR("!! WARNING: Insufficient free space to extend database !!: " <<
@@ -571,8 +571,8 @@ void BlockchainLMDB::do_resize(uint64_t increase_size)
   if (result)
     throw0(DB_ERROR(lmdb_error("Failed to set new mapsize: ", result).c_str()));
 	
-  boost::filesystem::path path(m_folder);
-  boost::filesystem::space_info si = boost::filesystem::space(path);
+  std::filesystem::path path(m_folder);
+  std::filesystem::space_info si = std::filesystem::space(path);
   boost::optional<uint64_t> space_available = si.available;
 	
   if (space_available)
@@ -1308,22 +1308,22 @@ void BlockchainLMDB::open(const std::string& filename, const int db_flags)
   if (m_open)
     throw0(DB_OPEN_FAILURE("Attempted to open db, but it's already open"));
 
-  boost::filesystem::path direc(filename);
-  if (boost::filesystem::exists(direc))
+  std::filesystem::path direc(filename);
+  if (std::filesystem::exists(direc))
   {
-    if (!boost::filesystem::is_directory(direc))
+    if (!std::filesystem::is_directory(direc))
       throw0(DB_OPEN_FAILURE("LMDB needs a directory path, but a file was passed"));
   }
   else
   {
-    if (!boost::filesystem::create_directories(direc))
+    if (!std::filesystem::create_directories(direc))
       throw0(DB_OPEN_FAILURE(std::string("Failed to create directory ").append(filename).c_str()));
   }
 
   // check for existing LMDB files in base directory
-  boost::filesystem::path old_files = direc.parent_path();
-  if (boost::filesystem::exists(old_files / CRYPTONOTE_BLOCKCHAINDATA_FILENAME)
-      || boost::filesystem::exists(old_files / CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME))
+  std::filesystem::path old_files = direc.parent_path();
+  if (std::filesystem::exists(old_files / CRYPTONOTE_BLOCKCHAINDATA_FILENAME)
+      || std::filesystem::exists(old_files / CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME))
   {
     LOG_PRINT_L0("Found existing LMDB files in " << old_files.string());
     LOG_PRINT_L0("Move " << CRYPTONOTE_BLOCKCHAINDATA_FILENAME << " and/or " << CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME << " to " << filename << ", or delete them, and then restart");
@@ -1638,9 +1638,9 @@ std::vector<std::string> BlockchainLMDB::get_filenames() const
   LOG_PRINT_L3("BlockchainLMDB::" << __func__);
   std::vector<std::string> filenames;
 
-  boost::filesystem::path datafile(m_folder);
+  std::filesystem::path datafile(m_folder);
   datafile /= CRYPTONOTE_BLOCKCHAINDATA_FILENAME;
-  boost::filesystem::path lockfile(m_folder);
+  std::filesystem::path lockfile(m_folder);
   lockfile /= CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME;
 
   filenames.push_back(datafile.string());
@@ -1654,7 +1654,7 @@ bool BlockchainLMDB::remove_data_file(const std::string& folder) const
   const std::string filename = folder + "/data.mdb";
   try
   {
-    boost::filesystem::remove(filename);
+    std::filesystem::remove(filename);
   }
   catch (const std::exception &e)
   {
@@ -4466,7 +4466,7 @@ bool BlockchainLMDB::is_read_only() const
 uint64_t BlockchainLMDB::get_database_size() const
 {
   uint64_t size = 0;
-  boost::filesystem::path datafile(m_folder);
+  std::filesystem::path datafile(m_folder);
   datafile /= CRYPTONOTE_BLOCKCHAINDATA_FILENAME;
   if (!epee::file_io_utils::get_file_size(datafile.string(), size))
     size = 0;

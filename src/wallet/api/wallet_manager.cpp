@@ -188,16 +188,16 @@ bool WalletManagerImpl::queryWalletDevice(Wallet::Device& device_type, const std
 std::vector<std::string> WalletManagerImpl::findWallets(const std::string &path)
 {
     std::vector<std::string> result;
-    boost::filesystem::path work_dir(path);
+    std::filesystem::path work_dir(path);
     // return empty result if path doesn't exist
-    if(!boost::filesystem::is_directory(path)){
+    if(!std::filesystem::is_directory(path)){
         return result;
     }
     const boost::regex wallet_rx("(.*)\\.(keys)$"); // searching for <wallet_name>.keys files
-    boost::filesystem::recursive_directory_iterator end_itr; // Default ctor yields past-the-end
-    for (boost::filesystem::recursive_directory_iterator itr(path); itr != end_itr; ++itr) {
+    std::filesystem::recursive_directory_iterator end_itr; // Default ctor yields past-the-end
+    for (std::filesystem::recursive_directory_iterator itr(path); itr != end_itr; ++itr) {
         // Skip if not a file
-        if (!boost::filesystem::is_regular_file(itr->status()))
+        if (!std::filesystem::is_regular_file(itr->status()))
             continue;
         boost::smatch what;
         std::string filename = itr->path().filename().string();
@@ -208,7 +208,7 @@ std::vector<std::string> WalletManagerImpl::findWallets(const std::string &path)
         if (matched) {
             // if keys file found, checking if there's wallet file itself
             std::string wallet_file = (itr->path().parent_path() /= what[1].str()).string();
-            if (boost::filesystem::exists(wallet_file)) {
+            if (std::filesystem::exists(wallet_file)) {
                 LOG_PRINT_L3("Found wallet: " << wallet_file);
                 result.push_back(wallet_file);
             }

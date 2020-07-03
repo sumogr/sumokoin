@@ -88,9 +88,9 @@ namespace cryptonote
   , {{ &arg_testnet_on, &arg_stagenet_on }}
   , [](std::array<bool, 2> testnet_stagenet, bool defaulted, std::string val)->std::string {
       if (testnet_stagenet[0])
-        return (boost::filesystem::path(val) / "testnet").string();
+        return (std::filesystem::path(val) / "testnet").string();
       else if (testnet_stagenet[1])
-        return (boost::filesystem::path(val) / "stagenet").string();
+        return (std::filesystem::path(val) / "stagenet").string();
       return val;
     }
   };
@@ -341,7 +341,7 @@ namespace cryptonote
 
     m_config_folder = command_line::get_arg(vm, arg_data_dir);
 
-    auto data_dir = boost::filesystem::path(m_config_folder);
+    auto data_dir = std::filesystem::path(m_config_folder);
 
     if (m_nettype == MAINNET)
     {
@@ -352,8 +352,8 @@ namespace cryptonote
       }
       set_checkpoints(std::move(checkpoints));
 
-      boost::filesystem::path json(JSON_HASH_FILE_NAME);
-      boost::filesystem::path checkpoint_json_hashfile_fullpath = data_dir / json;
+      std::filesystem::path json(JSON_HASH_FILE_NAME);
+      std::filesystem::path checkpoint_json_hashfile_fullpath = data_dir / json;
 
       set_checkpoints_file_path(checkpoint_json_hashfile_fullpath.string());
     }
@@ -458,19 +458,19 @@ namespace cryptonote
     bool keep_alt_blocks = command_line::get_arg(vm, arg_keep_alt_blocks);
     bool keep_fakechain = command_line::get_arg(vm, arg_keep_fakechain);
 
-    boost::filesystem::path folder(m_config_folder);
+    std::filesystem::path folder(m_config_folder);
     if (m_nettype == FAKECHAIN)
       folder /= "fake";
 
     // make sure the data directory exists, and try to lock it
-    CHECK_AND_ASSERT_MES (boost::filesystem::exists(folder) || boost::filesystem::create_directories(folder), false,
+    CHECK_AND_ASSERT_MES (std::filesystem::exists(folder) || std::filesystem::create_directories(folder), false,
       std::string("Failed to create directory ").append(folder.string()).c_str());
 
     // check for blockchain.bin
     try
     {
-      const boost::filesystem::path old_files = folder;
-      if (boost::filesystem::exists(old_files / "blockchain.bin"))
+      const std::filesystem::path old_files = folder;
+      if (std::filesystem::exists(old_files / "blockchain.bin"))
       {
         MWARNING("Found old-style blockchain.bin in " << old_files.string());
         MWARNING("Sumokoin now uses a new format. You can either remove blockchain.bin to start syncing");
@@ -1711,7 +1711,7 @@ namespace cryptonote
       filename = slash + 1;
     else
       filename = std::string(software) + "-update-" + version;
-    boost::filesystem::path path(epee::string_tools::get_current_module_folder());
+    std::filesystem::path path(epee::string_tools::get_current_module_folder());
     path /= filename;
 
     boost::unique_lock<boost::mutex> lock(m_update_mutex);
@@ -1768,7 +1768,7 @@ namespace cryptonote
         }
         else if (remove)
         {
-          if (!boost::filesystem::remove(tmppath))
+          if (!std::filesystem::remove(tmppath))
           {
             MCERROR("updates", "Failed to remove invalid downloaded file");
             good = false;
@@ -1927,8 +1927,8 @@ namespace cryptonote
   //-----------------------------------------------------------------------------------------------
   uint64_t core::get_free_space() const
   {
-    boost::filesystem::path path(m_config_folder);
-    boost::filesystem::space_info si = boost::filesystem::space(path);
+    std::filesystem::path path(m_config_folder);
+    std::filesystem::space_info si = std::filesystem::space(path);
     return si.available;
   }
   //-----------------------------------------------------------------------------------------------

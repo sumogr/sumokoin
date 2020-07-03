@@ -28,7 +28,7 @@
 
 #include <string>
 #include <atomic>
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <boost/thread/thread.hpp>
 #include "file_io_utils.h"
 #include "net/http_client.h"
@@ -106,10 +106,10 @@ namespace tools
           {
             MINFO("Content-Length: " << length);
             content_length = length;
-            boost::filesystem::path path(control->path);
+            std::filesystem::path path(control->path);
             try
             {
-              boost::filesystem::space_info si = boost::filesystem::space(path);
+              std::filesystem::space_info si = std::filesystem::space(path);
               if (si.available < (size_t)content_length)
               {
                 const uint64_t avail = (si.available + 1023) / 1024, needed = (content_length + 1023) / 1024;

@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 
 #include "gtest/gtest.h"
 
@@ -81,13 +81,13 @@ class RingDB: public tools::ringdb
 {
 public:
   RingDB(const char *genesis = ""): tools::ringdb(make_filename(), genesis) { }
-  ~RingDB() { close(); boost::filesystem::remove_all(filename); free(filename); }
+  ~RingDB() { close(); std::filesystem::remove_all(filename); free(filename); }
 
 private:
   std::string make_filename()
   {
-    boost::filesystem::path path =
-      boost::filesystem::temp_directory_path();
+    std::filesystem::path path =
+      std::filesystem::temp_directory_path();
 #if defined(__MINGW32__) || defined(__MINGW__)
     filename = tempnam(path.string().c_str(), "monero-ringdb-test-");
     EXPECT_TRUE(filename != NULL);

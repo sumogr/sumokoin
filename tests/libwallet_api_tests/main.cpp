@@ -36,7 +36,7 @@
 #include "common/util.h"
 
 #include <boost/chrono/chrono.hpp>
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -102,15 +102,15 @@ struct Utils
     static void deleteWallet(const std::string & walletname)
     {
         std::cout << "** deleting wallet: " << walletname << std::endl;
-        boost::filesystem::remove(walletname);
-        boost::filesystem::remove(walletname + ".address.txt");
-        boost::filesystem::remove(walletname + ".keys");
+        std::filesystem::remove(walletname);
+        std::filesystem::remove(walletname + ".address.txt");
+        std::filesystem::remove(walletname + ".keys");
     }
 
     static void deleteDir(const std::string &path)
     {
         std::cout << "** removing dir recursively: " << path  << std::endl;
-        boost::filesystem::remove_all(path);
+        std::filesystem::remove_all(path);
     }
 
     static void print_transaction(Monero::TransactionInfo * t)
@@ -149,7 +149,7 @@ struct WalletManagerTest : public testing::Test
         wmgr = Monero::WalletManagerFactory::getWalletManager();
         // Monero::WalletManagerFactory::setLogLevel(Monero::WalletManagerFactory::LogLevel_4);
         Utils::deleteWallet(WALLET_NAME);
-        Utils::deleteDir(boost::filesystem::path(WALLET_NAME_WITH_DIR).parent_path().string());
+        Utils::deleteDir(std::filesystem::path(WALLET_NAME_WITH_DIR).parent_path().string());
     }
 
 

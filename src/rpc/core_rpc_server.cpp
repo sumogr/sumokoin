@@ -2876,7 +2876,7 @@ namespace cryptonote
       return true;
     }
 
-    boost::filesystem::path path;
+    std::filesystem::path path;
     if (req.path.empty())
     {
       std::string filename;

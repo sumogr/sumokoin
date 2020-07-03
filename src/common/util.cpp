@@ -78,7 +78,7 @@ using namespace epee;
   #include <sys/utsname.h>
   #include <sys/stat.h>
 #endif
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
 #include <boost/format.hpp>
@@ -226,7 +226,7 @@ namespace tools
     try
     {
       boost::system::error_code ec{};
-      boost::filesystem::remove(filename(), ec);
+      std::filesystem::remove(filename(), ec);
     }
     catch (...) {}
   }
@@ -611,7 +611,7 @@ std::string get_nix_version_display_string()
   {
     /* Please for the love of god refactor  the ifdefs out of this */
 
-    // namespace fs = boost::filesystem;
+    // namespace fs = std::filesystem;
     // Windows < Vista: C:\Documents and Settings\Username\Application Data\CRYPTONOTE_NAME
     // Windows >= Vista: C:\Users\Username\AppData\Roaming\CRYPTONOTE_NAME
     // Unix & Mac: ~/.CRYPTONOTE_NAME
@@ -634,7 +634,7 @@ std::string get_nix_version_display_string()
 
   bool create_directories_if_necessary(const std::string& path)
   {
-    namespace fs = boost::filesystem;
+    namespace fs = std::filesystem;
     boost::system::error_code ec;
     fs::path fs_path(path);
     if (fs::is_directory(fs_path, ec))
@@ -699,11 +699,11 @@ std::string get_nix_version_display_string()
 
   bool sanitize_locale()
   {
-    // boost::filesystem throws for "invalid" locales, such as en_US.UTF-8, or kjsdkfs,
+    // std::filesystem throws for "invalid" locales, such as en_US.UTF-8, or kjsdkfs,
     // so reset it here before any calls to it
     try
     {
-      boost::filesystem::path p {std::string("test")};
+      std::filesystem::path p {std::string("test")};
       p /= std::string("test");
     }
     catch (...)

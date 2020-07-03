@@ -328,12 +328,12 @@ namespace cryptonote
       MWARNING("Failed to create data directory: " << directory);
       return false;
     }
-    const boost::filesystem::path state_file_path = (boost::filesystem::path(directory) / RPC_PAYMENTS_DATA_FILENAME);
-    if (boost::filesystem::exists(state_file_path))
+    const std::filesystem::path state_file_path = (std::filesystem::path(directory) / RPC_PAYMENTS_DATA_FILENAME);
+    if (std::filesystem::exists(state_file_path))
     {
       std::string state_file_path_old = state_file_path.string() + ".old";
       boost::system::error_code ec;
-      boost::filesystem::remove(state_file_path_old, ec);
+      std::filesystem::remove(state_file_path_old, ec);
       std::error_code e = tools::replace_file(state_file_path.string(), state_file_path_old);
       if (e)
         MWARNING("Failed to rename " << state_file_path << " to " << state_file_path_old << ": " << e);

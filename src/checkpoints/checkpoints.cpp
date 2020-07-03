@@ -208,7 +208,7 @@ namespace cryptonote
   bool checkpoints::load_checkpoints_from_json(const std::string &json_hashfile_fullpath)
   {
     boost::system::error_code errcode;
-    if (! (boost::filesystem::exists(json_hashfile_fullpath, errcode)))
+    if (! (std::filesystem::exists(json_hashfile_fullpath, errcode)))
     {
       LOG_PRINT_L1("Blockchain checkpoints file not found");
       return true;

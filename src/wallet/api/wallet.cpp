@@ -67,7 +67,7 @@ namespace {
 
     std::string get_default_ringdb_path(cryptonote::network_type nettype)
     {
-      boost::filesystem::path dir = tools::get_default_data_dir();
+      std::filesystem::path dir = tools::get_default_data_dir();
       // remove .bitmonero, replace with .shared-ringdb
       dir = dir.remove_filename();
       dir /= ".sumo-shared-ringdb";
@@ -388,7 +388,7 @@ void Wallet::init(const char *argv0, const char *default_log_base_name, const st
 #ifdef WIN32
     // Activate UTF-8 support for Boost filesystem classes on Windows
     std::locale::global(boost::locale::generator().generate(""));
-    boost::filesystem::path::imbue(std::locale());
+    std::filesystem::path::imbue(std::locale());
 #endif
     epee::string_tools::set_module_name_and_folder(argv0);
     mlog_configure(log_path.empty() ? mlog_get_default_log_path(default_log_base_name) : log_path.c_str(), console);

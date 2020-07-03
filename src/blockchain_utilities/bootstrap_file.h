@@ -32,8 +32,8 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <experimental/filesystem>
+#include <experimental/filesystem>
 
 #define BOOST_BIND_GLOBAL_PLACEHOLDERS
 
@@ -65,7 +65,7 @@ public:
   uint64_t seek_to_first_chunk(std::ifstream& import_file, uint8_t &major_version, uint8_t &minor_version);
 
   bool store_blockchain_raw(cryptonote::Blockchain* cs, cryptonote::tx_memory_pool* txp,
-      boost::filesystem::path& output_file, uint64_t use_block_height=0);
+      std::filesystem::path& output_file, uint64_t use_block_height=0);
 
 protected:
 
@@ -78,7 +78,7 @@ protected:
   boost::iostreams::stream<boost::iostreams::back_insert_device<buffer_type>>* m_output_stream;
 
   // open export file for write
-  bool open_writer(const boost::filesystem::path& file_path);
+  bool open_writer(const std::filesystem::path& file_path);
   bool initialize_file();
   bool close();
   void write_block(block& block);

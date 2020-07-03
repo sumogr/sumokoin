@@ -51,14 +51,14 @@ namespace
 
 
 
-bool BootstrapFile::open_writer(const boost::filesystem::path& file_path)
+bool BootstrapFile::open_writer(const std::filesystem::path& file_path)
 {
-  const boost::filesystem::path dir_path = file_path.parent_path();
+  const std::filesystem::path dir_path = file_path.parent_path();
   if (!dir_path.empty())
   {
-    if (boost::filesystem::exists(dir_path))
+    if (std::filesystem::exists(dir_path))
     {
-      if (!boost::filesystem::is_directory(dir_path))
+      if (!std::filesystem::is_directory(dir_path))
       {
         MFATAL("export directory path is a file: " << dir_path);
         return false;
@@ -66,7 +66,7 @@ bool BootstrapFile::open_writer(const boost::filesystem::path& file_path)
     }
     else
     {
-      if (!boost::filesystem::create_directory(dir_path))
+      if (!std::filesystem::create_directory(dir_path))
       {
         MFATAL("Failed to create directory " << dir_path);
         return false;
@@ -79,7 +79,7 @@ bool BootstrapFile::open_writer(const boost::filesystem::path& file_path)
   bool do_initialize_file = false;
   uint64_t num_blocks = 0;
 
-  if (! boost::filesystem::exists(file_path))
+  if (! std::filesystem::exists(file_path))
   {
     MDEBUG("creating file");
     do_initialize_file = true;
@@ -260,7 +260,7 @@ bool BootstrapFile::close()
 }
 
 
-bool BootstrapFile::store_blockchain_raw(Blockchain* _blockchain_storage, tx_memory_pool* _tx_pool, boost::filesystem::path& output_file, uint64_t requested_block_stop)
+bool BootstrapFile::store_blockchain_raw(Blockchain* _blockchain_storage, tx_memory_pool* _tx_pool, std::filesystem::path& output_file, uint64_t requested_block_stop)
 {
   uint64_t num_blocks_written = 0;
   m_max_chunk = 0;
@@ -443,9 +443,9 @@ uint64_t BootstrapFile::count_blocks(const std::string& import_file_path)
 // starting position without having to reread the entire file again.
 uint64_t BootstrapFile::count_blocks(const std::string& import_file_path, std::streampos &start_pos, uint64_t& seek_height)
 {
-  boost::filesystem::path raw_file_path(import_file_path);
+  std::filesystem::path raw_file_path(import_file_path);
   boost::system::error_code ec;
-  if (!boost::filesystem::exists(raw_file_path, ec))
+  if (!std::filesystem::exists(raw_file_path, ec))
   {
     MFATAL("bootstrap file not found: " << raw_file_path);
     throw std::runtime_error("Aborting");

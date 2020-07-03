@@ -314,7 +314,7 @@ namespace cryptonote
         if(buff != "0")
           m_extra_messages[i] = buff;
       }
-      m_config_folder_path = boost::filesystem::path(command_line::get_arg(vm, arg_extra_messages)).parent_path().string();
+      m_config_folder_path = std::filesystem::path(command_line::get_arg(vm, arg_extra_messages)).parent_path().string();
       m_config = AUTO_VAL_INIT(m_config);
       const std::string filename = m_config_folder_path + "/" + MINER_CONFIG_FILE_NAME;
       CHECK_AND_ASSERT_MES(epee::serialization::load_t_from_json_file(m_config, filename), false, "Failed to load data from " << filename);
@@ -985,16 +985,16 @@ namespace cryptonote
       std::string power_supply_class_path = "/sys/class/power_supply";
 
       boost::tribool on_battery = boost::logic::tribool(boost::logic::indeterminate);
-      if (boost::filesystem::is_directory(power_supply_class_path))
+      if (std::filesystem::is_directory(power_supply_class_path))
       {
-        const boost::filesystem::directory_iterator end_itr;
-        for (boost::filesystem::directory_iterator iter(power_supply_class_path); iter != end_itr; ++iter)
+        const std::filesystem::directory_iterator end_itr;
+        for (std::filesystem::directory_iterator iter(power_supply_class_path); iter != end_itr; ++iter)
         {
-          const boost::filesystem::path& power_supply_path = iter->path();
-          if (boost::filesystem::is_directory(power_supply_path))
+          const std::filesystem::path& power_supply_path = iter->path();
+          if (std::filesystem::is_directory(power_supply_path))
           {
-            boost::filesystem::path power_supply_type_path = power_supply_path / "type";
-            if (boost::filesystem::is_regular_file(power_supply_type_path))
+            std::filesystem::path power_supply_type_path = power_supply_path / "type";
+            if (std::filesystem::is_regular_file(power_supply_type_path))
             {
               std::ifstream power_supply_type_stream(power_supply_type_path.string());
               if (power_supply_type_stream.fail())
@@ -1009,8 +1009,8 @@ namespace cryptonote
               // If there is an AC adapter that's present and online we can break early
               if (boost::starts_with(power_supply_type, "Mains"))
               {
-                boost::filesystem::path power_supply_online_path = power_supply_path / "online";
-                if (boost::filesystem::is_regular_file(power_supply_online_path))
+                std::filesystem::path power_supply_online_path = power_supply_path / "online";
+                if (std::filesystem::is_regular_file(power_supply_online_path))
                 {
                   std::ifstream power_supply_online_stream(power_supply_online_path.string());
                   if (power_supply_online_stream.fail())
@@ -1027,8 +1027,8 @@ namespace cryptonote
               }
               else if (boost::starts_with(power_supply_type, "Battery") && boost::logic::indeterminate(on_battery))
               {
-                boost::filesystem::path power_supply_status_path = power_supply_path / "status";
-                if (boost::filesystem::is_regular_file(power_supply_status_path))
+                std::filesystem::path power_supply_status_path = power_supply_path / "status";
+                if (std::filesystem::is_regular_file(power_supply_status_path))
                 {
                   std::ifstream power_supply_status_stream(power_supply_status_path.string());
                   if (power_supply_status_stream.fail())

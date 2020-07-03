@@ -327,5 +327,5 @@ public:
   bool generate(std::vector<test_event_entry>& events) override;
 
 protected:
-  boost::filesystem::path m_wallet_dir;
+  std::filesystem::path m_wallet_dir;
 };

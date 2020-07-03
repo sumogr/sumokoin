@@ -329,7 +329,7 @@ static void setup_chain(cryptonote::core * core, gen_trezor_base & trezor_base, 
 {
   std::vector<test_event_entry> events;
   const bool do_serialize = !chain_path.empty();
-  const bool chain_file_exists = do_serialize && boost::filesystem::exists(chain_path);
+  const bool chain_file_exists = do_serialize && std::filesystem::exists(chain_path);
   bool loaded = false;
   bool generated = false;
 
@@ -1820,17 +1820,17 @@ bool gen_trezor_many_utxo::generate(std::vector<test_event_entry>& events)
 
 void wallet_api_tests::init()
 {
-  m_wallet_dir = boost::filesystem::unique_path();
-  boost::filesystem::create_directories(m_wallet_dir);
+  m_wallet_dir = std::filesystem::unique_path();
+  std::filesystem::create_directories(m_wallet_dir);
 }
 
 wallet_api_tests::~wallet_api_tests()
 {
   try
   {
-    if (!m_wallet_dir.empty() && boost::filesystem::exists(m_wallet_dir))
+    if (!m_wallet_dir.empty() && std::filesystem::exists(m_wallet_dir))
     {
-      boost::filesystem::remove_all(m_wallet_dir);
+      std::filesystem::remove_all(m_wallet_dir);
     }
   }
   catch(...)

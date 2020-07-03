@@ -32,7 +32,7 @@
 
 #include "gtest/gtest.h"
 
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 
 #include "misc_language.h"
 #include "string_tools.h"
@@ -84,6 +84,6 @@ TEST(notify, works)
       }
     }
   }
-  boost::filesystem::remove(name_template);
+  std::filesystem::remove(name_template);
   ASSERT_TRUE(ok);
 }

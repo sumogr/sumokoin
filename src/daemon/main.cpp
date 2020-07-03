@@ -50,7 +50,7 @@
 #define MONERO_DEFAULT_LOG_CATEGORY "daemon"
 
 namespace po = boost::program_options;
-namespace bf = boost::filesystem;
+namespace bf = std::filesystem;
 
 uint16_t parse_public_rpc_port(const po::variables_map &vm)
 {
@@ -189,7 +189,7 @@ int main(int argc, char const * argv[])
     }
 
     std::string config = command_line::get_arg(vm, daemon_args::arg_config_file);
-    boost::filesystem::path config_path(config);
+    std::filesystem::path config_path(config);
     boost::system::error_code ec;
     if (bf::exists(config_path, ec))
     {
@@ -226,7 +226,7 @@ int main(int argc, char const * argv[])
     //     relative path: relative to cwd
 
     // Create data dir if it doesn't exist
-    boost::filesystem::path data_dir = boost::filesystem::absolute(
+    std::filesystem::path data_dir = std::filesystem::absolute(
         command_line::get_arg(vm, cryptonote::arg_data_dir));
 
     // FIXME: not sure on windows implementation default, needs further review

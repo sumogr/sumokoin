@@ -50,7 +50,7 @@ static std::string db_path;
 static uint64_t records_per_sync = 128;
 static const size_t slack = 512 * 1024 * 1024;
 
-static std::error_code replace_file(const boost::filesystem::path& replacement_name, const boost::filesystem::path& replaced_name)
+static std::error_code replace_file(const std::filesystem::path& replacement_name, const std::filesystem::path& replaced_name)
 {
   std::error_code ec = tools::replace_file(replacement_name.string(), replaced_name.string());
   if (ec)
@@ -58,7 +58,7 @@ static std::error_code replace_file(const boost::filesystem::path& replacement_n
   return ec;
 }
 
-static void open(MDB_env *&env, const boost::filesystem::path &path, uint64_t db_flags, bool readonly)
+static void open(MDB_env *&env, const std::filesystem::path &path, uint64_t db_flags, bool readonly)
 {
   int dbr;
   int flags = 0;
@@ -88,8 +88,8 @@ static void add_size(MDB_env *env, uint64_t bytes)
 {
   try
   {
-    boost::filesystem::path path(db_path);
-    boost::filesystem::space_info si = boost::filesystem::space(path);
+    std::filesystem::path path(db_path);
+    std::filesystem::space_info si = std::filesystem::space(path);
     if(si.available < bytes)
     {
       MERROR("!! WARNING: Insufficient free space to extend database !!: " <<
@@ -442,7 +442,7 @@ int main(int argc, char* argv[])
 
   tools::on_startup();
 
-  boost::filesystem::path output_file_path;
+  std::filesystem::path output_file_path;
 
   po::options_description desc_cmd_only("Command line options");
   po::options_description desc_cmd_sett("Command line options and settings options");
@@ -522,7 +522,7 @@ int main(int argc, char* argv[])
   std::array<std::unique_ptr<Blockchain>, 2> core_storage;
   Blockchain *blockchain = NULL;
   tx_memory_pool m_mempool(*blockchain);
-  boost::filesystem::path paths[2];
+  std::filesystem::path paths[2];
   bool already_pruned = false;
   for (size_t n = 0; n < core_storage.size(); ++n)
   {
@@ -537,10 +537,10 @@ int main(int argc, char* argv[])
 
     if (n == 1)
     {
-      paths[1] = boost::filesystem::path(data_dir) / (db->get_db_name() + "-pruned");
-      if (boost::filesystem::exists(paths[1]))
+      paths[1] = std::filesystem::path(data_dir) / (db->get_db_name() + "-pruned");
+      if (std::filesystem::exists(paths[1]))
       {
-        if (!boost::filesystem::is_directory(paths[1]))
+        if (!std::filesystem::is_directory(paths[1]))
         {
           MERROR("LMDB needs a directory path, but a file was passed: " << paths[1].string());
           return 1;
@@ -548,7 +548,7 @@ int main(int argc, char* argv[])
       }
       else
       {
-        if (!boost::filesystem::create_directories(paths[1]))
+        if (!std::filesystem::create_directories(paths[1]))
         {
           MERROR("Failed to create directory: " << paths[1].string());
           return 1;
@@ -558,7 +558,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-      paths[0] = boost::filesystem::path(data_dir) / db->get_db_name();
+      paths[0] = std::filesystem::path(data_dir) / db->get_db_name();
     }
 
     MINFO("Loading blockchain from folder " << paths[n] << " ...");

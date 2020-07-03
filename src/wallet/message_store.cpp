@@ -766,7 +766,7 @@ void message_store::write_to_file(const multisig_wallet_state &state, const std:
 void message_store::read_from_file(const multisig_wallet_state &state, const std::string &filename)
 {
   boost::system::error_code ignored_ec;
-  bool file_exists = boost::filesystem::exists(filename, ignored_ec);
+  bool file_exists = std::filesystem::exists(filename, ignored_ec);
   if (!file_exists)
   {
     // Simply do nothing if the file is not there; allows e.g. easy recovery
