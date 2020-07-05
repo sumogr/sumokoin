@@ -449,7 +449,7 @@ add_definitions(-DAUTO_INITIALIZE_EASYLOGGINGPP)
 add_subdirectory(external)
 
 # Final setup for libunbound
-include_directories(${UNBOUND_INCLUDE})
+include_directories(${UNBOUND_INCLUDE_DIRS})
 link_directories(${UNBOUND_LIBRARY_DIRS})
 
 # Final setup for easylogging++
@@ -571,6 +571,12 @@ else()
       add_definitions(-DWINVER=0x0501 -D_WIN32_WINNT=0x0501)
     endif()
   endif()
+<<<<<<< HEAD
+=======
+  if(ARM7)
+    set(WARNINGS "${WARNINGS} -Wno-psabi -Wno-maybe-uninitialized")
+  endif()
+>>>>>>> b3b9c761... [cmake] pkgconfig for querying miniupnpc and unbound
   set(C_WARNINGS "-Waggregate-return -Wnested-externs -Wold-style-definition -Wstrict-prototypes")
   set(CXX_WARNINGS "-Wno-reorder -Wno-missing-field-initializers")
   try_compile(STATIC_ASSERT_RES "${CMAKE_CURRENT_BINARY_DIR}/static-assert" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/test-static-assert.c" COMPILE_DEFINITIONS "-std=c11")
