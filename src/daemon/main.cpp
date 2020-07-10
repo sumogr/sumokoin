@@ -240,7 +240,12 @@ int main(int argc, char const * argv[])
     //   if log-file argument given:
     //     absolute path
     //     relative path: relative to data_dir
-    bf::path log_file_path {data_dir / std::string(CRYPTONOTE_NAME ".log")};
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream datetime;
+    datetime << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d-%X");
+
+    bf::path log_file_path {data_dir / std::string("logs") / datetime.str() / std::string(CRYPTONOTE_NAME ".log")};
     if (!command_line::is_arg_defaulted(vm, daemon_args::arg_log_file))
       log_file_path = command_line::get_arg(vm, daemon_args::arg_log_file);
     if (!log_file_path.has_parent_path())

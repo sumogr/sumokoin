@@ -55,14 +55,14 @@ namespace daemon_args
   const command_line::arg_descriptor<std::string, false, true, 2> arg_log_file = {
     "log-file"
   , "Specify log file"
-  , (daemonizer::get_default_data_dir() / std::string(CRYPTONOTE_NAME ".log")).string()
+  , (daemonizer::get_default_data_dir() / std::string("logs") / std::string(CRYPTONOTE_NAME ".log")).string()
   , {{ &cryptonote::arg_testnet_on, &cryptonote::arg_stagenet_on }}
   , [](std::array<bool, 2> testnet_stagenet, bool defaulted, std::string val)->std::string {
       if (testnet_stagenet[0] && defaulted)
-        return (daemonizer::get_default_data_dir() / "testnet" /
+        return (daemonizer::get_default_data_dir() / "testnet" / std::string("logs") /
                 std::string(CRYPTONOTE_NAME ".log")).string();
       else if (testnet_stagenet[1] && defaulted)
-        return (daemonizer::get_default_data_dir() / "stagenet" /
+        return (daemonizer::get_default_data_dir() / "stagenet" / std::string("logs") /
                 std::string(CRYPTONOTE_NAME ".log")).string();
       return val;
     }
