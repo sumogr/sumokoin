@@ -1435,6 +1435,9 @@ namespace cryptonote
     }
     lock.commit();
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
+
 //this need updating before block 657450 is reached
     if (height < 460215)
     {
@@ -1452,6 +1455,8 @@ namespace cryptonote
     {
      expected_reward = 53150000000 + best_coinbase;
     }
+
+#pragma GCC diagnostic pop
 
     LOG_PRINT_L2("Block template filled with " << bl.tx_hashes.size() << " txes, weight "
         << total_weight << "/" << max_total_weight << ", coinbase " << print_money(best_coinbase)
