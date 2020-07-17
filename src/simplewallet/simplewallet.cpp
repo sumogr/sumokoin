@@ -1,5 +1,5 @@
-// Copyright (c) 2017-2019, Sumokoin Project
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2017-2020, Sumokoin Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -5472,17 +5472,17 @@ void simple_wallet::on_new_block(uint64_t height, const cryptonote::block& block
 void simple_wallet::on_money_received(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& tx, uint64_t amount, const cryptonote::subaddress_index& subaddr_index, uint64_t unlock_time)
 {
   uint64_t blocks_locked = unlock_time - height;
-  
+
   if (m_locked)
     return;
   message_writer(console_color_green, true) << "\r" << tr("Incoming transaction                ");
-  message_writer(console_color_white, true) << tr("Coins received: ") << print_money(amount) << "\n" 
+  message_writer(console_color_white, true) << tr("Coins received: ") << print_money(amount) << "\n"
                                             << tr("Height: ") << height << ", "
                                             << tr("txid ") << txid << ", "
                                             << tr("idx ") << subaddr_index;
-	
+
   if (unlock_time && !cryptonote::is_coinbase(tx))
-    message_writer(console_color_white, true) << tr("LOCKED TRANSACTION: This transaction is locked for ") << blocks_locked << tr(" blocks (unlock height: ") 
+    message_writer(console_color_white, true) << tr("LOCKED TRANSACTION: This transaction is locked for ") << blocks_locked << tr(" blocks (unlock height: ")
                      << unlock_time << tr(")\n") << tr("See details with: show_transfer ") + epee::string_tools::pod_to_hex(txid);
 
   if (m_auto_refresh_refreshing)
@@ -5533,7 +5533,7 @@ void simple_wallet::on_money_spent(uint64_t height, const crypto::hash &txid, co
   if (m_locked)
     return;
   message_writer(console_color_magenta, true) << "\r" << tr("Outgoing transaction                ");
-  message_writer(console_color_white, true) << tr("Coins spent: ") << "-" << print_money(amount) << "\n" 
+  message_writer(console_color_white, true) << tr("Coins spent: ") << "-" << print_money(amount) << "\n"
                                             << tr("Height: ") << height << ", "
                                             << tr("txid ") << txid << ", "
                                             << tr("idx ") << subaddr_index;
@@ -5575,8 +5575,6 @@ std::optional<epee::wipeable_string> simple_wallet::on_get_password(const char *
   return pwd_container->password();
 }
 //----------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-=======
 std::optional<std::string> simple_wallet::on_get_message(const char *info)
 {
   if (m_locked)

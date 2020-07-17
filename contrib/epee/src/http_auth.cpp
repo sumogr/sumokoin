@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -471,11 +471,7 @@ namespace
           fields = field_table >> skip_whitespace >> equal_sign >> skip_whitespace;
         }
 
-<<<<<<< HEAD
-        boost::optional<auth_message> operator()(const boost::string_ref request) const
-=======
         std::optional<auth_message> operator()(const boost::string_ref request) const
->>>>>>> 5088e053... [core] boost::optional to std::optional
         {
           namespace qi = boost::spirit::qi;
 

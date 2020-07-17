@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// Copyright (c) 2017-2019, The Monero Project
-// 
-=======
 // Copyright (c) 2017-2020, The Monero Project
 //
 >>>>>>> 5088e053... [core] boost::optional to std::optional

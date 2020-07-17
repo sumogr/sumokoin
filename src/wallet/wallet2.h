@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -135,12 +135,8 @@ private:
     virtual void on_unconfirmed_money_received(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& tx, uint64_t amount, const cryptonote::subaddress_index& subaddr_index) {}
     virtual void on_money_spent(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& in_tx, uint64_t amount, const cryptonote::transaction& spend_tx, const cryptonote::subaddress_index& subaddr_index) {}
     virtual void on_skip_transaction(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& tx) {}
-<<<<<<< HEAD
-    virtual boost::optional<epee::wipeable_string> on_get_password(const char *reason) { return boost::none; }
-=======
     virtual std::optional<epee::wipeable_string> on_get_password(const char *reason) { return std::nullopt; }
     virtual std::optional<std::string> on_get_message(const char *info) { return std::nullopt; }
->>>>>>> 5088e053... [core] boost::optional to std::optional
     // Light wallet callbacks
     virtual void on_lw_new_block(uint64_t height) {}
     virtual void on_lw_money_received(uint64_t height, const crypto::hash &txid, uint64_t amount) {}

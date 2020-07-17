@@ -1,5 +1,5 @@
-// Copyright (c) 2017-2019, Sumokoin Project
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2017-2020, Sumokoin Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -1790,13 +1790,6 @@ void wallet2::scan_output(const cryptonote::transaction &tx, bool miner_tx, cons
     CRITICAL_REGION_LOCAL(password_lock);
     if (!m_encrypt_keys_after_refresh)
     {
-<<<<<<< HEAD
-      boost::optional<epee::wipeable_string> pwd = m_callback->on_get_password(pool ? "output found in pool" : "output received");
-      THROW_WALLET_EXCEPTION_IF(!pwd, error::password_needed, tr("Password is needed to compute key image for incoming SUMO"));
-      THROW_WALLET_EXCEPTION_IF(!verify_password(*pwd), error::password_needed, tr("Invalid password: password is needed to compute key image for incoming SUMO"));
-      decrypt_keys(*pwd);
-      m_encrypt_keys_after_refresh = *pwd;
-=======
       if (pool)
       {
         std::optional<epee::wipeable_string> pwd = m_callback->on_get_password("pending output in pool");
@@ -4006,19 +3999,8 @@ bool wallet2::load_keys(const std::string& keys_file_name, const epee::wipeable_
   THROW_WALLET_EXCEPTION_IF(!r, error::file_read_error, keys_file_name);
 
   // Load keys from buffer
-<<<<<<< HEAD
-  boost::optional<crypto::chacha_key> keys_to_encrypt;
-  try {
-    r = wallet2::load_keys_buf(keys_file_buf, password, keys_to_encrypt);
-  } catch (const std::exception& e) {
-    std::size_t found = string(e.what()).find("failed to deserialize keys buffer");
-    THROW_WALLET_EXCEPTION_IF(found != std::string::npos, error::wallet_internal_error, "internal error: failed to deserialize \"" + keys_file_name + '\"');
-    throw e;
-  }
-=======
   std::optional<crypto::chacha_key> keys_to_encrypt;
   r = wallet2::load_keys_buf(keys_file_buf, password, keys_to_encrypt);
->>>>>>> 5088e053... [core] boost::optional to std::optional
 
   // Rewrite with encrypted keys if unencrypted, ignore errors
   if (r && keys_to_encrypt != std::nullopt)
@@ -6007,23 +5989,16 @@ std::map<uint32_t, std::pair<uint64_t, uint64_t>> wallet2::unlocked_balance_per_
       {
         amount = td.amount();
         blocks_to_unlock = 0;
-<<<<<<< HEAD
-=======
         time_to_unlock = 0;
->>>>>>> 5088e053... [core] boost::optional to std::optional
       }
       else
       {
         uint64_t unlock_height = td.m_block_height + std::max<uint64_t>(CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE, CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS);
         if (td.m_tx.unlock_time < CRYPTONOTE_MAX_BLOCK_NUMBER && td.m_tx.unlock_time > unlock_height)
           unlock_height = td.m_tx.unlock_time;
-<<<<<<< HEAD
-        blocks_to_unlock = unlock_height > blockchain_height ? unlock_height - blockchain_height : 0;
-=======
         uint64_t unlock_time = td.m_tx.unlock_time >= CRYPTONOTE_MAX_BLOCK_NUMBER ? td.m_tx.unlock_time : 0;
         blocks_to_unlock = unlock_height > blockchain_height ? unlock_height - blockchain_height : 0;
         time_to_unlock = unlock_time > now ? unlock_time - now : 0;
->>>>>>> 5088e053... [core] boost::optional to std::optional
         amount = 0;
       }
       auto found = amount_per_subaddr.find(td.m_subaddr_index.minor);
@@ -6058,11 +6033,8 @@ uint64_t wallet2::unlocked_balance_all(bool strict, uint64_t *blocks_to_unlock) 
     r += unlocked_balance(index_major, strict, blocks_to_unlock ? &local_blocks_to_unlock : NULL);
     if (blocks_to_unlock)
       *blocks_to_unlock = std::max(*blocks_to_unlock, local_blocks_to_unlock);
-<<<<<<< HEAD
-=======
     if (time_to_unlock)
       *time_to_unlock = std::max(*time_to_unlock, local_time_to_unlock);
->>>>>>> 5088e053... [core] boost::optional to std::optional
   }
   return r;
 }

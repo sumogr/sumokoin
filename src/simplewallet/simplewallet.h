@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2014-2020, The Monero Project
 //
 // All rights reserved.
 //
@@ -172,7 +172,7 @@ namespace cryptonote
     bool locked_sweep_all(const std::vector<std::string> &args);
     bool sweep_main(uint32_t account, uint64_t below, bool locked, const std::vector<std::string> &args);
     bool sweep_all(const std::vector<std::string> &args);
-    bool sweep_account(const std::vector<std::string> &args);    
+    bool sweep_account(const std::vector<std::string> &args);
     bool sweep_below(const std::vector<std::string> &args);
     bool sweep_single(const std::vector<std::string> &args);
     bool sweep_unmixable(const std::vector<std::string> &args);
@@ -353,12 +353,8 @@ namespace cryptonote
     virtual void on_unconfirmed_money_received(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& tx, uint64_t amount, const cryptonote::subaddress_index& subaddr_index);
     virtual void on_money_spent(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& in_tx, uint64_t amount, const cryptonote::transaction& spend_tx, const cryptonote::subaddress_index& subaddr_index);
     virtual void on_skip_transaction(uint64_t height, const crypto::hash &txid, const cryptonote::transaction& tx);
-<<<<<<< HEAD
-    virtual boost::optional<epee::wipeable_string> on_get_password(const char *reason);
-=======
     virtual std::optional<epee::wipeable_string> on_get_password(const char *reason);
     virtual std::optional<std::string> on_get_message(const char *info);
->>>>>>> 5088e053... [core] boost::optional to std::optional
     virtual void on_device_button_request(uint64_t code);
     virtual std::optional<epee::wipeable_string> on_device_pin_request();
     virtual std::optional<epee::wipeable_string> on_device_passphrase_request(bool on_device);
