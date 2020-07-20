@@ -1,6 +1,5 @@
 // Copyright (c) 2017-2020, The Monero Project
 //
->>>>>>> 5088e053... [core] boost::optional to std::optional
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are

@@ -1807,7 +1807,6 @@ void wallet2::scan_output(const cryptonote::transaction &tx, bool miner_tx, cons
         decrypt_keys(*pwd);
         m_encrypt_keys_after_refresh = *pwd;
       }
->>>>>>> 5088e053... [core] boost::optional to std::optional
     }
   }
 
