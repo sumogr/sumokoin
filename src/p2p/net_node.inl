@@ -51,6 +51,7 @@
 #include "common/pruning.h"
 #include "net/error.h"
 #include "net/net_helper.h"
+#include "net/abstract_tcp_server2.h"
 #include "math_helper.h"
 #include "misc_log_ex.h"
 #include "p2p_protocol_defs.h"
@@ -1034,7 +1035,6 @@ namespace nodetool
         LOG_WARNING_CC(context, "COMMAND_HANDSHAKE invoke failed. (" << code <<  ", " << epee::levin::get_err_descr(code) << ")");
         if (code == LEVIN_ERROR_CONNECTION_TIMEDOUT || code == LEVIN_ERROR_CONNECTION_DESTROYED)
           timeout = true;
-        add_host_fail(context.m_remote_address);  
         return;
       }
       std::string remote_version = rsp.node_data.version.substr(0,12);
@@ -2283,6 +2283,14 @@ namespace nodetool
     if(!context.m_is_income)
     {
       LOG_WARNING_CC(context, "COMMAND_HANDSHAKE came not from incoming connection");
+      drop_connection(context);
+      add_host_fail(context.m_remote_address);
+      return 1;
+    }
+    // placed here cause below happens on handshake attempt
+    if(epee::net_utils::sock_read_error)
+    {
+      LOG_WARNING_CC(context, "Error in receiving/reading data from remote node");
       drop_connection(context);
       add_host_fail(context.m_remote_address);
       return 1;

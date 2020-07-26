@@ -414,6 +414,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
       {
         _dbg3("[sock " << socket().native_handle() << "] Some problems at read: " << e.message() << ':' << e.value());
         shutdown();
+        sock_read_error = true;
       }
       else
       {

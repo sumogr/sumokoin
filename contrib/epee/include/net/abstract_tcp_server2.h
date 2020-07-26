@@ -63,6 +63,7 @@ namespace epee
 {
 namespace net_utils
 {
+  bool sock_read_error;
 
   struct i_connection_filter
   {
@@ -207,7 +208,7 @@ namespace net_utils
   {
     boosted_tcp_server(const boosted_tcp_server&) = delete;
     boosted_tcp_server& operator=(const boosted_tcp_server&) = delete;
-        
+
     enum try_connect_result_t
     {
       CONNECT_SUCCESS,
