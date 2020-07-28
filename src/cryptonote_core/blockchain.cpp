@@ -1079,8 +1079,8 @@ bool Blockchain::switch_to_alternative_blockchain(std::list<block_extended_info>
 
   std::shared_ptr<tools::Notify> reorg_notify = m_reorg_notify;
   if (reorg_notify)
-    reorg_notify->notify("%s", std::to_string(split_height).c_str(), "%h", std::to_string(m_db->height()).c_str(),
-        "%n", std::to_string(m_db->height() - split_height).c_str(), "%d", std::to_string(discarded_blocks).c_str(), NULL);
+    reorg_notify->notify("%s", std::to_chars(split_height).c_str(), "%h", std::to_chars(m_db->height()).c_str(),
+        "%n", std::to_chars(m_db->height() - split_height).c_str(), "%d", std::to_chars(discarded_blocks).c_str(), NULL);
 
   std::shared_ptr<tools::Notify> block_notify = m_block_notify;
   if (block_notify)

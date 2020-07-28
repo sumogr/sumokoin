@@ -93,7 +93,7 @@ namespace hw {
     void device_io_hid::init() {
       int r;
       r = hid_init();
-      ASSERT_X(r>=0, "Unable to init hidapi library. Error "+std::to_string(r)+": "+safe_hid_error(this->usb_device));
+      ASSERT_X(r>=0, "Unable to init hidapi library. Error "+std::to_chars(r)+": "+safe_hid_error(this->usb_device));
     }
 
     void device_io_hid::connect(void *params) {
@@ -117,9 +117,9 @@ namespace hw {
 
       MDEBUG( "Looking for " <<
               (select_any ? "any HID Device" : "HID Device with") <<
-              (interface_number ? (" interface_number " + std::to_string(interface_number.value())) : "") <<
+              (interface_number ? (" interface_number " + std::to_chars(interface_number.value())) : "") <<
               ((interface_number && usage_page) ? " or" : "") <<
-              (usage_page ? (" usage_page " + std::to_string(usage_page.value())) : ""));
+              (usage_page ? (" usage_page " + std::to_chars(usage_page.value())) : ""));
 
       hid_device_info *result = nullptr;
       for (; devices_list != nullptr; devices_list = devices_list->next) {
@@ -156,7 +156,7 @@ namespace hw {
 
       hwdev_info_list = hid_enumerate(vid, pid);
       if (!hwdev_info_list) {
-        MDEBUG("Unable to enumerate device "+std::to_string(vid)+":"+std::to_string(vid)+  ": "+ safe_hid_error(this->usb_device));
+        MDEBUG("Unable to enumerate device "+std::to_chars(vid)+":"+std::to_chars(vid)+  ": "+ safe_hid_error(this->usb_device));
         return NULL;
       }
       hwdev = NULL;
@@ -164,7 +164,7 @@ namespace hw {
         hwdev = hid_open_path(device->path);
       }
       hid_free_enumeration(hwdev_info_list);
-      ASSERT_X(hwdev, "Unable to open device "+std::to_string(pid)+":"+std::to_string(vid));
+      ASSERT_X(hwdev, "Unable to open device "+std::to_chars(pid)+":"+std::to_chars(vid));
       this->usb_vid = vid;
       this->usb_pid = pid;
       this->usb_device = hwdev;
@@ -198,7 +198,7 @@ namespace hw {
         memcpy(padding_buffer+1, buffer + offset, block_size);
         io_hid_log(0, padding_buffer, block_size+1);
         hid_ret = hid_write(this->usb_device, padding_buffer, block_size+1);
-        ASSERT_X(hid_ret>=0, "Unable to send hidapi command. Error "+std::to_string(result)+": "+ safe_hid_error(this->usb_device));
+        ASSERT_X(hid_ret>=0, "Unable to send hidapi command. Error "+std::to_chars(result)+": "+ safe_hid_error(this->usb_device));
         offset += block_size;
         remaining -= block_size;
       }
@@ -210,7 +210,7 @@ namespace hw {
       } else {
         hid_ret = hid_read(this->usb_device, buffer, MAX_BLOCK);
       }
-      ASSERT_X(hid_ret>=0, "Unable to read hidapi response. Error "+std::to_string(result)+": "+ safe_hid_error(this->usb_device));
+      ASSERT_X(hid_ret>=0, "Unable to read hidapi response. Error "+std::to_chars(result)+": "+ safe_hid_error(this->usb_device));
       result = (unsigned int)hid_ret;
       io_hid_log(1, buffer, result); 
       offset = MAX_BLOCK;
@@ -221,7 +221,7 @@ namespace hw {
           break;
         }
         hid_ret = hid_read_timeout(this->usb_device, buffer + offset, MAX_BLOCK, this->timeout);
-        ASSERT_X(hid_ret>=0, "Unable to receive hidapi response. Error "+std::to_string(result)+": "+ safe_hid_error(this->usb_device));
+        ASSERT_X(hid_ret>=0, "Unable to receive hidapi response. Error "+std::to_chars(result)+": "+ safe_hid_error(this->usb_device));
         result = (unsigned int)hid_ret;
         io_hid_log(1, buffer + offset, result);
         offset += MAX_BLOCK;
@@ -249,8 +249,8 @@ namespace hw {
       unsigned int offset_out = 0;
       unsigned int block_size;
 
-      ASSERT_X(this->packet_size >= 3, "Invalid Packet size: "+std::to_string(this->packet_size)) ;
-      ASSERT_X(out_len >= 7,  "out_len too short: "+std::to_string(out_len));
+      ASSERT_X(this->packet_size >= 3, "Invalid Packet size: "+std::to_chars(this->packet_size)) ;
+      ASSERT_X(out_len >= 7,  "out_len too short: "+std::to_chars(out_len));
 
       out_len -= 7;
       out[offset_out++] = ((this->channel >> 8) & 0xff);
@@ -262,13 +262,13 @@ namespace hw {
       out[offset_out++] = ((command_len >> 8) & 0xff);
       out[offset_out++] = (command_len & 0xff);
       block_size = (command_len > this->packet_size - 7 ? this->packet_size - 7 : command_len);
-      ASSERT_X(out_len >= block_size,  "out_len too short: "+std::to_string(out_len));
+      ASSERT_X(out_len >= block_size,  "out_len too short: "+std::to_chars(out_len));
       out_len -= block_size;
       memcpy(out + offset_out, command + offset, block_size);
       offset_out += block_size;
       offset += block_size;
       while (offset != command_len) {
-        ASSERT_X(out_len >= 5,  "out_len too short: "+std::to_string(out_len));
+        ASSERT_X(out_len >= 5,  "out_len too short: "+std::to_chars(out_len));
         out_len -= 5;
         out[offset_out++] = ((this->channel >> 8) & 0xff);
         out[offset_out++] = (this->channel & 0xff);
@@ -277,14 +277,14 @@ namespace hw {
         out[offset_out++] = (sequence_idx & 0xff);
         sequence_idx++;
         block_size = ((command_len - offset) > this->packet_size - 5 ? this->packet_size - 5 : command_len - offset);
-        ASSERT_X(out_len >= block_size,  "out_len too short: "+std::to_string(out_len));
+        ASSERT_X(out_len >= block_size,  "out_len too short: "+std::to_chars(out_len));
         out_len -= block_size;
         memcpy(out + offset_out, command + offset, block_size);
         offset_out += block_size;
         offset += block_size;
       }
       while ((offset_out % this->packet_size) != 0) {
-        ASSERT_X(out_len >= 1,  "out_len too short: "+std::to_string(out_len));
+        ASSERT_X(out_len >= 1,  "out_len too short: "+std::to_chars(out_len));
         out_len--;
         out[offset_out++] = 0;
       }

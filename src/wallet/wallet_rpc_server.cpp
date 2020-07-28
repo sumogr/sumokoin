@@ -2763,7 +2763,7 @@ namespace tools
         if (idx >= ab.size())
         {
           er.code = WALLET_RPC_ERROR_CODE_WRONG_INDEX;
-          er.message = "Index out of range: " + std::to_string(idx);
+          er.message = "Index out of range: " + std::to_chars(idx);
           return false;
         }
         const auto &entry = ab[idx];
@@ -2834,7 +2834,7 @@ namespace tools
     if (req.index >= ab.size())
     {
       er.code = WALLET_RPC_ERROR_CODE_WRONG_INDEX;
-      er.message = "Index out of range: " + std::to_string(req.index);
+      er.message = "Index out of range: " + std::to_chars(req.index);
       return false;
     }
 
@@ -2896,7 +2896,7 @@ namespace tools
     if (req.index >= ab.size())
     {
       er.code = WALLET_RPC_ERROR_CODE_WRONG_INDEX;
-      er.message = "Index out of range: " + std::to_string(req.index);
+      er.message = "Index out of range: " + std::to_chars(req.index);
       return false;
     }
     if (!m_wallet->delete_address_book_row(req.index))
@@ -2941,7 +2941,7 @@ namespace tools
     try
     {
       m_auto_refresh_period = req.enable ? req.period ? req.period : DEFAULT_AUTO_REFRESH_PERIOD : 0;
-      MINFO("Auto refresh now " << (m_auto_refresh_period ? std::to_string(m_auto_refresh_period) + " seconds" : std::string("disabled")));
+      MINFO("Auto refresh now " << (m_auto_refresh_period ? std::to_chars(m_auto_refresh_period) + " seconds" : std::string("disabled")));
       return true;
     }
     catch (const std::exception& e)

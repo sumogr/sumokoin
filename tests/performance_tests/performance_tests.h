@@ -226,9 +226,9 @@ void run_test(const std::string &filter, Params &params, const char* test_name)
         if (!runner.is_same_distribution(prev_instance.npoints, prev_instance.mean, prev_instance.stddev))
         {
           double pc = fabs(100. * (prev_instance.mean - runner.get_mean()) / prev_instance.mean);
-          cmp = ", " + std::to_string(pc) + "% " + (mean > prev_instance.mean ? "slower" : "faster");
+          cmp = ", " + std::to_chars(pc) + "% " + (mean > prev_instance.mean ? "slower" : "faster");
         }
-cmp += "  -- " + std::to_string(prev_instance.mean);
+cmp += "  -- " + std::to_chars(prev_instance.mean);
       }
       std::cout << " (min " << mins << " " << unit << ", 90th " << p95s << " " << unit << ", median " << meds << " " << unit << ", std dev " << stddevs << " " << unit << ")" << cmp;
     }

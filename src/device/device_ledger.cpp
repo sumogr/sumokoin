@@ -228,11 +228,11 @@ namespace hw {
       log_message("keymap", "content");
       size_t sz = ABP.size();
       for (size_t i=0; i<sz; i++) {
-        log_message("  keymap", std::to_string(i));
+        log_message("  keymap", std::to_chars(i));
         log_hexbuffer("    Aout", (char*)ABP[i].Aout.bytes, 32);
         log_hexbuffer("    Bout", (char*)ABP[i].Bout.bytes, 32);
-        log_message  ("  is_sub", std::to_string(ABP[i].is_subaddress));
-        log_message  ("   index", std::to_string(ABP[i].index));
+        log_message  ("  is_sub", std::to_chars(ABP[i].is_subaddress));
+        log_message  ("   index", std::to_chars(ABP[i].index));
         log_hexbuffer("    Pout", (char*)ABP[i].Pout.bytes, 32);
       }
     }
@@ -706,7 +706,7 @@ namespace hw {
         crypto::public_key derived_pub_x;
         log_hexbuffer("derive_subaddress_public_key: [[IN]]  pub       ", pub_x.data, 32);
         log_hexbuffer("derive_subaddress_public_key: [[IN]]  derivation", derivation_x.data, 32);
-        log_message  ("derive_subaddress_public_key: [[IN]]  index     ", std::to_string((int)output_index_x));
+        log_message  ("derive_subaddress_public_key: [[IN]]  index     ", std::to_chars((int)output_index_x));
         this->controle_device->derive_subaddress_public_key(pub_x, derivation_x,output_index_x,derived_pub_x);
         log_hexbuffer("derive_subaddress_public_key: [[OUT]] derived_pub", derived_pub_x.data, 32);
         #endif
@@ -755,7 +755,7 @@ namespace hw {
         crypto::public_key                 D_x;
         log_hexbuffer("get_subaddress_spend_public_key: [[IN]]  keys.m_view_secret_key ", keys_x.m_view_secret_key.data,32);
         log_hexbuffer("get_subaddress_spend_public_key: [[IN]]  keys.m_spend_secret_key", keys_x.m_spend_secret_key.data,32);
-        log_message  ("get_subaddress_spend_public_key: [[IN]]  index               ", std::to_string(index_x.major)+"."+std::to_string(index_x.minor));
+        log_message  ("get_subaddress_spend_public_key: [[IN]]  index               ", std::to_chars(index_x.major)+"."+std::to_chars(index_x.minor));
         D_x = this->controle_device->get_subaddress_spend_public_key(keys_x, index_x);
         log_hexbuffer("get_subaddress_spend_public_key: [[OUT]] derivation          ", D_x.data, 32);
         #endif
@@ -808,7 +808,7 @@ namespace hw {
         log_hexbuffer("get_subaddress: [[IN]]  keys.m_view_public_key",  keys_x.m_account_address.m_view_public_key.data, 32);
         log_hexbuffer("get_subaddress: [[IN]]  keys.m_view_secret_key ", keys_x.m_view_secret_key.data, 32);
         log_hexbuffer("get_subaddress: [[IN]]  keys.m_spend_public_key", keys_x.m_account_address.m_spend_public_key.data, 32);
-        log_message  ("get_subaddress: [[IN]]  index                                ", std::to_string(index_x.major)+"."+std::to_string(index_x.minor));
+        log_message  ("get_subaddress: [[IN]]  index                                ", std::to_chars(index_x.major)+"."+std::to_chars(index_x.minor));
         address_x = this->controle_device->get_subaddress(keys_x, index_x);
         log_hexbuffer("get_subaddress: [[OUT]]  keys.m_view_public_key ", address_x.m_view_public_key.data, 32);
         log_hexbuffer("get_subaddress: [[OUT]]  keys.m_spend_public_key", address_x.m_spend_public_key.data, 32);
@@ -847,7 +847,7 @@ namespace hw {
         const crypto::secret_key            sec_x =  hw::ledger::decrypt(sec);
         const cryptonote::subaddress_index  index_x = index;
         crypto::secret_key            sub_sec_x;
-        log_message  ("get_subaddress_secret_key: [[IN]]  index  ", std::to_string(index.major)+"."+std::to_string(index.minor));
+        log_message  ("get_subaddress_secret_key: [[IN]]  index  ", std::to_chars(index.major)+"."+std::to_chars(index.minor));
         log_hexbuffer("get_subaddress_secret_key: [[IN]]  sec    ", sec_x.data, 32);
         sub_sec_x = this->controle_device->get_subaddress_secret_key(sec_x, index_x);
         log_hexbuffer("get_subaddress_secret_key: [[OUT]] sub_sec", sub_sec_x.data, 32);
@@ -1122,7 +1122,7 @@ namespace hw {
         const size_t output_index_x               = output_index;
         crypto::ec_scalar res_x;
         log_hexbuffer("derivation_to_scalar: [[IN]]  derivation    ", derivation_x.data, 32);
-        log_message  ("derivation_to_scalar: [[IN]]  output_index  ", std::to_string(output_index_x));
+        log_message  ("derivation_to_scalar: [[IN]]  output_index  ", std::to_chars(output_index_x));
         this->controle_device->derivation_to_scalar(derivation_x, output_index_x, res_x);
         log_hexbuffer("derivation_to_scalar: [[OUT]] res          ", res_x.data, 32);
         #endif
@@ -1163,7 +1163,7 @@ namespace hw {
         const crypto::secret_key     sec_x          = hw::ledger::decrypt(sec);
         crypto::secret_key           derived_sec_x;
         log_hexbuffer("derive_secret_key: [[IN]]  derivation ", derivation_x.data, 32);
-        log_message  ("derive_secret_key: [[IN]]  index      ", std::to_string(output_index_x));
+        log_message  ("derive_secret_key: [[IN]]  index      ", std::to_chars(output_index_x));
         log_hexbuffer("derive_secret_key: [[IN]]  sec        ", sec_x.data, 32);
         this->controle_device->derive_secret_key(derivation_x, output_index_x, sec_x, derived_sec_x);
         log_hexbuffer("derive_secret_key: [[OUT]] derived_sec", derived_sec_x.data, 32);
@@ -1206,7 +1206,7 @@ namespace hw {
         const crypto::public_key     pub_x        = pub;
         crypto::public_key           derived_pub_x;
         log_hexbuffer("derive_public_key: [[IN]]  derivation  ", derivation_x.data, 32);
-        log_message  ("derive_public_key: [[IN]]  output_index", std::to_string(output_index_x));
+        log_message  ("derive_public_key: [[IN]]  output_index", std::to_chars(output_index_x));
         log_hexbuffer("derive_public_key: [[IN]]  pub         ", pub_x.data, 32);
         this->controle_device->derive_public_key(derivation_x, output_index_x, pub_x, derived_pub_x);
         log_hexbuffer("derive_public_key: [[OUT]] derived_pub ", derived_pub_x.data, 32);
@@ -1553,7 +1553,7 @@ namespace hw {
       std::vector<rct::key>                    amount_keys_x;
       crypto::public_key                       out_eph_public_key_x;
 
-      log_message  ("generate_output_ephemeral_keys: [[IN]] tx_version", std::to_string(tx_version_x));
+      log_message  ("generate_output_ephemeral_keys: [[IN]] tx_version", std::to_chars(tx_version_x));
       //log_hexbuffer("generate_output_ephemeral_keys: [[IN]] sender_account_keys.view", sender_account_keys.m_sview_secret_key.data, 32);
       //log_hexbuffer("generate_output_ephemeral_keys: [[IN]] sender_account_keys.spend", sender_account_keys.m_spend_secret_key.data, 32);
       log_hexbuffer("generate_output_ephemeral_keys: [[IN]] txkey_pub", txkey_pub_x.data, 32);
@@ -1564,8 +1564,8 @@ namespace hw {
         log_hexbuffer("generate_output_ephemeral_keys: [[IN]] change_addr.view", (*change_addr_x).m_view_public_key.data, 32);
         log_hexbuffer("generate_output_ephemeral_keys: [[IN]] change_addr.spend", (*change_addr_x).m_spend_public_key.data, 32);
       }
-      log_message  ("generate_output_ephemeral_keys: [[IN]] output_index",  std::to_string(output_index_x));
-      log_message  ("generate_output_ephemeral_keys: [[IN]] need_additional_txkeys",  std::to_string(need_additional_txkeys_x));
+      log_message  ("generate_output_ephemeral_keys: [[IN]] output_index",  std::to_chars(output_index_x));
+      log_message  ("generate_output_ephemeral_keys: [[IN]] need_additional_txkeys",  std::to_chars(need_additional_txkeys_x));
       if(need_additional_txkeys_x) {
         log_hexbuffer("generate_output_ephemeral_keys: [[IN]] additional_tx_keys[oi]", additional_tx_keys_x[output_index].data, 32);
       }
@@ -1800,7 +1800,7 @@ namespace hw {
         rct::key prehash_x;
         this->controle_device->mlsag_prehash(blob_x, inputs_size_x, outputs_size_x, hashes_x, outPk_x, prehash_x);
         if (inputs_size) {
-          log_message("mlsag_prehash", (std::string("inputs_size not null: ") +  std::to_string(inputs_size)).c_str());
+          log_message("mlsag_prehash", (std::string("inputs_size not null: ") +  std::to_chars(inputs_size)).c_str());
         }
         this->key_map.log();
         #endif
@@ -2111,7 +2111,7 @@ namespace hw {
 
         #ifdef DEBUG_HWDEVICE
         for (size_t j = 0; j < rows; j++) {
-           hw::ledger::check32("mlsag_sign", "ss["+std::to_string(j)+"]", (char*)ss_x[j].bytes, (char*)ss[j].bytes);
+           hw::ledger::check32("mlsag_sign", "ss["+std::to_chars(j)+"]", (char*)ss_x[j].bytes, (char*)ss[j].bytes);
         }
         #endif
 

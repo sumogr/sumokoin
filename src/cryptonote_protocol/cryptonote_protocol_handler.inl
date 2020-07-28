@@ -186,9 +186,9 @@ namespace cryptonote
         cntxt.m_remote_address.str()
         << std::setw(20) << nodetool::peerid_to_string(peer_id)
         << std::setw(20) << std::hex << support_flags
-        << std::setw(30) << std::to_string(cntxt.m_recv_cnt)+ "(" + std::to_string(time(NULL) - cntxt.m_last_recv) + ")" + "/" + std::to_string(cntxt.m_send_cnt) + "(" + std::to_string(time(NULL) - cntxt.m_last_send) + ")"
+        << std::setw(30) << std::to_chars(cntxt.m_recv_cnt)+ "(" + std::to_chars(time(NULL) - cntxt.m_last_recv) + ")" + "/" + std::to_chars(cntxt.m_send_cnt) + "(" + std::to_chars(time(NULL) - cntxt.m_last_send) + ")"
         << std::setw(25) << get_protocol_state_string(cntxt.m_state)
-        << std::setw(20) << std::to_string(time(NULL) - cntxt.m_started)
+        << std::setw(20) << std::to_chars(time(NULL) - cntxt.m_started)
         << std::setw(12) << std::fixed << (connection_time == 0 ? 0.0 : cntxt.m_recv_cnt / connection_time / 1024)
         << std::setw(14) << std::fixed << cntxt.m_current_speed_down / 1024
         << std::setw(10) << std::fixed << (connection_time == 0 ? 0.0 : cntxt.m_send_cnt / connection_time / 1024)
@@ -239,7 +239,7 @@ namespace cryptonote
       if (cntxt.m_remote_address.get_type_id() == epee::net_utils::ipv4_network_address::get_type_id())
       {
         cnx.ip = cnx.host;
-        cnx.port = std::to_string(cntxt.m_remote_address.as<epee::net_utils::ipv4_network_address>().port());
+        cnx.port = std::to_chars(cntxt.m_remote_address.as<epee::net_utils::ipv4_network_address>().port());
       }
       cnx.rpc_port = cntxt.m_rpc_port;
       cnx.rpc_credits_per_hash = cntxt.m_rpc_credits_per_hash;
@@ -1500,18 +1500,18 @@ namespace cryptonote
               uint64_t completion_percent = (current_blockchain_height * 100 / target_blockchain_height);
               if (completion_percent == 100) // never show 100% if not actually up to date
                 completion_percent = 99;
-              progress_message = " (" + std::to_string(completion_percent) + "%, "
-                  + std::to_string(target_blockchain_height - current_blockchain_height) + " left)";
+              progress_message = " (" + std::to_chars(completion_percent) + "%, "
+                  + std::to_chars(target_blockchain_height - current_blockchain_height) + " left)";
             }
             const uint32_t previous_stripe = tools::get_pruning_stripe(previous_height, target_blockchain_height, CRYPTONOTE_PRUNING_LOG_STRIPES);
             const uint32_t current_stripe = tools::get_pruning_stripe(current_blockchain_height, target_blockchain_height, CRYPTONOTE_PRUNING_LOG_STRIPES);
             std::string timing_message = "";
             if (ELPP->vRegistry()->allowed(el::Level::Info, "sync-info"))
-              timing_message = std::string(" (") + std::to_string(dt.total_microseconds()/1e6) + " sec, "
-                + std::to_string((current_blockchain_height - previous_height) * 1e6 / dt.total_microseconds())
-                + " blocks/sec), " + std::to_string(m_block_queue.get_data_size() / 1048576.f) + " MB queued in "
-                + std::to_string(m_block_queue.get_num_filled_spans()) + " spans, stripe "
-                + std::to_string(previous_stripe) + " -> " + std::to_string(current_stripe);
+              timing_message = std::string(" (") + std::to_chars(dt.total_microseconds()/1e6) + " sec, "
+                + std::to_chars((current_blockchain_height - previous_height) * 1e6 / dt.total_microseconds())
+                + " blocks/sec), " + std::to_chars(m_block_queue.get_data_size() / 1048576.f) + " MB queued in "
+                + std::to_chars(m_block_queue.get_num_filled_spans()) + " spans, stripe "
+                + std::to_chars(previous_stripe) + " -> " + std::to_chars(current_stripe);
             if (ELPP->vRegistry()->allowed(el::Level::Debug, "sync-info"))
               timing_message += std::string(": ") + m_block_queue.get_overview(current_blockchain_height);
             uint64_t comp_perc = (current_blockchain_height * 100 / target_blockchain_height);

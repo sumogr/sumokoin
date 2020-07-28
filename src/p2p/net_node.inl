@@ -558,7 +558,7 @@ namespace nodetool
     using namespace boost::asio;
 
     std::string host = addr;
-    std::string port = std::to_string(default_port);
+    std::string port = std::to_chars(default_port);
     size_t colon_pos = addr.find_last_of(':');
     size_t dot_pos = addr.find_last_of('.');
     size_t square_brace_pos = addr.find('[');
@@ -743,7 +743,7 @@ namespace nodetool
         if (result.size())
         {
           for (const auto& addr_string : result)
-            full_addrs.insert(addr_string + ":" + std::to_string(cryptonote::get_config(m_nettype).P2P_DEFAULT_PORT));
+            full_addrs.insert(addr_string + ":" + std::to_chars(cryptonote::get_config(m_nettype).P2P_DEFAULT_PORT));
         }
         ++i;
       }
@@ -773,9 +773,9 @@ namespace nodetool
     m_config_folder = command_line::get_arg(vm, cryptonote::arg_data_dir);
     network_zone& public_zone = m_network_zones.at(epee::net_utils::zone::public_);
 
-    if ((m_nettype == cryptonote::MAINNET && public_zone.m_port != std::to_string(::config::P2P_DEFAULT_PORT))
-        || (m_nettype == cryptonote::TESTNET && public_zone.m_port != std::to_string(::config::testnet::P2P_DEFAULT_PORT))
-        || (m_nettype == cryptonote::STAGENET && public_zone.m_port != std::to_string(::config::stagenet::P2P_DEFAULT_PORT))) {
+    if ((m_nettype == cryptonote::MAINNET && public_zone.m_port != std::to_chars(::config::P2P_DEFAULT_PORT))
+        || (m_nettype == cryptonote::TESTNET && public_zone.m_port != std::to_chars(::config::testnet::P2P_DEFAULT_PORT))
+        || (m_nettype == cryptonote::STAGENET && public_zone.m_port != std::to_chars(::config::stagenet::P2P_DEFAULT_PORT))) {
       m_config_folder = m_config_folder + "/" + public_zone.m_port;
     }
 

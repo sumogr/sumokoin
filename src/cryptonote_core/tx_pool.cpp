@@ -1299,7 +1299,7 @@ namespace cryptonote
         }
         ss << obj_to_json_str(tx) << std::endl;
       }
-      ss << "blob_size: " << (short_format ? "-" : std::to_string(txblob->size())) << std::endl
+      ss << "blob_size: " << (short_format ? "-" : std::to_chars(txblob->size())) << std::endl
         << "weight: " << meta.weight << std::endl
         << "fee: " << print_money(meta.fee) << std::endl
         << "kept_by_block: " << (meta.kept_by_block ? 'T' : 'F') << std::endl

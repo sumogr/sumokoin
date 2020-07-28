@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 
       MDEBUG("Transaction tests for HF " << (int)hf);
       trezor_base.set_hard_fork(hf);
-      TREZOR_SETUP_CHAIN(std::string("HF") + std::to_string((int)hf));
+      TREZOR_SETUP_CHAIN(std::string("HF") + std::to_chars((int)hf));
 
       daemon = std::make_shared<mock_daemon>(core, vm_core);
       CHECK_AND_ASSERT_THROW_MES(daemon->nettype() == trezor_base.nettype(), "Serialized chain network type does not match");

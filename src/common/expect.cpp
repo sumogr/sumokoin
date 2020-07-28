@@ -52,7 +52,7 @@ namespace detail
                 error_msg.append(buff);
 
                 error_msg.push_back(':');
-                error_msg.append(std::to_string(line));
+                error_msg.append(std::to_chars(line));
             }
             if (msg && file)
                 error_msg.push_back(')');

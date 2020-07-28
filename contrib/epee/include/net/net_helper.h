@@ -152,7 +152,7 @@ namespace net_utils
     inline
       bool connect(const std::string& addr, int port, std::chrono::milliseconds timeout)
     {
-      return connect(addr, std::to_string(port), timeout);
+      return connect(addr, std::to_chars(port), timeout);
     }
 
     inline

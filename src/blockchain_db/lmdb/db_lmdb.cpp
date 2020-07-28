@@ -2522,7 +2522,7 @@ std::vector<uint64_t> BlockchainLMDB::get_block_cumulative_rct_outputs(const std
     throw0(DB_ERROR(lmdb_error("Failed to query m_blocks: ", result).c_str()));
   for (size_t i = 0; i < heights.size(); ++i)
     if (heights[i] >= db_stats.ms_entries)
-      throw0(BLOCK_DNE(std::string("Attempt to get rct distribution from height " + std::to_string(heights[i]) + " failed -- block size not in db").c_str()));
+      throw0(BLOCK_DNE(std::string("Attempt to get rct distribution from height " + std::to_chars(heights[i]) + " failed -- block size not in db").c_str()));
 
   MDB_val v;
 
@@ -2543,7 +2543,7 @@ std::vector<uint64_t> BlockchainLMDB::get_block_cumulative_rct_outputs(const std
         range_begin = ((const mdb_block_info*)v.mv_data)->bi_height;
         range_end = range_begin + v.mv_size / sizeof(mdb_block_info); // whole records please
         if (height < range_begin || height >= range_end)
-          throw0(DB_ERROR(("Height " + std::to_string(height) + " not included in multuple record range: " + std::to_string(range_begin) + "-" + std::to_string(range_end)).c_str()));
+          throw0(DB_ERROR(("Height " + std::to_chars(height) + " not included in multuple record range: " + std::to_chars(range_begin) + "-" + std::to_chars(range_end)).c_str()));
       }
       else
       {
@@ -2613,7 +2613,7 @@ std::vector<uint64_t> BlockchainLMDB::get_block_info_64bit_fields(uint64_t start
 
   const uint64_t h = height();
   if (start_height >= h)
-    throw0(DB_ERROR(("Height " + std::to_string(start_height) + " not in blockchain").c_str()));
+    throw0(DB_ERROR(("Height " + std::to_chars(start_height) + " not in blockchain").c_str()));
 
   std::vector<uint64_t> ret;
   ret.reserve(count);
@@ -2636,7 +2636,7 @@ std::vector<uint64_t> BlockchainLMDB::get_block_info_64bit_fields(uint64_t start
         range_begin = ((const mdb_block_info*)v.mv_data)->bi_height;
         range_end = range_begin + v.mv_size / sizeof(mdb_block_info); // whole records please
         if (height < range_begin || height >= range_end)
-          throw0(DB_ERROR(("Height " + std::to_string(height) + " not included in multiple record range: " + std::to_string(range_begin) + "-" + std::to_string(range_end)).c_str()));
+          throw0(DB_ERROR(("Height " + std::to_chars(height) + " not included in multiple record range: " + std::to_chars(range_begin) + "-" + std::to_chars(range_end)).c_str()));
       }
       else
       {
@@ -3368,7 +3368,7 @@ output_data_t BlockchainLMDB::get_output_key(const uint64_t& amount, const uint6
   auto get_result = mdb_cursor_get(m_cur_output_amounts, &k, &v, MDB_GET_BOTH);
   if (get_result == MDB_NOTFOUND)
     throw1(OUTPUT_DNE(std::string("Attempting to get output pubkey by index, but key does not exist: amount " +
-        std::to_string(amount) + ", index " + std::to_string(index)).c_str()));
+        std::to_chars(amount) + ", index " + std::to_chars(index)).c_str()));
   else if (get_result)
     throw0(DB_ERROR("Error attempting to retrieve an output pubkey from the db"));
 

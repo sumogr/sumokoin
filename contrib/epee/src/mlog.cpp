@@ -154,7 +154,7 @@ void mlog_configure(const std::string &filename_base, bool console, const std::s
     log_format = MLOG_BASE_FORMAT;
   c.setGlobally(el::ConfigurationType::Format, log_format);
   c.setGlobally(el::ConfigurationType::ToStandardOutput, console ? "true" : "false");
-  c.setGlobally(el::ConfigurationType::MaxLogFileSize, std::to_string(max_log_file_size));
+  c.setGlobally(el::ConfigurationType::MaxLogFileSize, std::to_chars(max_log_file_size));
   el::Loggers::setDefaultConfigurations(c, true);
 
   el::Loggers::addFlag(el::LoggingFlag::HierarchicalLogging);

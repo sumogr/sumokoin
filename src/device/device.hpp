@@ -64,7 +64,7 @@ namespace hw {
         //device funcion not supported
         #define dfns()  \
            throw std::runtime_error(std::string("device function not supported: ")+ std::string(__FUNCTION__) + \
-                                    std::string(" (device.hpp line ")+std::to_string(__LINE__)+std::string(").")); \
+                                    std::string(" (device.hpp line ")+std::to_chars(__LINE__)+std::string(").")); \
            return false;
     }
 

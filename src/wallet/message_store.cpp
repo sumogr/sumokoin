@@ -117,7 +117,7 @@ void message_store::set_signer(const multisig_wallet_state &state,
                                const std::optional<std::string> &transport_address,
                                const std::optional<cryptonote::account_public_address> monero_address)
 {
-  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_string(index));
+  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_chars(index));
   authorized_signer &m = m_signers[index];
   if (label)
   {
@@ -138,7 +138,7 @@ void message_store::set_signer(const multisig_wallet_state &state,
 
 const authorized_signer &message_store::get_signer(uint32_t index) const
 {
-  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_string(index));
+  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_chars(index));
   return m_signers[index];
 }
 
@@ -193,7 +193,7 @@ void message_store::unpack_signer_config(const multisig_wallet_state &state, con
     THROW_WALLET_EXCEPTION_IF(true, tools::error::wallet_internal_error, "Invalid structure of signer config");
   }
   uint32_t num_signers = (uint32_t)signers.size();
-  THROW_WALLET_EXCEPTION_IF(num_signers != m_num_authorized_signers, tools::error::wallet_internal_error, "Wrong number of signers in config: " + std::to_string(num_signers));
+  THROW_WALLET_EXCEPTION_IF(num_signers != m_num_authorized_signers, tools::error::wallet_internal_error, "Wrong number of signers in config: " + std::to_chars(num_signers));
   for (uint32_t i = 0; i < num_signers; ++i)
   {
     authorized_signer &m = signers[i];
@@ -465,7 +465,7 @@ void message_store::setup_signer_for_auto_config(uint32_t index, const std::stri
   // auto-config parameters. In the wallet of somebody using the token to send auto-config
   // data the auto-config parameters are stored in the "me" signer and taken from there
   // to send that data.
-  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_string(index));
+  THROW_WALLET_EXCEPTION_IF(index >= m_num_authorized_signers, tools::error::wallet_internal_error, "Invalid signer index " + std::to_chars(index));
   authorized_signer &m = m_signers[index];
   m.auto_config_token = token;
   crypto::hash_to_scalar(token.data(), token.size(), m.auto_config_secret_key);
@@ -540,7 +540,7 @@ void message_store::process_wallet_created_data(const multisig_wallet_state &sta
     break;
 
   default:
-    THROW_WALLET_EXCEPTION(tools::error::wallet_internal_error, "Illegal message type " + std::to_string((uint32_t)type));
+    THROW_WALLET_EXCEPTION(tools::error::wallet_internal_error, "Illegal message type " + std::to_chars((uint32_t)type));
     break;
   }
 }
@@ -607,7 +607,7 @@ size_t message_store::get_message_index_by_id(uint32_t id) const
 {
   size_t index;
   bool found = get_message_index_by_id(id, index);
-  THROW_WALLET_EXCEPTION_IF(!found, tools::error::wallet_internal_error, "Invalid message id " + std::to_string(id));
+  THROW_WALLET_EXCEPTION_IF(!found, tools::error::wallet_internal_error, "Invalid message id " + std::to_chars(id));
   return index;
 }
 
@@ -635,7 +635,7 @@ message message_store::get_message_by_id(uint32_t id) const
 {
   message m;
   bool found = get_message_by_id(id, m);
-  THROW_WALLET_EXCEPTION_IF(!found, tools::error::wallet_internal_error, "Invalid message id " + std::to_string(id));
+  THROW_WALLET_EXCEPTION_IF(!found, tools::error::wallet_internal_error, "Invalid message id " + std::to_chars(id));
   return m;
 }
 

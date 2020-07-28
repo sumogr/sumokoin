@@ -338,7 +338,7 @@ namespace trezor {
       UnexpectedMessageException(hw::trezor::messages::MessageType recvType,
                                  const std::shared_ptr<google::protobuf::Message> & recvMsg)
           : recvType(recvType), recvMsg(recvMsg) {
-        reason = std::string("Trezor returned unexpected message: ") + std::to_string(recvType);
+        reason = std::string("Trezor returned unexpected message: ") + std::to_chars(recvType);
       }
     };
   }

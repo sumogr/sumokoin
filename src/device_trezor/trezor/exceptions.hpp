@@ -139,7 +139,7 @@ namespace proto {
                      std::optional<std::string> message)
         : code(code), message(message) {
       reason = "Trezor returned failure: code="
-               + (code ? std::to_string(code.get()) : "")
+               + (code ? std::to_chars(code.get()) : "")
                + ", message=" + (message ? message.get() : "");
     };
   };

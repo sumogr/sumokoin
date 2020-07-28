@@ -85,9 +85,9 @@ void mock_daemon::default_options(boost::program_options::variables_map & vm)
 void mock_daemon::set_ports(boost::program_options::variables_map & vm, unsigned initial_port)
 {
   CHECK_AND_ASSERT_THROW_MES(initial_port < 65535-2, "Invalid port number");
-  tools::options::set_option(vm, nodetool::arg_p2p_bind_port, po::variable_value(std::to_string(initial_port), false));
-  tools::options::set_option(vm, cryptonote::core_rpc_server::arg_rpc_bind_port, po::variable_value(std::to_string(initial_port + 1), false));
-  tools::options::set_option(vm, daemon_args::arg_zmq_rpc_bind_port, po::variable_value(std::to_string(initial_port + 2), false));
+  tools::options::set_option(vm, nodetool::arg_p2p_bind_port, po::variable_value(std::to_chars(initial_port), false));
+  tools::options::set_option(vm, cryptonote::core_rpc_server::arg_rpc_bind_port, po::variable_value(std::to_chars(initial_port + 1), false));
+  tools::options::set_option(vm, daemon_args::arg_zmq_rpc_bind_port, po::variable_value(std::to_chars(initial_port + 2), false));
   po::notify(vm);
 }
 

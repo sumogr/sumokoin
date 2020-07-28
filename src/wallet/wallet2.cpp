@@ -306,7 +306,7 @@ uint64_t calculate_fee_from_weight(uint64_t base_fee, uint64_t weight, uint64_t 
 
 std::string get_weight_string(size_t weight)
 {
-  return std::to_string(weight) + " weight";
+  return std::to_chars(weight) + " weight";
 }
 
 std::string get_weight_string(const cryptonote::transaction &tx, size_t blob_size)
@@ -409,7 +409,7 @@ std::unique_ptr<tools::wallet2> make_basic(const boost::program_options::variabl
   }
 
   if (daemon_address.empty())
-    daemon_address = std::string("http://") + daemon_host + ":" + std::to_string(daemon_port);
+    daemon_address = std::string("http://") + daemon_host + ":" + std::to_chars(daemon_port);
 
   {
     const boost::string_ref real_daemon = boost::string_ref{daemon_address}.substr(0, daemon_address.rfind(':'));
@@ -761,7 +761,7 @@ std::string strjoin(const std::vector<size_t> &V, const char *sep)
   {
     if (!first)
       ss << sep;
-    ss << std::to_string(v);
+    ss << std::to_chars(v);
     first = false;
   }
   return ss.str();
@@ -2086,14 +2086,14 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
       if (!pool)
       {
         THROW_WALLET_EXCEPTION_IF(tx.vout.size() != o_indices.size(), error::wallet_internal_error,
-            "transactions outputs size=" + std::to_string(tx.vout.size()) +
-            " not match with daemon response size=" + std::to_string(o_indices.size()));
+            "transactions outputs size=" + std::to_chars(tx.vout.size()) +
+            " not match with daemon response size=" + std::to_chars(o_indices.size()));
       }
 
       for(size_t o: outs)
       {
 	THROW_WALLET_EXCEPTION_IF(tx.vout.size() <= o, error::wallet_internal_error, "wrong out in transaction: internal index=" +
-				  std::to_string(o) + ", total_outs=" + std::to_string(tx.vout.size()));
+				  std::to_chars(o) + ", total_outs=" + std::to_chars(tx.vout.size()));
 
         auto kit = m_pub_keys.find(tx_scan_info[o].in_ephemeral.pub);
 	THROW_WALLET_EXCEPTION_IF(kit != m_pub_keys.end() && kit->second >= m_transfers.size(),
@@ -2538,8 +2538,8 @@ bool wallet2::should_skip_block(const cryptonote::block &b, uint64_t height) con
 void wallet2::process_new_blockchain_entry(const cryptonote::block& b, const cryptonote::block_complete_entry& bche, const parsed_block &parsed_block, const crypto::hash& bl_id, uint64_t height, const std::vector<tx_cache_data> &tx_cache_data, size_t tx_cache_data_offset, std::map<std::pair<uint64_t, uint64_t>, size_t> *output_tracker_cache)
 {
   THROW_WALLET_EXCEPTION_IF(bche.txs.size() + 1 != parsed_block.o_indices.indices.size(), error::wallet_internal_error,
-      "block transactions=" + std::to_string(bche.txs.size()) +
-      " not match with daemon response size=" + std::to_string(parsed_block.o_indices.indices.size()));
+      "block transactions=" + std::to_chars(bche.txs.size()) +
+      " not match with daemon response size=" + std::to_chars(parsed_block.o_indices.indices.size()));
 
   //handle transactions from new block
 
@@ -2797,7 +2797,7 @@ void wallet2::process_parsed_blocks(uint64_t start_height, const std::vector<cry
       //split detected here !!!
       THROW_WALLET_EXCEPTION_IF(current_index == start_height, error::wallet_internal_error,
         "wrong daemon response: split starts from the first block in response " + string_tools::pod_to_hex(bl_id) +
-        " (height " + std::to_string(start_height) + "), local block id at this height: " +
+        " (height " + std::to_chars(start_height) + "), local block id at this height: " +
         string_tools::pod_to_hex(m_blockchain[current_index]));
 
       detach_blockchain(current_index, output_tracker_cache);
@@ -3634,7 +3634,7 @@ void wallet2::detach_blockchain(uint64_t height, std::map<std::pair<uint64_t, ui
     if (!m_transfers[i].m_key_image_known || m_transfers[i].m_key_image_partial)
       continue;
     auto it_ki = m_key_images.find(m_transfers[i].m_key_image);
-    THROW_WALLET_EXCEPTION_IF(it_ki == m_key_images.end(), error::wallet_internal_error, "key image not found: index " + std::to_string(i) + ", ki " + epee::string_tools::pod_to_hex(m_transfers[i].m_key_image) + ", " + std::to_string(m_key_images.size()) + " key images known");
+    THROW_WALLET_EXCEPTION_IF(it_ki == m_key_images.end(), error::wallet_internal_error, "key image not found: index " + std::to_chars(i) + ", ki " + epee::string_tools::pod_to_hex(m_transfers[i].m_key_image) + ", " + std::to_chars(m_key_images.size()) + " key images known");
     m_key_images.erase(it_ki);
   }
 
@@ -6137,7 +6137,7 @@ void wallet2::rescan_spent()
       THROW_ON_RPC_RESPONSE_ERROR(r, {}, daemon_resp, "is_key_image_spent", error::is_key_image_spent_error, get_rpc_status(daemon_resp.status));
       THROW_WALLET_EXCEPTION_IF(daemon_resp.spent_status.size() != n_outputs, error::wallet_internal_error,
         "daemon returned wrong response for is_key_image_spent, wrong amounts count = " +
-        std::to_string(daemon_resp.spent_status.size()) + ", expected " +  std::to_string(n_outputs));
+        std::to_chars(daemon_resp.spent_status.size()) + ", expected " +  std::to_chars(n_outputs));
       check_rpc_cost("/is_key_image_spent", daemon_resp.credits, pre_call_credits, n_outputs * COST_PER_KEY_IMAGE);
     }
 
@@ -6819,7 +6819,7 @@ bool wallet2::sign_tx(unsigned_tx_set &exported_txs, const std::string &signed_f
     for (size_t i = 0; i < signed_txes.ptx.size(); ++i)
     {
       std::string tx_as_hex = epee::string_tools::buff_to_hex_nodelimer(tx_to_blob(signed_txes.ptx[i].tx));
-      std::string raw_filename = signed_filename + "_raw" + (signed_txes.ptx.size() == 1 ? "" : ("_" + std::to_string(i)));
+      std::string raw_filename = signed_filename + "_raw" + (signed_txes.ptx.size() == 1 ? "" : ("_" + std::to_chars(i)));
       if (!save_to_file(raw_filename, tx_as_hex))
       {
         LOG_PRINT_L0("Failed to save file to " << raw_filename);
@@ -7623,7 +7623,7 @@ bool wallet2::find_and_save_rings(bool force)
     txs_hashes.push_back(txid);
   }
 
-  MDEBUG("Found " << std::to_string(txs_hashes.size()) << " transactions");
+  MDEBUG("Found " << std::to_chars(txs_hashes.size()) << " transactions");
 
   // get those transactions from the daemon
   auto it = txs_hashes.begin();
@@ -7645,7 +7645,7 @@ bool wallet2::find_and_save_rings(bool force)
       THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {}, res, "/gettransactions");
       THROW_WALLET_EXCEPTION_IF(res.txs.size() != req.txs_hashes.size(), error::wallet_internal_error,
         "daemon returned wrong response for gettransactions, wrong txs count = " +
-        std::to_string(res.txs.size()) + ", expected " + std::to_string(req.txs_hashes.size()));
+        std::to_chars(res.txs.size()) + ", expected " + std::to_chars(req.txs_hashes.size()));
       check_rpc_cost("/gettransactions", res.credits, pre_call_credits, res.txs.size() * COST_PER_TX);
     }
 
@@ -8123,8 +8123,8 @@ void wallet2::get_outs(std::vector<std::vector<tools::wallet2::get_outs_entry>> 
           MINFO("This output has a known ring, reusing (size " << ring.size() << ")");
           THROW_WALLET_EXCEPTION_IF(ring.size() > fake_outputs_count + 1, error::wallet_internal_error,
               "An output in this transaction was previously spent on another chain with ring size " +
-              std::to_string(ring.size()) + ", it cannot be spent now with ring size " +
-              std::to_string(fake_outputs_count + 1) + " as it is smaller: use a higher ring size");
+              std::to_chars(ring.size()) + ", it cannot be spent now with ring size " +
+              std::to_chars(fake_outputs_count + 1) + " as it is smaller: use a higher ring size");
           bool own_found = false;
           for (const auto &out: ring)
           {
@@ -8147,7 +8147,7 @@ void wallet2::get_outs(std::vector<std::vector<tools::wallet2::get_outs_entry>> 
             }
           }
           THROW_WALLET_EXCEPTION_IF(!own_found, error::wallet_internal_error,
-              "Known ring does not include the spent output: " + std::to_string(td.m_global_output_index));
+              "Known ring does not include the spent output: " + std::to_chars(td.m_global_output_index));
         }
       }
 
@@ -8283,7 +8283,7 @@ void wallet2::get_outs(std::vector<std::vector<tools::wallet2::get_outs_entry>> 
 
         for (const auto &pick: picks)
           MDEBUG("picking " << pick.first << " outputs: " <<
-              boost::join(pick.second | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+              boost::join(pick.second | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
 
         // if we had enough unusable outputs, we might fall off here and still
         // have too few outputs, so we stuff with one to keep counts good, and
@@ -8307,7 +8307,7 @@ void wallet2::get_outs(std::vector<std::vector<tools::wallet2::get_outs_entry>> 
         outs[i.amount].insert(i.index);
       for (const auto &o: outs)
         MDEBUG("asking for outputs with amount " << print_money(o.first) << ": " <<
-            boost::join(o.second | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+            boost::join(o.second | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
     }
 
     // get the keys for those
@@ -8321,7 +8321,7 @@ void wallet2::get_outs(std::vector<std::vector<tools::wallet2::get_outs_entry>> 
       THROW_ON_RPC_RESPONSE_ERROR(r, {}, daemon_resp, "get_outs.bin", error::get_outs_error, get_rpc_status(daemon_resp.status));
       THROW_WALLET_EXCEPTION_IF(daemon_resp.outs.size() != req.outputs.size(), error::wallet_internal_error,
         "daemon returned wrong response for get_outs.bin, wrong amounts count = " +
-        std::to_string(daemon_resp.outs.size()) + ", expected " +  std::to_string(req.outputs.size()));
+        std::to_chars(daemon_resp.outs.size()) + ", expected " +  std::to_chars(req.outputs.size()));
       check_rpc_cost("/get_outs.bin", daemon_resp.credits, pre_call_credits, daemon_resp.outs.size() * COST_PER_OUT);
     }
 
@@ -8561,7 +8561,7 @@ void wallet2::transfer_selected(const std::vector<cryptonote::tx_destination_ent
   destination_split_strategy(dsts, change_dts, dust_policy.dust_threshold, splitted_dsts, dust_dsts);
   for(auto& d: dust_dsts) {
     THROW_WALLET_EXCEPTION_IF(dust_policy.dust_threshold < d.amount, error::wallet_internal_error, "invalid dust value: dust = " +
-      std::to_string(d.amount) + ", dust_threshold = " + std::to_string(dust_policy.dust_threshold));
+      std::to_chars(d.amount) + ", dust_threshold = " + std::to_chars(dust_policy.dust_threshold));
   }
   for(auto& d: dust_dsts) {
     if (!dust_policy.add_to_fee)
@@ -9561,7 +9561,7 @@ std::vector<wallet2::pending_tx> wallet2::create_transactions_2(std::vector<cryp
       else
       {
         THROW_WALLET_EXCEPTION_IF(original_output_index > dsts.size(), error::wallet_internal_error,
-            std::string("original_output_index too large: ") + std::to_string(original_output_index) + " > " + std::to_string(dsts.size()));
+            std::string("original_output_index too large: ") + std::to_chars(original_output_index) + " > " + std::to_chars(dsts.size()));
         if (original_output_index == dsts.size())
         {
           dsts.push_back(de);
@@ -10853,7 +10853,7 @@ void wallet2::set_tx_key(const crypto::hash &txid, const crypto::secret_key &tx_
     THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {}, res, "/gettransactions");
     THROW_WALLET_EXCEPTION_IF(res.txs.size() != 1, error::wallet_internal_error,
       "daemon returned wrong response for gettransactions, wrong txs count = " +
-      std::to_string(res.txs.size()) + ", expected 1");
+      std::to_chars(res.txs.size()) + ", expected 1");
     check_rpc_cost("/gettransactions", res.credits, pre_call_credits, COST_PER_TX);
   }
 
@@ -10906,7 +10906,7 @@ std::string wallet2::get_spend_proof(const crypto::hash &txid, const std::string
     THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {}, res, "gettransactions");
     THROW_WALLET_EXCEPTION_IF(res.txs.size() != 1, error::wallet_internal_error,
       "daemon returned wrong response for gettransactions, wrong txs count = " +
-      std::to_string(res.txs.size()) + ", expected 1");
+      std::to_chars(res.txs.size()) + ", expected 1");
     check_rpc_cost("/gettransactions", res.credits, pre_call_credits, COST_PER_TX);
   }
 
@@ -10970,7 +10970,7 @@ std::string wallet2::get_spend_proof(const crypto::hash &txid, const std::string
       THROW_ON_RPC_RESPONSE_ERROR(r, {}, res, "get_outs.bin", error::get_outs_error, res.status);
       THROW_WALLET_EXCEPTION_IF(res.outs.size() != ring_size, error::wallet_internal_error,
         "daemon returned wrong response for get_outs.bin, wrong amounts count = " +
-        std::to_string(res.outs.size()) + ", expected " +  std::to_string(ring_size));
+        std::to_chars(res.outs.size()) + ", expected " +  std::to_chars(ring_size));
       check_rpc_cost("/get_outs.bin", res.credits, pre_call_credits, ring_size * COST_PER_OUT);
     }
 
@@ -11028,7 +11028,7 @@ bool wallet2::check_spend_proof(const crypto::hash &txid, const std::string &mes
     THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {}, res, "gettransactions");
     THROW_WALLET_EXCEPTION_IF(res.txs.size() != 1, error::wallet_internal_error,
       "daemon returned wrong response for gettransactions, wrong txs count = " +
-      std::to_string(res.txs.size()) + ", expected 1");
+      std::to_chars(res.txs.size()) + ", expected 1");
     check_rpc_cost("/gettransactions", res.credits, pre_call_credits, COST_PER_TX);
   }
 
@@ -11103,7 +11103,7 @@ bool wallet2::check_spend_proof(const crypto::hash &txid, const std::string &mes
       THROW_ON_RPC_RESPONSE_ERROR(r, {}, res, "get_outs.bin", error::get_outs_error, res.status);
       THROW_WALLET_EXCEPTION_IF(res.outs.size() != req.outputs.size(), error::wallet_internal_error,
         "daemon returned wrong response for get_outs.bin, wrong amounts count = " +
-        std::to_string(res.outs.size()) + ", expected " +  std::to_string(req.outputs.size()));
+        std::to_chars(res.outs.size()) + ", expected " +  std::to_chars(req.outputs.size()));
       check_rpc_cost("/get_outs.bin", res.credits, pre_call_credits, req.outputs.size() * COST_PER_OUT);
     }
 
@@ -12309,7 +12309,7 @@ uint64_t wallet2::import_key_images(const std::vector<std::pair<crypto::key_imag
       THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {},  daemon_resp, "is_key_image_spent");
       THROW_WALLET_EXCEPTION_IF(daemon_resp.spent_status.size() != signed_key_images.size(), error::wallet_internal_error,
         "daemon returned wrong response for is_key_image_spent, wrong amounts count = " +
-        std::to_string(daemon_resp.spent_status.size()) + ", expected " +  std::to_string(signed_key_images.size()));
+        std::to_chars(daemon_resp.spent_status.size()) + ", expected " +  std::to_chars(signed_key_images.size()));
       check_rpc_cost("/is_key_image_spent", daemon_resp.credits, pre_call_credits, daemon_resp.spent_status.size() * COST_PER_KEY_IMAGE);
     }
 
@@ -12397,7 +12397,7 @@ uint64_t wallet2::import_key_images(const std::vector<std::pair<crypto::key_imag
       bool r = epee::net_utils::invoke_http_json("/gettransactions", gettxs_req, gettxs_res, *m_http_client, rpc_timeout);
       THROW_ON_RPC_RESPONSE_ERROR_GENERIC(r, {}, gettxs_res, "gettransactions");
       THROW_WALLET_EXCEPTION_IF(gettxs_res.txs.size() != spent_txids.size(), error::wallet_internal_error,
-        "daemon returned wrong response for gettransactions, wrong count = " + std::to_string(gettxs_res.txs.size()) + ", expected " + std::to_string(spent_txids.size()));
+        "daemon returned wrong response for gettransactions, wrong count = " + std::to_chars(gettxs_res.txs.size()) + ", expected " + std::to_chars(spent_txids.size()));
       check_rpc_cost("/gettransactions", gettxs_res.credits, pre_call_credits, spent_txids.size() * COST_PER_TX);
     }
     PERF_TIMER_STOP(import_key_images_E);
@@ -12464,7 +12464,7 @@ uint64_t wallet2::import_key_images(const std::vector<std::pair<crypto::key_imag
         auto it = m_key_images.find(boost::get<cryptonote::txin_to_key>(in).k_image);
         if (it != m_key_images.end())
         {
-          THROW_WALLET_EXCEPTION_IF(it->second >= m_transfers.size(), error::wallet_internal_error, std::string("Key images cache contains illegal transfer offset: ") + std::to_string(it->second) + std::string(" m_transfers.size() = ") + std::to_string(m_transfers.size()));
+          THROW_WALLET_EXCEPTION_IF(it->second >= m_transfers.size(), error::wallet_internal_error, std::string("Key images cache contains illegal transfer offset: ") + std::to_chars(it->second) + std::string(" m_transfers.size() = ") + std::to_chars(m_transfers.size()));
           const transfer_details& td = m_transfers[it->second];
           uint64_t amount = boost::get<cryptonote::txin_to_key>(in).amount;
           if (amount > 0)
@@ -13358,9 +13358,9 @@ uint64_t wallet2::get_blockchain_height_by_date(uint16_t year, uint8_t month, ui
     }
     cryptonote::block blk_min, blk_mid, blk_max;
     if (res.blocks.size() < 3) throw std::runtime_error("Not enough blocks returned from daemon");
-    if (!parse_and_validate_block_from_blob(res.blocks[0].block, blk_min)) throw std::runtime_error("failed to parse blob at height " + std::to_string(height_min));
-    if (!parse_and_validate_block_from_blob(res.blocks[1].block, blk_mid)) throw std::runtime_error("failed to parse blob at height " + std::to_string(height_mid));
-    if (!parse_and_validate_block_from_blob(res.blocks[2].block, blk_max)) throw std::runtime_error("failed to parse blob at height " + std::to_string(height_max));
+    if (!parse_and_validate_block_from_blob(res.blocks[0].block, blk_min)) throw std::runtime_error("failed to parse blob at height " + std::to_chars(height_min));
+    if (!parse_and_validate_block_from_blob(res.blocks[1].block, blk_mid)) throw std::runtime_error("failed to parse blob at height " + std::to_chars(height_mid));
+    if (!parse_and_validate_block_from_blob(res.blocks[2].block, blk_max)) throw std::runtime_error("failed to parse blob at height " + std::to_chars(height_max));
     uint64_t timestamp_min = blk_min.timestamp;
     uint64_t timestamp_mid = blk_mid.timestamp;
     uint64_t timestamp_max = blk_max.timestamp;

@@ -377,9 +377,9 @@ bool ringdb::get_ring(const crypto::chacha_key &chacha_key, const crypto::key_im
     outs = decompress_ring(data_plaintext, 0);
   }
   MDEBUG("Found ring for key image " << key_image << ":");
-  MDEBUG("Relative: " << boost::join(outs | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+  MDEBUG("Relative: " << boost::join(outs | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
   outs = cryptonote::relative_output_offsets_to_absolute(outs);
-  MDEBUG("Absolute: " << boost::join(outs | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+  MDEBUG("Absolute: " << boost::join(outs | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
 
   dbr = mdb_txn_commit(txn);
   THROW_WALLET_EXCEPTION_IF(dbr, tools::error::wallet_internal_error, "Failed to commit txn getting ring from database: " + std::string(mdb_strerror(dbr)));

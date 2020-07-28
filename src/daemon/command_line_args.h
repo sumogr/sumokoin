@@ -111,13 +111,13 @@ namespace daemon_args
   const command_line::arg_descriptor<std::string, false, true, 2> arg_zmq_rpc_bind_port = {
     "zmq-rpc-bind-port"
   , "Port for ZMQ RPC server to listen on"
-  , std::to_string(config::ZMQ_RPC_DEFAULT_PORT)
+  , std::to_chars(config::ZMQ_RPC_DEFAULT_PORT)
   , {{ &cryptonote::arg_testnet_on, &cryptonote::arg_stagenet_on }}
   , [](std::array<bool, 2> testnet_stagenet, bool defaulted, std::string val)->std::string {
       if (testnet_stagenet[0] && defaulted)
-        return std::to_string(config::testnet::ZMQ_RPC_DEFAULT_PORT);
+        return std::to_chars(config::testnet::ZMQ_RPC_DEFAULT_PORT);
       if (testnet_stagenet[1] && defaulted)
-        return std::to_string(config::stagenet::ZMQ_RPC_DEFAULT_PORT);
+        return std::to_chars(config::stagenet::ZMQ_RPC_DEFAULT_PORT);
       return val;
     }
   };

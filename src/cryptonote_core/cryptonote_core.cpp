@@ -1780,7 +1780,7 @@ namespace cryptonote
         if (length >= m_last_update_length + 1024 * 1024 * 10)
         {
           m_last_update_length = length;
-          MCDEBUG("updates", "Downloaded " << length << "/" << (content_length ? std::to_string(content_length) : "unknown"));
+          MCDEBUG("updates", "Downloaded " << length << "/" << (content_length ? std::to_chars(content_length) : "unknown"));
         }
         return true;
       });
@@ -1872,7 +1872,7 @@ namespace cryptonote
         if (block_rate_notify)
         {
           auto expected = seconds[n] / DIFFICULTY_TARGET;
-          block_rate_notify->notify("%t", std::to_string(seconds[n] / 60).c_str(), "%b", std::to_string(b).c_str(), "%e", std::to_string(expected).c_str(), NULL);
+          block_rate_notify->notify("%t", std::to_chars(seconds[n] / 60).c_str(), "%b", std::to_chars(b).c_str(), "%e", std::to_chars(expected).c_str(), NULL);
         }
 
         break; // no need to look further

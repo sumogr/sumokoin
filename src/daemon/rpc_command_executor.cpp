@@ -79,7 +79,7 @@ namespace {
     std::string port_str;
     epee::string_tools::xtype_to_string(peer.port, port_str);
     std::string addr_str = peer.host + ":" + port_str;
-    std::string rpc_port = peer.rpc_port ? std::to_string(peer.rpc_port) : "-";
+    std::string rpc_port = peer.rpc_port ? std::to_chars(peer.rpc_port) : "-";
     std::string rpc_credits_per_hash = peer.rpc_credits_per_hash ? print_float(peer.rpc_credits_per_hash / RPC_CREDITS_PER_HASH_SCALE, 2) : "-";
     std::string pruning_seed = epee::string_tools::to_string_hex(peer.pruning_seed);
     tools::msg_writer() << boost::format("%-10s %-25s %-25s %-5s %-5s %-4s %s") % prefix % id_str % addr_str % rpc_port % rpc_credits_per_hash % pruning_seed % elapsed;
@@ -826,7 +826,7 @@ bool t_rpc_command_executor::print_connections() {
 
   for (auto & info : res.connections)
   {
-    std::string rpc_port = info.rpc_port ? std::to_string(info.rpc_port) : "no";
+    std::string rpc_port = info.rpc_port ? std::to_chars(info.rpc_port) : "no";
     std::string address = info.incoming ? "INC " : "OUT ";
     if (info.incoming)
       ++incoming_number;
@@ -843,9 +843,9 @@ bool t_rpc_command_executor::print_connections() {
      << std::setw(8) << info.height
      << std::setw(18) << info.peer_id
      << std::setw(6) << info.support_flags
-     << std::setw(26) << std::to_string(info.recv_count) + "("  + std::to_string(info.recv_idle_time) + ")/" + std::to_string(info.send_count) + "(" + std::to_string(info.send_idle_time) + ")"
+     << std::setw(26) << std::to_chars(info.recv_count) + "("  + std::to_chars(info.recv_idle_time) + ")/" + std::to_chars(info.send_count) + "(" + std::to_chars(info.send_idle_time) + ")"
      << std::setw(18) << info.state
-     << std::setw(22) << std::to_string(info.avg_download) + "/" + std::to_string(info.current_download) + "  |  "+ std::to_string(info.avg_upload) + "/" + std::to_string(info.current_upload)
+     << std::setw(22) << std::to_chars(info.avg_download) + "/" + std::to_chars(info.current_download) + "  |  "+ std::to_chars(info.avg_upload) + "/" + std::to_chars(info.current_upload)
      << std::setw(8) << info.live_time
 
      << std::left << (info.localhost ? "[LOCALHOST]" : "")
@@ -890,7 +890,7 @@ bool t_rpc_command_executor::print_open_rpc() {
 
   for (auto & info : res.connections)
   {
-    std::string rpc_port = std::to_string(info.rpc_port);
+    std::string rpc_port = std::to_chars(info.rpc_port);
     if (rpc_port != "0")
     {
       std::string address = info.ip + ":" + info.port;
@@ -1065,7 +1065,7 @@ bool t_rpc_command_executor::set_log_level(int8_t level) {
     }
   }
 
-  tools::success_msg_writer() << "Log level is now " << std::to_string(level);
+  tools::success_msg_writer() << "Log level is now " << std::to_chars(level);
 
   return true;
 }
@@ -1828,7 +1828,7 @@ bool t_rpc_command_executor::out_peers(bool set, uint32_t limit)
 		}
 	}
 
-	const std::string s = res.out_peers == (uint32_t)-1 ? "unlimited" : std::to_string(res.out_peers);
+	const std::string s = res.out_peers == (uint32_t)-1 ? "unlimited" : std::to_chars(res.out_peers);
 	tools::msg_writer() << "Max number of out peers set to " << s << std::endl;
 
 	return true;
@@ -1862,7 +1862,7 @@ bool t_rpc_command_executor::in_peers(bool set, uint32_t limit)
 		}
 	}
 
-	const std::string s = res.in_peers == (uint32_t)-1 ? "unlimited" : std::to_string(res.in_peers);
+	const std::string s = res.in_peers == (uint32_t)-1 ? "unlimited" : std::to_chars(res.in_peers);
 	tools::msg_writer() << "Max number of in peers set to " << s << std::endl;
 
 	return true;
@@ -2495,7 +2495,7 @@ bool t_rpc_command_executor::sync_info()
     if (res.next_needed_pruning_seed)
       tools::success_msg_writer() << "Next needed pruning seed: " << res.next_needed_pruning_seed;
 
-    tools::success_msg_writer() << std::to_string(res.peers.size()) << " peers";
+    tools::success_msg_writer() << std::to_chars(res.peers.size()) << " peers";
     for (const auto &p: res.peers)
     {
       std::string address = epee::string_tools::pad_string(p.info.address, 24);
@@ -2512,7 +2512,7 @@ bool t_rpc_command_executor::sync_info()
     uint64_t total_size = 0;
     for (const auto &s: res.spans)
       total_size += s.size;
-    tools::success_msg_writer() << std::to_string(res.spans.size()) << " spans, " << total_size/1e6 << " MB";
+    tools::success_msg_writer() << std::to_chars(res.spans.size()) << " spans, " << total_size/1e6 << " MB";
     tools::success_msg_writer() << res.overview;
     for (const auto &s: res.spans)
     {

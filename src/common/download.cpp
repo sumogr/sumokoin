@@ -60,7 +60,7 @@ namespace tools
   {
     static std::atomic<unsigned int> thread_id(0);
 
-    MLOG_SET_THREAD_NAME("DL" + std::to_string(thread_id++));
+    MLOG_SET_THREAD_NAME("DL" + std::to_chars(thread_id++));
 
     struct stopped_setter
     {
@@ -123,7 +123,7 @@ namespace tools
           {
             // we requested a range, so check if we're getting it, otherwise truncate
             bool got_range = false;
-            const std::string prefix = "bytes=" + std::to_string(offset) + "-";
+            const std::string prefix = "bytes=" + std::to_chars(offset) + "-";
             for (const auto &kv: headers.m_header_info.m_etc_fields)
             {
               if (kv.first == "Content-Range" && strncmp(kv.second.c_str(), prefix.c_str(), prefix.size()))
@@ -186,7 +186,7 @@ namespace tools
       epee::net_utils::ssl_support_t ssl = u_c.schema == "https" ? epee::net_utils::ssl_support_t::e_ssl_support_enabled : epee::net_utils::ssl_support_t::e_ssl_support_disabled;
       uint16_t port = u_c.port ? u_c.port : ssl == epee::net_utils::ssl_support_t::e_ssl_support_enabled ? 443 : 80;
       MDEBUG("Connecting to " << u_c.host << ":" << port);
-      client.set_server(u_c.host, std::to_string(port), std::nullopt, ssl);
+      client.set_server(u_c.host, std::to_chars(port), std::nullopt, ssl);
       if (!client.connect(std::chrono::seconds(30)))
       {
         boost::lock_guard<boost::mutex> lock(control->mutex);
@@ -199,7 +199,7 @@ namespace tools
       epee::net_utils::http::fields_list fields;
       if (existing_size > 0)
       {
-        const std::string range = "bytes=" + std::to_string(existing_size) + "-";
+        const std::string range = "bytes=" + std::to_chars(existing_size) + "-";
         MDEBUG("Asking for range: " << range);
         fields.push_back(std::make_pair("Range", range));
       }

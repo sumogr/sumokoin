@@ -539,7 +539,7 @@ namespace trezor{
 
   std::string UdpTransport::get_path() const {
     std::string path(PATH_PREFIX);
-    return path + m_device_host + ":" + std::to_string(m_device_port);
+    return path + m_device_host + ":" + std::to_chars(m_device_port);
   }
 
   void UdpTransport::require_socket(){
@@ -590,7 +590,7 @@ namespace trezor{
     }
 
     udp::resolver resolver(m_io_service);
-    udp::resolver::query query(udp::v4(), m_device_host, std::to_string(m_device_port));
+    udp::resolver::query query(udp::v4(), m_device_host, std::to_chars(m_device_port));
     m_endpoint = *resolver.resolve(query);
 
     m_socket.reset(new udp::socket(m_io_service));
@@ -1126,8 +1126,8 @@ namespace trezor{
 
   std::ostream& WebUsbTransport::dump(std::ostream& o) const {
     o << "WebUsbTransport<path=" << get_path()
-             << ", vendorId=" << (m_usb_device_desc ? std::to_string(m_usb_device_desc->idVendor) : "?")
-             << ", productId=" << (m_usb_device_desc ? std::to_string(m_usb_device_desc->idProduct) : "?")
+             << ", vendorId=" << (m_usb_device_desc ? std::to_chars(m_usb_device_desc->idVendor) : "?")
+             << ", productId=" << (m_usb_device_desc ? std::to_chars(m_usb_device_desc->idProduct) : "?")
              << ", deviceType=";
 
     if (m_usb_device_desc){

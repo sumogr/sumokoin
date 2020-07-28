@@ -607,7 +607,7 @@ static std::vector<uint64_t> canonicalize(const std::vector<uint64_t> &v)
   if (c.size() < v.size())
   {
     MINFO("Ring has duplicate member(s): " <<
-        boost::join(v | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+        boost::join(v | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
   }
   return c;
 }
@@ -1236,7 +1236,7 @@ int main(int argc, char* argv[])
   if (!command_line::is_arg_defaulted(vm, arg_log_level))
     mlog_set_log(command_line::get_arg(vm, arg_log_level).c_str());
   else
-    mlog_set_log(std::string(std::to_string(log_level) + ",bcutil:INFO").c_str());
+    mlog_set_log(std::string(std::to_chars(log_level) + ",bcutil:INFO").c_str());
 
   LOG_PRINT_L0("Starting...");
 
@@ -1330,7 +1330,7 @@ int main(int argc, char* argv[])
       for (const auto &out: tx.vout)
       {
         ++outs_total;
-        CHECK_AND_ASSERT_THROW_MES(out.target.type() == typeid(txout_to_key), "Out target type is not txout_to_key: height=" + std::to_string(height));
+        CHECK_AND_ASSERT_THROW_MES(out.target.type() == typeid(txout_to_key), "Out target type is not txout_to_key: height=" + std::to_chars(height));
         uint64_t out_global_index = outs_per_amount[out.amount]++;
         if (is_output_spent(cur, output_data(out.amount, out_global_index)))
           ++outs_spent;
@@ -1488,8 +1488,8 @@ int main(int argc, char* argv[])
         else if (n > 0 && get_relative_ring(txn, txin.k_image, relative_ring))
         {
           MDEBUG("Key image " << txin.k_image << " already seen: rings " <<
-              boost::join(relative_ring | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " ") <<
-              ", " << boost::join(txin.key_offsets | boost::adaptors::transformed([](uint64_t out){return std::to_string(out);}), " "));
+              boost::join(relative_ring | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " ") <<
+              ", " << boost::join(txin.key_offsets | boost::adaptors::transformed([](uint64_t out){return std::to_chars(out);}), " "));
           std::cout << "\r" << start_idx << "/" << n_txes << "         \r" << std::flush;
           if (relative_ring != txin.key_offsets)
           {
@@ -1670,7 +1670,7 @@ int main(int argc, char* argv[])
 
 skip_secondary_passes:
   uint64_t diff = get_num_spent_outputs() - start_blackballed_outputs;
-  LOG_PRINT_L0(std::to_string(diff) << " new outputs marked as spent, " << get_num_spent_outputs() << " total outputs marked as spent");
+  LOG_PRINT_L0(std::to_chars(diff) << " new outputs marked as spent, " << get_num_spent_outputs() << " total outputs marked as spent");
 
   MDB_txn *txn;
   dbr = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);

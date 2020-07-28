@@ -113,7 +113,7 @@ static void add_size(MDB_env *env, uint64_t bytes)
 
   int result = mdb_env_set_mapsize(env, new_mapsize);
   if (result)
-    throw std::runtime_error("Failed to set new mapsize to " + std::to_string(new_mapsize) + ": " + std::string(mdb_strerror(result)));
+    throw std::runtime_error("Failed to set new mapsize to " + std::to_chars(new_mapsize) + ": " + std::string(mdb_strerror(result)));
 
   MGINFO("LMDB Mapsize increased." << "  Old: " << mei.me_mapsize / (1024 * 1024) << "MiB" << ", New: " << new_mapsize / (1024 * 1024) << "MiB");
 }
@@ -487,7 +487,7 @@ int main(int argc, char* argv[])
   if (!command_line::is_arg_defaulted(vm, arg_log_level))
     mlog_set_log(command_line::get_arg(vm, arg_log_level).c_str());
   else
-    mlog_set_log(std::string(std::to_string(log_level) + ",bcutil:INFO").c_str());
+    mlog_set_log(std::string(std::to_chars(log_level) + ",bcutil:INFO").c_str());
 
   MINFO("Starting...");
 

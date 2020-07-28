@@ -89,7 +89,7 @@ static bool generate_multisig(uint32_t threshold, uint32_t total, const std::str
     std::vector<std::shared_ptr<tools::wallet2>> wallets(total);
     for (size_t n = 0; n < total; ++n)
     {
-      std::string name = basename + "-" + std::to_string(n + 1);
+      std::string name = basename + "-" + std::to_chars(n + 1);
       wallets[n].reset(new tools::wallet2(nettype, 1, false));
       wallets[n]->init("");
       wallets[n]->generate(name, pwd_container->password(), rct::rct2sk(rct::skGen()), false, false, create_address_file);
@@ -114,7 +114,7 @@ static bool generate_multisig(uint32_t threshold, uint32_t total, const std::str
     std::stringstream ss;
     for (size_t n = 0; n < total; ++n)
     {
-      std::string name = basename + "-" + std::to_string(n + 1);
+      std::string name = basename + "-" + std::to_chars(n + 1);
       std::vector<crypto::secret_key> skn;
       std::vector<crypto::public_key> pkn;
       for (size_t k = 0; k < total; ++k)

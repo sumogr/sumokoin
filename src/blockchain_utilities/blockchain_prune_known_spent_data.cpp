@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
   if (!command_line::is_arg_defaulted(vm, arg_log_level))
     mlog_set_log(command_line::get_arg(vm, arg_log_level).c_str());
   else
-    mlog_set_log(std::string(std::to_string(log_level) + ",bcutil:INFO").c_str());
+    mlog_set_log(std::string(std::to_chars(log_level) + ",bcutil:INFO").c_str());
 
   LOG_PRINT_L0("Starting...");
 

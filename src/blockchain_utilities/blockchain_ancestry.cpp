@@ -392,7 +392,7 @@ int main(int argc, char* argv[])
   if (!command_line::is_arg_defaulted(vm, arg_log_level))
     mlog_set_log(command_line::get_arg(vm, arg_log_level).c_str());
   else
-    mlog_set_log(std::string(std::to_string(log_level) + ",bcutil:INFO").c_str());
+    mlog_set_log(std::string(std::to_chars(log_level) + ",bcutil:INFO").c_str());
 
   LOG_PRINT_L0("Starting...");
 
@@ -718,9 +718,9 @@ done:
   core_storage->deinit();
 
   if (opt_show_cache_stats)
-  MINFO("cache: txes " << std::to_string(cached_txes*100./total_txes)
-        << "%, blocks " << std::to_string(cached_blocks*100./total_blocks)
-        << "%, outputs " << std::to_string(cached_outputs*100./total_outputs)
+  MINFO("cache: txes " << std::to_chars(cached_txes*100./total_txes)
+        << "%, blocks " << std::to_chars(cached_blocks*100./total_blocks)
+        << "%, outputs " << std::to_chars(cached_outputs*100./total_outputs)
         << "%");
 
   return 0;

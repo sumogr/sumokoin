@@ -1093,7 +1093,7 @@ bool simple_wallet::make_multisig_main(const std::vector<std::string> &args, boo
     fail_msg_writer() << tr("Error creating multisig: new wallet is not multisig");
     return false;
   }
-  success_msg_writer() << std::to_string(threshold) << "/" << total << tr(" multisig address: ")
+  success_msg_writer() << std::to_chars(threshold) << "/" << total << tr(" multisig address: ")
       << m_wallet->get_account().get_public_address_str(m_wallet->nettype());
 
   return true;
@@ -2230,8 +2230,8 @@ bool simple_wallet::lock(const std::vector<std::string> &args)
 
 bool simple_wallet::net_stats(const std::vector<std::string> &args)
 {
-  message_writer() << std::to_string(m_wallet->get_bytes_sent()) + tr(" bytes sent");
-  message_writer() << std::to_string(m_wallet->get_bytes_received()) + tr(" bytes received");
+  message_writer() << std::to_chars(m_wallet->get_bytes_sent()) + tr(" bytes sent");
+  message_writer() << std::to_chars(m_wallet->get_bytes_received()) + tr(" bytes received");
   return true;
 }
 
@@ -2262,7 +2262,7 @@ bool simple_wallet::public_nodes(const std::vector<std::string> &args)
       char cphs[9];
       snprintf(cphs, sizeof(cphs), "%.3f", cph);
       const std::string last_seen = node.last_seen == 0 ? tr("never") : get_human_readable_timespan(std::chrono::seconds(now - node.last_seen));
-      std::string host = node.host + ":" + std::to_string(node.rpc_port);
+      std::string host = node.host + ":" + std::to_chars(node.rpc_port);
       message_writer() << boost::format("%32s %12s %16s") % host % cphs % last_seen;
       m_claimed_cph[host] = node.rpc_credits_per_hash;
     }
@@ -5356,7 +5356,7 @@ bool simple_wallet::set_daemon(const std::vector<std::string>& args)
     if (!match[3].length())
     {
       uint16_t daemon_port = get_config(m_wallet->nettype()).RPC_DEFAULT_PORT;
-      daemon_url = match[1] + match[2] + std::string(":") + std::to_string(daemon_port);
+      daemon_url = match[1] + match[2] + std::string(":") + std::to_chars(daemon_port);
     } else {
       daemon_url = args[0];
     }
@@ -7658,7 +7658,7 @@ bool simple_wallet::accept_loaded_tx(const std::function<size_t()> get_num_txes,
   {
     if (!dest_string.empty())
       dest_string += ", ";
-    dest_string += std::to_string(n_dummy_outputs) + tr(" dummy output(s)");
+    dest_string += std::to_chars(n_dummy_outputs) + tr(" dummy output(s)");
   }
   if (dest_string.empty())
     dest_string = tr("with no destinations");
@@ -7750,7 +7750,7 @@ bool simple_wallet::sign_transfer(const std::vector<std::string> &args_)
     {
       if (i > 0)
         rawfiles_as_text += ", ";
-      rawfiles_as_text += "signed_sumo_tx_raw" + (ptx.size() == 1 ? "" : ("_" + std::to_string(i)));
+      rawfiles_as_text += "signed_sumo_tx_raw" + (ptx.size() == 1 ? "" : ("_" + std::to_chars(i)));
     }
     success_msg_writer(true) << tr("Transaction raw hex data exported to ") << rawfiles_as_text;
   }
@@ -8288,15 +8288,15 @@ static std::string get_human_readable_timespan(std::chrono::seconds seconds)
 {
   uint64_t ts = seconds.count();
   if (ts < 60)
-    return std::to_string(ts) + sw::tr(" seconds");
+    return std::to_chars(ts) + sw::tr(" seconds");
   if (ts < 3600)
-    return std::to_string((uint64_t)(ts / 60)) + sw::tr(" minutes");
+    return std::to_chars((uint64_t)(ts / 60)) + sw::tr(" minutes");
   if (ts < 3600 * 24)
-    return std::to_string((uint64_t)(ts / 3600)) + sw::tr(" hours");
+    return std::to_chars((uint64_t)(ts / 3600)) + sw::tr(" hours");
   if (ts < 3600 * 24 * 30.5)
-    return std::to_string((uint64_t)(ts / (3600 * 24))) + sw::tr(" days");
+    return std::to_chars((uint64_t)(ts / (3600 * 24))) + sw::tr(" days");
   if (ts < 3600 * 24 * 365.25)
-    return std::to_string((uint64_t)(ts / (3600 * 24 * 30.5))) + sw::tr(" months");
+    return std::to_chars((uint64_t)(ts / (3600 * 24 * 30.5))) + sw::tr(" months");
   return sw::tr("a long time");
 }
 //----------------------------------------------------------------------------------------------------
@@ -8407,7 +8407,7 @@ bool simple_wallet::get_transfers(std::vector<std::string>& local_args, std::vec
         {
           uint64_t bh = std::max(pd.m_unlock_time, pd.m_block_height + CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE);
           if (bh >= last_block_height)
-            locked_msg = std::to_string(bh - last_block_height) + " blks";
+            locked_msg = std::to_chars(bh - last_block_height) + " blks";
         }
         else
         {
@@ -8619,7 +8619,7 @@ bool simple_wallet::show_transfers(const std::vector<std::string> &args_)
       % string_tools::pod_to_hex(transfer.hash)
       % fee
       % destinations
-      % boost::algorithm::join(transfer.index | boost::adaptors::transformed([](uint32_t i) { return std::to_string(i); }), ", ")
+      % boost::algorithm::join(transfer.index | boost::adaptors::transformed([](uint32_t i) { return std::to_chars(i); }), ", ")
       % transfer.note
       % lock_status;
 
@@ -8694,7 +8694,7 @@ bool simple_wallet::export_transfers(const std::vector<std::string>& args_)
       % print_money(transfer.fee)
       % (transfer.outputs.size() ? transfer.outputs[0].first : "-")
       % (transfer.outputs.size() ? print_money(transfer.outputs[0].second) : "")
-      % boost::algorithm::join(transfer.index | boost::adaptors::transformed([](uint32_t i) { return std::to_string(i); }), ", ")
+      % boost::algorithm::join(transfer.index | boost::adaptors::transformed([](uint32_t i) { return std::to_chars(i); }), ", ")
       % transfer.note
       << std::endl;
 
@@ -9051,7 +9051,7 @@ bool simple_wallet::check_rpc_payment()
       bool low = (diff > MAX_PAYMENT_DIFF || cph < MIN_PAYMENT_RATE);
       if (credits_per_hash_found > 0 && cph >= m_wallet->auto_mine_for_rpc_payment_threshold())
       {
-        MINFO(std::to_string(cph) << " credits per hash is >= our threshold (" << m_wallet->auto_mine_for_rpc_payment_threshold() << "), starting mining");
+        MINFO(std::to_chars(cph) << " credits per hash is >= our threshold (" << m_wallet->auto_mine_for_rpc_payment_threshold() << "), starting mining");
         return true;
       }
       else if (m_rpc_payment_mining_requested)
@@ -10125,9 +10125,9 @@ bool simple_wallet::show_transfer(const std::vector<std::string> &args)
         if (bh >= last_block_height)
           success_msg_writer() << "Locked: " << (bh - last_block_height) << " blocks to unlock";
         else if (suggested_threshold > 0)
-          success_msg_writer() << std::to_string(last_block_height - bh) << " confirmations (" << suggested_threshold << " suggested threshold)";
+          success_msg_writer() << std::to_chars(last_block_height - bh) << " confirmations (" << suggested_threshold << " suggested threshold)";
         else
-          success_msg_writer() << std::to_string(last_block_height - bh) << " confirmations";
+          success_msg_writer() << std::to_chars(last_block_height - bh) << " confirmations";
       }
       else
       {
@@ -10268,7 +10268,7 @@ void simple_wallet::commit_or_save(std::vector<tools::wallet2::pending_tx>& ptx_
       cryptonote::blobdata blob;
       tx_to_blob(ptx.tx, blob);
       const std::string blob_hex = epee::string_tools::buff_to_hex_nodelimer(blob);
-      const std::string filename = "raw_sumo_tx" + (ptx_vector.size() == 1 ? "" : ("_" + std::to_string(i++)));
+      const std::string filename = "raw_sumo_tx" + (ptx_vector.size() == 1 ? "" : ("_" + std::to_chars(i++)));
       if (m_wallet->save_to_file(filename, blob_hex, true))
         success_msg_writer(true) << tr("Transaction successfully saved to ") << filename << tr(", txid ") << txid;
       else
@@ -10462,7 +10462,7 @@ bool simple_wallet::choose_mms_processing(const std::vector<mms::processing_data
   for (size_t i = 0; i < choices; ++i)
   {
     const mms::processing_data &data = data_list[i];
-    text = std::to_string(i+1) + ": ";
+    text = std::to_chars(i+1) + ": ";
     switch (data.processing)
     {
     case mms::message_processing::sign_tx:
@@ -10839,7 +10839,7 @@ void simple_wallet::mms_next(const std::vector<std::string> &args)
       message_writer() << tr("make_multisig");
       size_t number_of_key_sets = data.message_ids.size();
       std::vector<std::string> sig_args(number_of_key_sets + 1);
-      sig_args[0] = std::to_string(ms.get_num_required_signers());
+      sig_args[0] = std::to_chars(ms.get_num_required_signers());
       for (size_t i = 0; i < number_of_key_sets; ++i)
       {
         mms::message m = ms.get_message_by_id(data.message_ids[i]);

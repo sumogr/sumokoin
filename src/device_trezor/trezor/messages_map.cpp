@@ -62,7 +62,7 @@ namespace trezor
   google::protobuf::Message * MessageMapper::get_message(messages::MessageType wire_number) {
     const string &messageTypeName = hw::trezor::messages::MessageType_Name(wire_number);
     if (messageTypeName.empty()) {
-      throw exc::EncodingException(std::string("Message descriptor not found: ") + std::to_string(wire_number));
+      throw exc::EncodingException(std::string("Message descriptor not found: ") + std::to_chars(wire_number));
     }
 
     string messageName = messageTypeName.substr(strlen(TYPE_PREFIX));

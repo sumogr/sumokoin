@@ -785,7 +785,7 @@ namespace tools
     struct wallet_coded_rpc_error : public wallet_rpc_error
     {
       explicit wallet_coded_rpc_error(std::string&& loc, const std::string& request, int code, const std::string& status)
-        : wallet_rpc_error(std::move(loc), std::string("error ") + std::to_string(code) + (" in ") + request + " RPC: " + status, request),
+        : wallet_rpc_error(std::move(loc), std::string("error ") + std::to_chars(code) + (" in ") + request + " RPC: " + status, request),
         m_code(code), m_status(status)
       {
       }

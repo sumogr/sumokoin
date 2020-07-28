@@ -168,7 +168,7 @@ bool wallet2::search_for_rpc_payment(uint64_t credits_target, const std::functio
       {
         MWARNING("Found a local_nonce at diff " << diff << ", but failed to send it to the daemon");
         if (errorfunc)
-          errorfunc("Found nonce, but daemon errored out with error " + std::to_string(e.code()) + ": " + e.status() + ", continuing");
+          errorfunc("Found nonce, but daemon errored out with error " + std::to_chars(e.code()) + ": " + e.status() + ", continuing");
       }
       catch (const std::exception &e)
       {

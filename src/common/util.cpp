@@ -736,7 +736,7 @@ std::string get_nix_version_display_string()
 #else
   static void posix_crash_handler(int signal)
   {
-    tools::log_stack_trace(("crashing with fatal signal " + std::to_string(signal)).c_str());
+    tools::log_stack_trace(("crashing with fatal signal " + std::to_chars(signal)).c_str());
 #ifdef NDEBUG
     _exit(1);
 #else
@@ -1082,17 +1082,17 @@ std::string get_nix_version_display_string()
   std::string get_human_readable_timespan(uint64_t seconds)
   {
     if (seconds < 60)
-      return std::to_string(seconds) + " seconds";
+      return std::to_chars(seconds) + " seconds";
     if (seconds < 3600)
-      return std::to_string((uint64_t)(seconds / 60)) + " minutes";
+      return std::to_chars((uint64_t)(seconds / 60)) + " minutes";
     if (seconds < 3600 * 24)
-      return std::to_string((uint64_t)(seconds / 3600)) + " hours";
+      return std::to_chars((uint64_t)(seconds / 3600)) + " hours";
     if (seconds < 3600 * 24 * 30.5)
-      return std::to_string((uint64_t)(seconds / (3600 * 24))) + " days";
+      return std::to_chars((uint64_t)(seconds / (3600 * 24))) + " days";
     if (seconds < 3600 * 24 * 365.25)
-      return std::to_string((uint64_t)(seconds / (3600 * 24 * 30.5))) + " months";
+      return std::to_chars((uint64_t)(seconds / (3600 * 24 * 30.5))) + " months";
     if (seconds < 3600 * 24 * 365.25 * 100)
-      return std::to_string((uint64_t)(seconds / (3600 * 24 * 30.5 * 365.25))) + " years";
+      return std::to_chars((uint64_t)(seconds / (3600 * 24 * 30.5 * 365.25))) + " years";
     return "a long time";
   }
 

@@ -254,7 +254,7 @@ namespace net_utils
 				req_buff.reserve(2048);
 				req_buff.append(method.data(), method.size()).append(" ").append(uri.data(), uri.size()).append(" HTTP/1.1\r\n");
 				add_field(req_buff, "Host", m_host_buff);
-				add_field(req_buff, "Content-Length", std::to_string(body.size()));
+				add_field(req_buff, "Content-Length", std::to_chars(body.size()));
 
 				//handle "additional_params"
 				for(const auto& field : additional_params)
