@@ -2506,6 +2506,8 @@ void DefaultLogDispatchCallback::dispatch(base::type::string_t&& rawLinePrefix, 
         m_data->logMessage()->logger()->logBuilder()->setColor(el::base::utils::colorFromLevel(level), false);
         ELPP_COUT << rawLinePrefix;
         m_data->logMessage()->logger()->logBuilder()->setColor(color == el::Color::Default ? el::base::utils::colorFromLevel(level): color, color != el::Color::Default);
+        try { sanitize(rawLinePayload); }
+        catch (const std::exception &e) { rawLinePayload = "<Invalid UTF-8 in log>"; }
         ELPP_COUT << rawLinePayload;
         m_data->logMessage()->logger()->logBuilder()->setColor(el::Color::Default, false);
         ELPP_COUT << std::flush;
@@ -2872,6 +2874,16 @@ void Writer::initializeLogger(Logger *logger, bool needLock) {
 }
 
 void Writer::processDispatch() {
+  static std::atomic_flag in_dispatch;
+  if (in_dispatch.test_and_set())
+  {
+    if (m_proceed && m_logger != NULL)
+    {
+      m_logger->stream().str(ELPP_LITERAL(""));
+      m_logger->releaseLock();
+    }
+    return;
+  }
 #if ELPP_LOGGING_ENABLED
   if (ELPP->hasFlag(LoggingFlag::MultiLoggerSupport)) {
     bool firstDispatched = false;
@@ -2910,6 +2922,7 @@ void Writer::processDispatch() {
     m_logger->releaseLock();
   }
 #endif // ELPP_LOGGING_ENABLED
+  in_dispatch.clear();
 }
 
 void Writer::triggerDispatch(void) {
