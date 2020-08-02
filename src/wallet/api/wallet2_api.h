@@ -1,6 +1,5 @@
 // Copyright (c) 2014-2020, The Monero Project
 //
->>>>>>> 96e404d6... [miner] completely remove background mining
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
