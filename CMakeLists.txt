@@ -714,6 +714,10 @@ else()
   if (noexecheap_SUPPORTED)
     set(LD_SECURITY_FLAGS "${LD_SECURITY_FLAGS} -Wl,-z,noexecheap")
   endif()
+  
+  if (LINUX AND STATIC AND NOT BUILD_64)
+  add_linker_flag_if_supported(-m32)
+  endif()
 
   if(BACKCOMPAT)
       add_linker_flag_if_supported(-Wl,--wrap=__divmoddi4 LD_BACKCOMPAT_FLAGS)
