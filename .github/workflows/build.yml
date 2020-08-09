@@ -18,7 +18,8 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
+        dpkg --add-architecture i386
         sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt-get install libc6-i386
+      run: sudo apt-get install linux-libc-dev:i386
    
