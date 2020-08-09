@@ -17,7 +17,18 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: sudo apt update
+      run: |
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial main restricted'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial-updates main restricted'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial universe'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial-updates universe'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial multiverse'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial-updates multiverse'
+        add-apt-repository 'deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse'
+        add-apt-repository 'deb http://security.ubuntu.com/ubuntu xenial-security main restricted'
+        add-apt-repository 'deb http://security.ubuntu.com/ubuntu xenial-security universe'
+        add-apt-repository 'deb http://security.ubuntu.com/ubuntu xenial-security multiverse'
+        sudo apt update
     - name: install sumokoin dependencies
-      run: grep ^[^#] /etc/apt/sources.list /etc/apt/sources.list.d/*
+      run: apt-get install linux-libc-dev:i386
    
