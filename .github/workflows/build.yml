@@ -19,6 +19,5 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc automake g++-multilib bc autoconf libtool gperf libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: make depends target=i686-linux-gnu
+      run: grep ^[^#] /etc/apt/sources.list /etc/apt/sources.list.d/*
+   
