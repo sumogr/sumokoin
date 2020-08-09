@@ -22,5 +22,5 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get purge binutils* --no-upgrade
+        sudo apt-get purge *multilib*
         sudo apt-get install gperf g++-7-multilib:i386 gcc-7-multilib:i386 g++-7:i386 gcc-7:i386 pkg-config git screen libtool automake autoconf cmake ccache binutils:i386 pkg-config linux-libc-dev:i386 --no-upgrade --no-install-recommends
