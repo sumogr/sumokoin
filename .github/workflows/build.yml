@@ -21,5 +21,5 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt-get install gperf gcc-7 g++-7 g++-7-multilib gcc-7-multilib pkg-config git screen libtool automake autoconf cmake ccache binutils-gold pkg-config linux-libc-dev:i386 --no-install-recommends
+      run: sudo apt list --installed
    
