@@ -15,7 +15,6 @@ jobs:
     - name: set apt conf
       run: |
         sudo apt-get purge -y gcc-5
-        sudo apt-get purge -y g++-5
         gcc --version
         g++ --version
 
