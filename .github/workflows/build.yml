@@ -21,6 +21,6 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt update
     - name: uninstall sumokoin dependencies
-      run: sudo apt-get purge binutils* *gcc* *g++* *lib* *cpp*
+      run: sudo apt-get purge binutils* *gcc* *g++* lib32gcc* linux-libc* lib64gcc* lib6* libsfgcc* libx* *cpp* 
     - name: install sumokoin dependencies
       run: sudo apt-get install gperf gcc-7 g++-7 g++-7-multilib gcc-7-multilib pkg-config git screen libtool automake autoconf cmake ccache binutils-gold pkg-config linux-libc-dev:i386 --no-install-recommends
