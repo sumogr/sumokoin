@@ -1,9 +1,8 @@
 package=libiconv
-$(package)_version=1.15
+$(package)_version=1.16
 $(package)_download_path=https://ftp.gnu.org/gnu/libiconv
 $(package)_file_name=libiconv-$($(package)_version).tar.gz
-$(package)_sha256_hash=ccf536620a45458d26ba83887a983b96827001e92a13847b45e4925cc8913178
-$(package)_patches=fix-whitespace.patch
+$(package)_sha256_hash=e6a1b1b589654277ee790cce3734f07876ac4ccfaecbee8afa0b649cf529cc04
 
 define $(package)_set_vars
   $(package)_config_opts=--disable-nls
@@ -14,8 +13,7 @@ define $(package)_set_vars
 endef
 
 define $(package)_preprocess_cmds
-  cp -f $(BASEDIR)/config.guess $(BASEDIR)/config.sub build-aux/ &&\
-  patch -p1 < $($(package)_patch_dir)/fix-whitespace.patch
+  cp -f $(BASEDIR)/config.guess $(BASEDIR)/config.sub build-aux/
 endef
 
 define $(package)_config_cmds
