@@ -1,0 +1,12 @@
+--- boost_1_64_0/tools/build/src/tools/darwin.jam.O	2017-04-17 03:22:26.000000000 +0100
++++ boost_1_64_0/tools/build/src/tools/darwin.jam	2019-11-15 15:46:16.957937137 +0000
+@@ -140,6 +243,8 @@
+    # - GCC 4.0 and higher in Darwin does not have -fcoalesce-templates.
+-   if $(real-version) < "4.0.0"
+-   {
+-       flags darwin.compile.c++ OPTIONS $(condition) : -fcoalesce-templates ;
+-   }
++   # if $(real-version) < "4.0.0"
++   # {
++   #     flags darwin.compile.c++ OPTIONS $(condition) : -fcoalesce-templates ;
++   # }

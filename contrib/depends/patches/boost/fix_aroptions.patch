@@ -25,4 +25,3 @@
 +    "$(.AR)" $(AROPTIONS) $(.ARFLAGS) "$(<)" "$(>)"
      "$(.RANLIB)" "$(<)"
  }
- 
