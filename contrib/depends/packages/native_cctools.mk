@@ -11,10 +11,10 @@ $(package)_clang_file_name=clang+llvm-$($(package)_clang_version)-x86_64-linux-g
 $(package)_clang_sha256_hash=b25f592a0c00686f03e3b7db68ca6dc87418f681f4ead4df4745a01d9be63843
 
 $(package)_libtapi_version=1000.10.8
-$(package)_libtapi_download_path=https://github.com/tpoechtrager/apple-libtapi/archive/
-$(package)_libtapi_download_file=master.zip
-$(package)_libtapi_file_name=master.zip
-$(package)_libtapi_sha256_hash=930d6e1a2b8929a32e8b95f0b187254be0ee697c1e8c0abf758ceac6e2439f81
+$(package)_libtapi_download_path=https://github.com/tpoechtrager/apple-libtapi/archive
+$(package)_libtapi_download_file=$($(package)_libtapi_version).tar.gz
+$(package)_libtapi_file_name=$($(package)_libtapi_version).tar.gz
+$(package)_libtapi_sha256_hash=9af5a314dc56c1f9b5c8e1fda23e54f6de05f98d2f7bad46bb75798d681c6b43
 $(package)_extra_sources=$($(package)_clang_file_name)
 $(package)_extra_sources += $($(package)_libtapi_file_name)
 
@@ -32,7 +32,7 @@ define $(package)_extract_cmds
   $(build_SHA256SUM) -c $($(package)_extract_dir)/.$($(package)_file_name).hash && \
   mkdir -p toolchain/bin toolchain/lib/clang/$($(package)_clang_version)/include && \
   mkdir -p libtapi && \
-  unzip --no-same-owner  --strip-components=1 -C libtapi -xf $($(package)_source_dir)/$($(package)_libtapi_file_name) && \
+  tar --no-same-owner  --strip-components=1 -C libtapi -xf $($(package)_source_dir)/$($(package)_libtapi_file_name) && \
   tar --no-same-owner  --strip-components=1 -C toolchain -xf $($(package)_source_dir)/$($(package)_clang_file_name) && \
   rm -f toolchain/lib/libc++abi.so* && \
   tar --no-same-owner --strip-components=1 -xf $($(package)_source)
