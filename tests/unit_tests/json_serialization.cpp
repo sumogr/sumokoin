@@ -5,6 +5,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <vector>
+#include <optional>
 
 #include "byte_stream.h"
 #include "crypto/hash.h"
@@ -129,6 +130,43 @@ TEST(JsonSerialization, MinerTransaction)
     EXPECT_EQ(tx_bytes, tx_copy_bytes);
 }
 
+<<<<<<< HEAD
+=======
+// Sumo doesnot have any non-encrypted transactions
+/*
+TEST(JsonSerialization, RegularTransaction)
+{
+    cryptonote::account_base acct1;
+    acct1.generate();
+
+    cryptonote::account_base acct2;
+    acct2.generate();
+
+    const auto miner_tx = test::make_miner_transaction(acct1.get_keys().m_account_address);
+    const auto tx = test::make_transaction(
+        acct1.get_keys(), {miner_tx}, {acct2.get_keys().m_account_address}, false, false
+    );
+
+    crypto::hash tx_hash{};
+    ASSERT_TRUE(cryptonote::get_transaction_hash(tx, tx_hash));
+
+    cryptonote::transaction tx_copy = test_json(tx);
+
+    crypto::hash tx_copy_hash{};
+    ASSERT_TRUE(cryptonote::get_transaction_hash(tx_copy, tx_copy_hash));
+    EXPECT_EQ(tx_hash, tx_copy_hash);
+
+    cryptonote::blobdata tx_bytes{};
+    cryptonote::blobdata tx_copy_bytes{};
+
+    ASSERT_TRUE(cryptonote::t_serializable_object_to_blob(tx, tx_bytes));
+    ASSERT_TRUE(cryptonote::t_serializable_object_to_blob(tx_copy, tx_copy_bytes));
+
+    EXPECT_EQ(tx_bytes, tx_copy_bytes);
+}
+*/
+
+>>>>>>> 4cf46ac5... fix unit tests for sumo
 TEST(JsonSerialization, RingctTransaction)
 {
     cryptonote::account_base acct1;
@@ -190,4 +228,3 @@ TEST(JsonSerialization, BulletproofTransaction)
 
     EXPECT_EQ(tx_bytes, tx_copy_bytes);
 }
-
