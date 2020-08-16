@@ -1,21 +1,21 @@
-// Copyright (c) 2016-2019, The Monero Project
-// 
+// Copyright (c) 2016-2020, The Monero Project
+//
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-// 
+//
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -29,12 +29,17 @@
 #pragma once
 
 #include <boost/thread/thread.hpp>
-#include <zmq.hpp>
-#include <string>
+#include <boost/utility/string_ref.hpp>
+#include <cstdint>
 #include <memory>
+#include <string>
 
 #include "common/command_line.h"
-#include "rpc_handler.h"
+#include "cryptonote_basic/fwd.h"
+#include "net/zmq.h"
+#include "rpc/fwd.h"
+#include "rpc/rpc_handler.h"
+#include "span.h"
 
 namespace cryptonote
 {
@@ -42,10 +47,7 @@ namespace cryptonote
 namespace rpc
 {
 
-static constexpr int DEFAULT_NUM_ZMQ_THREADS = 1;
-static constexpr int DEFAULT_RPC_RECV_TIMEOUT_MS = 1000;
-
-class ZmqServer
+class ZmqServer final
 {
   public:
 
@@ -53,13 +55,14 @@ class ZmqServer
 
     ~ZmqServer();
 
-    static void init_options(boost::program_options::options_description& desc);
 
     void serve();
 
-    bool addIPCSocket(std::string address, std::string port);
-    bool addTCPSocket(std::string address, std::string port);
+    //! \return ZMQ context on success, `nullptr` on failure
+    void* init_rpc(boost::string_ref address, boost::string_ref port);
 
+    //! \return `nullptr` on errors.
+    std::shared_ptr<listener::zmq_pub> init_pub(epee::span<const std::string> addresses);
     void run();
     void stop();
 
@@ -73,9 +76,11 @@ class ZmqServer
 
     boost::thread run_thread;
 
-    std::unique_ptr<zmq::socket_t> rep_socket;
+    net::zmq::socket rep_socket;
+    net::zmq::socket pub_socket;
+    net::zmq::socket relay_socket;
+    std::shared_ptr<listener::zmq_pub> shared_state;
 };
-
 
 }  // namespace cryptonote
 
