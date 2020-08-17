@@ -70,6 +70,7 @@
 #define REQUEST_NEXT_SCHEDULED_SPAN_THRESHOLD_STANDBY (5 * 1000000) // microseconds
 #define REQUEST_NEXT_SCHEDULED_SPAN_THRESHOLD (30 * 1000000) // microseconds
 #define IDLE_PEER_KICK_TIME (600 * 1000000) // microseconds
+#define UNRESPONSIVE_PEER_KICK_TIME (300 * 1000000) // microseconds
 #define DROP_ON_SYNC_WEDGE_THRESHOLD (30 * 1000000000ull) // nanoseconds
 #define LAST_ACTIVITY_STALL_THRESHOLD (2.0f) // seconds
 
@@ -1025,8 +1026,6 @@ namespace cryptonote
     return 1;
   }
   //------------------------------------------------------------------------------------------------------------------------
-
-
   template<class t_core>
   double t_cryptonote_protocol_handler<t_core>::get_avg_block_size()
   {
@@ -2318,6 +2317,38 @@ skip:
       });
     }
 
+    return true;
+  }
+  //------------------------------------------------------------------------------------------------------------------------
+  template<class t_core>
+  bool t_cryptonote_protocol_handler<t_core>::kick_unresponsive_peers()
+  {
+    m_p2p->for_each_connection([&](cryptonote_connection_context& context, nodetool::peerid_type peer_id, uint32_t support_flags)->bool
+    {
+      bool val_expected = false;
+      if(!m_core.is_within_compiled_block_hash_area(m_core.get_current_blockchain_height()) && m_synchronized.compare_exchange_strong(val_expected, true))
+      {
+        m_unresponsive_peer_kicker.do_call(boost::bind(&t_cryptonote_protocol_handler<t_core>::kick_unresponsive_peers, this));
+        MGINFO("Checking for unresponsive peers ...");
+        if (context.m_state == cryptonote_connection_context::state_normal || context.m_state == cryptonote_connection_context::state_before_handshake)
+        {
+          auto timestamp = time(NULL);
+          auto recv_time = timestamp - std::max(context.m_started, context.m_last_recv);
+          auto send_time = timestamp - std::max(context.m_started, context.m_last_send);
+          std::string address = context.m_remote_address.str();
+          if ((recv_time > UNRESPONSIVE_PEER_KICK_TIME) || (send_time > UNRESPONSIVE_PEER_KICK_TIME))
+          {
+            MGINFO("Kicking lingering peer" << address);
+            drop_connection(context, false, false);
+          }
+        }
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    });
     return true;
   }
   //------------------------------------------------------------------------------------------------------------------------
