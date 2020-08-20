@@ -70,7 +70,7 @@
 #define REQUEST_NEXT_SCHEDULED_SPAN_THRESHOLD_STANDBY (5 * 1000000) // microseconds
 #define REQUEST_NEXT_SCHEDULED_SPAN_THRESHOLD (30 * 1000000) // microseconds
 #define IDLE_PEER_KICK_TIME (600 * 1000000) // microseconds
-#define UNRESPONSIVE_PEER_KICK_TIME (240.0f) // seconds
+#define UNRESPONSIVE_PEER_KICK_TIME (70.0f) // seconds
 #define DROP_ON_SYNC_WEDGE_THRESHOLD (30 * 1000000000ull) // nanoseconds
 #define LAST_ACTIVITY_STALL_THRESHOLD (2.0f) // seconds
 
@@ -2326,6 +2326,8 @@ skip:
   {
     if (m_core.get_current_blockchain_height() >= m_core.get_target_blockchain_height())
     {
+      boost::unique_lock<boost::mutex> sync{m_sync_lock, boost::try_to_lock};
+      sync.lock();
       MINFO("Checking for unresponsive peers ...");
       m_p2p->for_each_connection([&](cryptonote_connection_context& context, nodetool::peerid_type peer_id, uint32_t support_flags)->bool
       {
@@ -2340,6 +2342,7 @@ skip:
         }
         return true;
       });
+      sync.unlock();
     }
 
     return true;
