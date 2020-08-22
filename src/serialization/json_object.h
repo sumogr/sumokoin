@@ -33,6 +33,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
+#include <vector>
 
 #include "cryptonote_basic/cryptonote_basic.h"
 #include "rpc/message_data_structs.h"
@@ -345,6 +346,7 @@ inline typename std::enable_if<sfinae::is_map_like<Map>::value, void>::type from
 
   auto itr = val.MemberBegin();
 
+  map.clear();
   while (itr != val.MemberEnd())
   {
     typename Map::key_type k;
@@ -365,6 +367,19 @@ inline typename std::enable_if<sfinae::is_vector_like<Vec>::value, void>::type t
   dest.EndArray();
 }
 
+namespace traits
+{
+  template<typename T>
+  void reserve(const T&, std::size_t)
+  {}
+
+  template<typename T>
+  void reserve(std::vector<T>& vec, const std::size_t count)
+  {
+    vec.reserve(count);
+  }
+}
+
 template <typename Vec>
 inline typename std::enable_if<sfinae::is_vector_like<Vec>::value, void>::type fromJsonValue(const rapidjson::Value& val, Vec& vec)
 {
@@ -373,11 +388,12 @@ inline typename std::enable_if<sfinae::is_vector_like<Vec>::value, void>::type f
     throw WRONG_TYPE("json array");
   }
 
+  vec.clear();
+  traits::reserve(vec, val.Size());
   for (rapidjson::SizeType i=0; i < val.Size(); i++)
   {
-    typename Vec::value_type v;
-    fromJsonValue(val[i], v);
-    vec.push_back(v);
+    vec.emplace_back();
+    fromJsonValue(val[i], vec.back());
   }
 }
 
