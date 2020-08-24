@@ -28,6 +28,31 @@
 #
 # Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
+<<<<<<< HEAD
+=======
+cmake_minimum_required(VERSION 2.8.7)
+message(STATUS "CMake version ${CMAKE_VERSION}")
+
+cmake_host_system_information(RESULT freememsys QUERY AVAILABLE_PHYSICAL_MEMORY) 
+cmake_host_system_information(RESULT freememvirt QUERY AVAILABLE_VIRTUAL_MEMORY)
+message(STATUS "Total available physical memory: ${freememsys} Mib")
+message(STATUS "Total available virtual memory: ${freememvirt} Mib")
+math(EXPR totalmemavail "${freememsys} + ${freememvirt}")
+message(STATUS "Total available memory: ${totalmemavail}  Mib")
+if (totalmemavail LESS 3500) #sumokoin needs on about 3 Gb of available memory to compile, give it 500 Mb slack
+  message(FATAL_ERROR "Sumokoin needs at least 3.5 Gb of available memory (physical+virtual) to compile!")
+endif()
+
+set(CMAKE_C_FLAGS_RELEASE "-DNDEBUG ${OPT_FLAGS_RELEASE}")
+set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG ${OPT_FLAGS_RELEASE}")
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+  message(STATUS "Setting default build type: ${CMAKE_BUILD_TYPE}")
+endif()
+string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_LOWER)
+
+>>>>>>> 6eeefe35... enforce minimum available memory for compilation
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 list(INSERT CMAKE_MODULE_PATH 0
