@@ -4745,7 +4745,10 @@ std::optional<epee::wipeable_string> simple_wallet::new_wallet(const boost::prog
 
   // convert rng value to electrum-style word list
   epee::wipeable_string electrum_words;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 108f1451... [simplewallet] convert seed generation timestamp to UTC
   crypto::ElectrumWords::bytes_to_words(recovery_val, electrum_words, mnemonic_language);
   const std::string vkey = epee::string_tools::pod_to_hex(m_wallet->get_account().get_keys().m_view_secret_key);
   message_writer(console_color_cyan, true) <<
@@ -4767,8 +4770,19 @@ std::optional<epee::wipeable_string> simple_wallet::new_wallet(const boost::prog
   message_writer(console_color_red, true) << "\n" << tr("NOTE: the above 26 words can be used to recover access to your wallet. "
     "Write them down and store them somewhere safe and secure. Please do not store them in "
     "your email or on file storage services outside of your immediate control.");
+<<<<<<< HEAD
 
    message_writer(console_color_green, true) << "Press ENTER to Continue";
+=======
+  if (!m_restoring)
+    {
+      std::time_t timenow= std::time(nullptr);
+      std::tm tm = *std::gmtime(&timenow);
+      message_writer(console_color_green, true) << "\n" << "Seed words generated at: " << std::put_time(&tm, "%a %b %d %H:%M:%S %Y") << " UTC";
+      message_writer(console_color_yellow, true) << tr("When restoring from seed words you may use the date above to avoid needlessly scanning the entire blockchain.") << "\n";
+    }
+  message_writer(console_color_green, true) << "Press ENTER to Continue";
+>>>>>>> 108f1451... [simplewallet] convert seed generation timestamp to UTC
    cin.ignore();
 
   return password;
@@ -6395,6 +6409,18 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
 
   SCOPED_WALLET_UNLOCK_ON_BAD_PASSWORD(return false;);
 
+<<<<<<< HEAD
+=======
+#if (__GNUC__ && defined( __has_warning ))
+#if __has_warning( "-Wimplicit-fallthrough=" )
+#define SUPPRESS
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough="
+#endif
+#endif
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+>>>>>>> 108f1451... [simplewallet] convert seed generation timestamp to UTC
   try
   {
     // figure out what tx will be necessary
