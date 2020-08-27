@@ -198,9 +198,18 @@ plot 'stats.csv' index "DATA" using (timecolumn(1,"%Y-%m-%d")):4 with lines, '' 
   uint64_t prevtxs = 0, currtxs = 0;
   uint64_t currblks = 0;
   uint64_t totins = 0, totouts = 0, totrings = 0;
+<<<<<<< HEAD
   uint32_t minins = 10, maxins = 0;
   uint32_t minouts = 10, maxouts = 0;
   uint32_t minrings = 50, maxrings = 0;
+=======
+  uint64_t prevemission = 0, prevfees = 0;
+  uint64_t emission = 0, fees = 0;
+  boost::multiprecision::uint128_t totdiff = 0, mindiff = 0, maxdiff = 0;
+  uint32_t minins = MAX_INOUT, maxins = 0;
+  uint32_t minouts = MAX_INOUT, maxouts = 0;
+  uint32_t minrings = MAX_RINGS, maxrings = 0;
+>>>>>>> 4ad2fafc... fix integer type for sumo
   uint32_t io, tottxs = 0;
   uint32_t txhr[24] = {0};
   unsigned int i;
