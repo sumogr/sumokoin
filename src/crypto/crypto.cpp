@@ -32,12 +32,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
-<<<<<<< HEAD
-#include <cstdlib>
-#include <cstring>
-=======
 #include <optional>
->>>>>>> decddbe7... fix for c++17
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/shared_ptr.hpp>

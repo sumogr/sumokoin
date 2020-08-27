@@ -32,8 +32,6 @@ set(device_sources
   log.cpp
   )
 
-<<<<<<< HEAD
-=======
 if(HIDAPI_FOUND)
   set(device_sources
     ${device_sources}
@@ -42,7 +40,6 @@ if(HIDAPI_FOUND)
     )
 endif()
 
->>>>>>> 7dacbe31... [wallet] support for supercop ASM in wallet, and benchmark for supercop
 set(device_headers
   device.hpp
   device_io.hpp
@@ -51,39 +48,12 @@ set(device_headers
   log.hpp
  )
 
-<<<<<<< HEAD
-if(MONERUJO_HIDAPI)
-    add_definitions(-DHAVE_MONERUJO)
-    set(device_sources
-      ${device_sources}
-      device_ledger.cpp
-      )
-    set(device_headers
-      ${device_headers}
-      device_ledger.hpp
-      device_io_monerujo.hpp
-      )
-else ()
-  if(HIDAPI_FOUND)
-    set(device_sources
-      ${device_sources}
-      device_ledger.cpp
-      device_io_hid.cpp
-      )
-    set(device_headers
-      ${device_headers}
-      device_ledger.hpp
-      device_io_hid.hpp
-      )
-  endif()
-=======
 if(HIDAPI_FOUND)
   set(device_headers
     ${device_headers}
     device_ledger.hpp
     device_io_hid.hpp
     )
->>>>>>> 7dacbe31... [wallet] support for supercop ASM in wallet, and benchmark for supercop
 endif()
 
 set(device_private_headers)
@@ -102,7 +72,7 @@ target_link_libraries(device
     ${HIDAPI_LIBRARIES}
     cncrypto
     ringct_basic
-    wallet-crypto    
+    wallet-crypto
     ${OPENSSL_CRYPTO_LIBRARIES}
     ${Boost_SERIALIZATION_LIBRARY}
   PRIVATE

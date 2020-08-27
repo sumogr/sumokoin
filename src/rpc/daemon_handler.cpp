@@ -908,11 +908,7 @@ namespace rpc
     return true;
   }
 
-<<<<<<< HEAD
-  std::string DaemonHandler::handle(const std::string& request)
-=======
   epee::byte_slice DaemonHandler::handle(std::string&& request)
->>>>>>> 896ed289... [zmq] Switch to insitu parsing for ZMQ-JSON; GetBlocksFast reads 13%+ faster - Monero Ref #6601
   {
     MDEBUG("Handling RPC request: " << request);
 

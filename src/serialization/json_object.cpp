@@ -1129,9 +1129,6 @@ void fromJsonValue(const rapidjson::Value& val, rct::rctSig& sig)
   }
 }
 
-<<<<<<< HEAD
-void toJsonValue(rapidjson::Writer<rapidjson::StringBuffer>& dest, const rct::ecdhTuple& tuple)
-=======
 void fromJsonValue(const rapidjson::Value& val, rct::ctkey& key)
 {
   key.dest = {};
@@ -1139,7 +1136,6 @@ void fromJsonValue(const rapidjson::Value& val, rct::ctkey& key)
 }
 
 void toJsonValue(rapidjson::Writer<epee::byte_stream>& dest, const rct::ecdhTuple& tuple)
->>>>>>> f192fa5a... [zmq] fix pruned tx for ZMQ's GetBlocksFast - Monero Ref #6601
 {
   dest.StartObject();
   INSERT_INTO_JSON_OBJECT(dest, mask, tuple.mask);

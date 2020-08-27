@@ -132,11 +132,7 @@ class DaemonHandler : public RpcHandler
 
     void handle(const GetOutputDistribution::Request& req, GetOutputDistribution::Response& res);
 
-<<<<<<< HEAD
-    std::string handle(const std::string& request);
-=======
     epee::byte_slice handle(std::string&& request) override final;
->>>>>>> 896ed289... [zmq] Switch to insitu parsing for ZMQ-JSON; GetBlocksFast reads 13%+ faster - Monero Ref #6601
 
   private:
 

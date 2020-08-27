@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// Copyright (c) 2016-2019, The Monero Project
-=======
 // Copyright (c) 2016-2020, The Monero Project
->>>>>>> 896ed289... [zmq] Switch to insitu parsing for ZMQ-JSON; GetBlocksFast reads 13%+ faster - Monero Ref #6601
 //
 // All rights reserved.
 //

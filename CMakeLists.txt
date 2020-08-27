@@ -28,12 +28,10 @@
 #
 # Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
-<<<<<<< HEAD
-=======
 cmake_minimum_required(VERSION 2.8.7)
 message(STATUS "CMake version ${CMAKE_VERSION}")
 
-cmake_host_system_information(RESULT freememsys QUERY AVAILABLE_PHYSICAL_MEMORY) 
+cmake_host_system_information(RESULT freememsys QUERY AVAILABLE_PHYSICAL_MEMORY)
 cmake_host_system_information(RESULT freememvirt QUERY AVAILABLE_VIRTUAL_MEMORY)
 message(STATUS "Total available physical memory: ${freememsys} Mib")
 message(STATUS "Total available virtual memory: ${freememvirt} Mib")
@@ -52,7 +50,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_LOWER)
 
->>>>>>> 6eeefe35... enforce minimum available memory for compilation
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 list(INSERT CMAKE_MODULE_PATH 0
@@ -227,16 +224,12 @@ if(NOT MANUAL_SUBMODULES)
         message(FATAL_ERROR "Submodule '${relative_path}' is not up-to-date. Please update all submodules with\ngit submodule update --init --force\nor run cmake with -DMANUAL_SUBMODULES=1\n")
       endif()
     endfunction ()
-    
+
     message(STATUS "Checking submodules")
     check_submodule(external/miniupnp)
     check_submodule(external/unbound)
     check_submodule(external/rapidjson)
-<<<<<<< HEAD
-    check_submodule(external/trezor-common)
-=======
     check_submodule(external/supercop)
->>>>>>> 7dacbe31... [wallet] support for supercop ASM in wallet, and benchmark for supercop
   endif()
 endif()
 
@@ -492,8 +485,6 @@ add_definition_if_function_found(strptime HAVE_STRPTIME)
 
 add_definitions(-DAUTO_INITIALIZE_EASYLOGGINGPP)
 
-<<<<<<< HEAD
-=======
 set(MONERO_GENERATED_HEADERS_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated_include")
 include_directories(${MONERO_GENERATED_HEADERS_DIR})
 
@@ -508,7 +499,6 @@ include_directories(${MONERO_GENERATED_HEADERS_DIR})
 #  CMAKE_ARGS -DLRELEASE_PATH=${LRELEASE_PATH}
 #  INSTALL_COMMAND cmake -E echo "")
 # include_directories("${CMAKE_CURRENT_BINARY_DIR}/translations")
->>>>>>> 7dacbe31... [wallet] support for supercop ASM in wallet, and benchmark for supercop
 add_subdirectory(external)
 
 # Final setup for libunbound
@@ -527,7 +517,7 @@ include_directories(${LIBUNWIND_INCLUDE})
 link_directories(${LIBUNWIND_LIBRARY_DIRS})
 
 # Final setup for hid
-if (HIDAPI_FOUND) 
+if (HIDAPI_FOUND)
   message(STATUS "Using HIDAPI include dir at ${HIDAPI_INCLUDE_DIR}")
   add_definitions(-DHAVE_HIDAPI)
   include_directories(${HIDAPI_INCLUDE_DIR})
@@ -822,7 +812,7 @@ else()
   endif(ARM)
 
   if(ANDROID AND NOT BUILD_GUI_DEPS STREQUAL "ON" OR IOS)
-    #From Android 5: "only position independent executables (PIE) are supported" 
+    #From Android 5: "only position independent executables (PIE) are supported"
     message(STATUS "Enabling PIE executable")
     set(PIC_FLAG "")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
