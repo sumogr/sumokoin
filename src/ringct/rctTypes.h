@@ -48,7 +48,12 @@ extern "C" {
 
 #include "hex.h"
 #include "span.h"
+<<<<<<< HEAD
 #include "serialization/vector.h"
+=======
+#include "memwipe.h"
+#include "serialization/containers.h"
+>>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 #include "serialization/debug_archive.h"
 #include "serialization/binary_archive.h"
 #include "serialization/json_archive.h"
@@ -141,12 +146,12 @@ namespace rct {
         key64 s1;
         key ee;
     };
-  
+
     //Container for precomp
     struct geDsmp {
         ge_dsmp k;
     };
-    
+
     //just contains the necessary keys to represent MLSAG sigs
     //c.f. https://eprint.iacr.org/2015/1098
     struct mgSig {
@@ -236,6 +241,12 @@ namespace rct {
     struct RCTConfig {
       RangeProofType range_proof_type;
       int bp_version;
+
+      BEGIN_SERIALIZE_OBJECT()
+        VERSION_FIELD(0)
+        VARINT_FIELD(range_proof_type)
+        VARINT_FIELD(bp_version)
+      END_SERIALIZE()
     };
     struct rctSigBase {
         uint8_t type;
@@ -314,6 +325,16 @@ namespace rct {
           ar.end_array();
           return ar.stream().good();
         }
+
+        BEGIN_SERIALIZE_OBJECT()
+          FIELD(type)
+          FIELD(message)
+          FIELD(mixRing)
+          FIELD(pseudoOuts)
+          FIELD(ecdhInfo)
+          FIELD(outPk)
+          VARINT_FIELD(txnFee)
+        END_SERIALIZE()
     };
     struct rctSigPrunable {
         std::vector<rangeSig> rangeSigs;
@@ -433,6 +454,12 @@ namespace rct {
           return ar.stream().good();
         }
 
+        BEGIN_SERIALIZE_OBJECT()
+          FIELD(rangeSigs)
+          FIELD(bulletproofs)
+          FIELD(MGs)
+          FIELD(pseudoOuts)
+        END_SERIALIZE()
     };
     struct rctSig: public rctSigBase {
         rctSigPrunable p;
@@ -446,6 +473,11 @@ namespace rct {
         {
           return type == RCTTypeBulletproof || type == RCTTypeBulletproof2 ? p.pseudoOuts : pseudoOuts;
         }
+
+        BEGIN_SERIALIZE_OBJECT()
+          FIELDS((rctSigBase&)*this)
+          FIELD(p)
+        END_SERIALIZE()
     };
 
     //other basepoint H = toPoint(cn_fast_hash(G)), G the basepoint
