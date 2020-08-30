@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// Copyright (c) 2018-2019, The Monero Project
-// 
-=======
 // Copyright (c) 2018-2020, The Monero Project
 //
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
@@ -36,11 +31,8 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
-<<<<<<< HEAD
-=======
 #include <map>
 #include <boost/thread/mutex.hpp>
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 #include <boost/serialization/version.hpp>
 #include "cryptonote_basic/blobdatatype.h"
 #include "cryptonote_basic/cryptonote_basic.h"

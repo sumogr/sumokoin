@@ -48,12 +48,8 @@ extern "C" {
 
 #include "hex.h"
 #include "span.h"
-<<<<<<< HEAD
-#include "serialization/vector.h"
-=======
 #include "memwipe.h"
 #include "serialization/containers.h"
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 #include "serialization/debug_archive.h"
 #include "serialization/binary_archive.h"
 #include "serialization/json_archive.h"

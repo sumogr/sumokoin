@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// Copyright (c) 2014-2019, The Monero Project
-// 
-=======
 // Copyright (c) 2014-2020, The Monero Project
 //
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
@@ -140,7 +135,7 @@ namespace nodetool
       FIELD(adr)
       FIELD(id)
       FIELD(is_income)
-    END_SERIALIZE()    
+    END_SERIALIZE()
   };
   typedef connection_entry_base<epee::net_utils::network_address> connection_entry;
 

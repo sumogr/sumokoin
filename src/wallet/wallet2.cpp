@@ -58,10 +58,6 @@ using namespace epee;
 #include "cryptonote_basic/cryptonote_basic_impl.h"
 #include "multisig/multisig.h"
 #include "common/boost_serialization_helper.h"
-<<<<<<< HEAD
-#include "common/command_line.h"
-=======
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 #include "common/threadpool.h"
 #include "int-util.h"
 #include "profile_tools.h"
@@ -10977,7 +10973,7 @@ void wallet2::set_tx_key(const crypto::hash &txid, const crypto::secret_key &tx_
         break;
       }
     }
-  }    
+  }
   THROW_WALLET_EXCEPTION_IF(!found, error::wallet_internal_error, "Given tx secret key doesn't agree with the tx public key in the blockchain");
   tx_extra_additional_pub_keys additional_tx_pub_keys;
   find_tx_extra_field_by_type(tx_extra_fields, additional_tx_pub_keys);

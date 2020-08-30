@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// Copyright (c) 2014-2019, The Monero Project
-// 
-=======
 // Copyright (c) 2014-2020, The Monero Project
 //
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are

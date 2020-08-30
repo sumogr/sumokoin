@@ -27,10 +27,6 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "message_store.h"
-<<<<<<< HEAD
-#include <boost/archive/portable_binary_oarchive.hpp>
-=======
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 #include <boost/archive/portable_binary_iarchive.hpp>
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>

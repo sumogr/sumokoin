@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// Copyright (c) 2018-2019, The Monero Project
-// 
-=======
 // Copyright (c) 2018-2020, The Monero Project
 //
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
@@ -235,21 +230,6 @@ namespace cryptonote
 
     block = is_current ? info.block : info.previous_block;
     *(uint32_t*)(hashing_blob.data() + 39) = SWAP32LE(nonce);
-<<<<<<< HEAD
-    
-//    crypto::cn_slow_hash_type cn_type = crypto::cn_slow_hash_type::cn_original;
-//    const uint8_t major_version = hashing_blob[0];
-//    if (major_version == CRYPTONOTE_HEAVY_BLOCK_VERSION)
-//    {
-//      cn_type = crypto::cn_slow_hash_type::cn_heavy;
-//    }
-//    else if (major_version >= HF_VERSION_BP){
-//      cn_type = crypto::cn_slow_hash_type::cn_r;
-//    }
-//    const int cn_variant = major_version >= HF_VERSION_BP ? major_version - 3 : 0;
-//    crypto::cn_slow_hash(hashing_blob.data(), hashing_blob.size(), hash, cn_variant, cryptonote::get_block_height(block), cn_type);
-   
-=======
 
     crypto::cn_slow_hash_type cn_type = crypto::cn_slow_hash_type::cn_original;
     const uint8_t major_version = hashing_blob[0];
@@ -263,7 +243,6 @@ namespace cryptonote
     const int cn_variant = major_version >= HF_VERSION_BP ? major_version - 3 : 0;
     crypto::cn_slow_hash(hashing_blob.data(), hashing_blob.size(), hash, cn_variant, cryptonote::get_block_height(block), cn_type);
 
->>>>>>> 5fb47a7b... [serialization] replace most boost serialization with existing sumokoin serialization
     if (!check_hash(hash, m_diff))
     {
       MWARNING("Payment too low");
