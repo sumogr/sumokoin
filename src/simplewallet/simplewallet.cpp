@@ -50,6 +50,7 @@
 #include "common/util.h"
 #include "common/dns_utils.h"
 #include "common/scoped_message_writer.h"
+#include "console_handler.h"
 #include "cryptonote_protocol/cryptonote_protocol_handler.h"
 #include "simplewallet.h"
 #include "rpc/rpc_payment_signature.h"
