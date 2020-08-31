@@ -9663,7 +9663,6 @@ bool simple_wallet::address_book(const std::vector<std::string> &args/* = std::v
       PRINT_USAGE(USAGE_ADDRESS_BOOK);
       return true;
     }
-  auto address_book = m_wallet->get_address_book();
   const std::vector<std::string>& command_list = m_address_book.get_command_list(args[1]);
   if (command_list.empty())
   {
