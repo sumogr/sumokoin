@@ -194,7 +194,7 @@ namespace
                             "  account tag_description <tag_name> <description>");
   const char* USAGE_ADDRESS("address [ new <label text with white spaces allowed> | all | <index_min> [<index_max>] | label <index> <label text with white spaces allowed> | device [<index>] | one-off <account> <subaddress>]");
   const char* USAGE_INTEGRATED_ADDRESS("integrated_address [device] [<payment_id> | <address>]");
-  const char* USAGE_ADDRESS_BOOK("address_book [(show)|(export)|(export_csv)|(add (<address>|<integrated address>) [<description possibly with whitespaces>])|(delete <index>)]");
+  const char* USAGE_ADDRESS_BOOK("address_book [(show)|(export)|(export_csv)|(search <keyword>)|(add (<address>|<integrated address>) [<description possibly with whitespaces>])|(delete <index>)]");
   const char* USAGE_SET_VARIABLE("set <option> [<value>]");
   const char* USAGE_GET_TX_KEY("get_tx_key <txid>");
   const char* USAGE_SET_TX_KEY("set_tx_key <txid> <tx_key>");
@@ -9538,7 +9538,7 @@ bool simple_wallet::print_integrated_address(const std::vector<std::string> &arg
 //----------------------------------------------------------------------------------------------------
 bool simple_wallet::address_book(const std::vector<std::string> &args/* = std::vector<std::string>()*/)
 {
-  if (args.size() == 0 || (args.size() == 1 && args[0] != "show" && args[0] != "add" && args[0] != "delete" && args[0] != "export" && args[0] != "export_csv"))
+  if (args.size() == 0 || (args.size() == 1 && args[0] != "show" && args[0] != "add" && args[0] != "delete" && args[0] != "export" && args[0] != "export_csv" && args[0] != "search"))
   {
     PRINT_USAGE(USAGE_ADDRESS_BOOK);
     return true;
@@ -9654,6 +9654,36 @@ bool simple_wallet::address_book(const std::vector<std::string> &args/* = std::v
     m_wallet->add_address_book_row(info.address, info.has_payment_id ? &info.payment_id : NULL, description, info.is_subaddress);
     return true;
   }
+
+
+  if (args[0] == "search")
+  {
+    if (args.size() == 1)
+    {
+      PRINT_USAGE(USAGE_ADDRESS_BOOK);
+      return true;
+    }
+  auto address_book = m_wallet->get_address_book();
+  const std::vector<std::string>& command_list = m_address_book.get_command_list(args[1]);
+  if (command_list.empty())
+  {
+    std::cout << "Nothing found" << std::endl;
+    return true;
+  }
+
+  std::cout << std::endl;
+  for(auto const& command:command_list)
+  {
+    std::vector<std::string> cmd;
+    cmd.push_back(command);
+    std::pair<std::string, std::string> documentation = m_command_lookup.get_documentation(cmd);
+    std::cout << "  " << documentation.first << std::endl;
+  }
+  std::cout << std::endl;
+
+  return true;
+}
+
   if (args[0] == "delete")
   {
     if (args.size() == 1)
