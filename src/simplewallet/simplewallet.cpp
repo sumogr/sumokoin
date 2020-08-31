@@ -9664,46 +9664,7 @@ bool simple_wallet::address_book(const std::vector<std::string> &args/* = std::v
       return true;
     }
   auto address_book = m_wallet->get_address_book();
-  std::vector<std::string> get_command_list(const std::vector<std::string>& keywords = std::vector<std::string>())
-{
-  std::vector<std::string> list;
-  list.reserve(address_book.size());
-  for(auto const& x:address_book)
-  {
-    bool take = true;
-    for(auto const& y:keywords)
-    {
-      bool in_usage = x.second.second.first.find(y) != std::string::npos;
-      bool in_description = x.second.second.second.find(y) != std::string::npos;
-      if (!(in_usage || in_description))
-      {
-        take = false;
-        break;
-      }
-    }
-    if (take)
-    {
-      list.push_back(x.first);
-    }
-  }
-  return list;
-}
-  const std::vector<std::string>& command_list = address_book.get_command_list(args[1]);
-  if (command_list.empty())
-  {
-    std::cout << "Nothing found" << std::endl;
-    return true;
-  }
-
-  std::cout << std::endl;
-  for(auto const& command:command_list)
-  {
-    std::vector<std::string> cmd;
-    cmd.push_back(command);
-    std::pair<std::string, std::string> documentation = m_command_lookup.get_documentation(cmd);
-    std::cout << "  " << documentation.first << std::endl;
-  }
-  std::cout << std::endl;
+std::vector<int>::iterator it = std::find(address_book.begin(), address_book.end(), args[1]);
 
   return true;
 }
