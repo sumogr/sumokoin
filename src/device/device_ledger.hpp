@@ -44,8 +44,8 @@ namespace hw {
 
     /* Minimal supported version */
     #define MINIMAL_APP_VERSION_MAJOR    1
-    #define MINIMAL_APP_VERSION_MINOR    3
-    #define MINIMAL_APP_VERSION_MICRO    1
+    #define MINIMAL_APP_VERSION_MINOR    6
+    #define MINIMAL_APP_VERSION_MICRO    0
 
     #define VERSION(M,m,u)       ((M)<<16|(m)<<8|(u))
     #define VERSION_MAJOR(v)     (((v)>>16)&0xFF)
@@ -57,8 +57,6 @@ namespace hw {
     void register_all(std::map<std::string, std::unique_ptr<device>> &registry);
 
     #ifdef WITH_DEVICE_LEDGER
-<<<<<<< HEAD
-=======
 
     // Origin: https://github.com/LedgerHQ/ledger-app-monero/blob/master/src/monero_types.h
     #define SW_BYTES_REMAINING_00                0x6100
@@ -99,7 +97,6 @@ namespace hw {
     #define SW_UNKNOWN                           0x6f00
     #define SW_OK                                0x9000
     #define SW_ALGORITHM_UNSUPPORTED             0x9484
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
 
     namespace {
         bool apdu_verbose =true;
@@ -272,13 +269,8 @@ namespace hw {
         /* ======================================================================= */
         /*                               TRANSACTION                               */
         /* ======================================================================= */
-<<<<<<< HEAD
-        void generate_tx_proof(const crypto::hash &prefix_hash,
-                                   const crypto::public_key &R, const crypto::public_key &A, const boost::optional<crypto::public_key> &B, const crypto::public_key &D, const crypto::secret_key &r,
-=======
         void generate_tx_proof(const crypto::hash &prefix_hash,
                                    const crypto::public_key &R, const crypto::public_key &A, const std::optional<crypto::public_key> &B, const crypto::public_key &D, const crypto::secret_key &r,
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
                                    crypto::signature &sig) override;
 
         bool  open_tx(crypto::secret_key &tx_key) override;

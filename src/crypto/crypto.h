@@ -130,19 +130,12 @@ namespace crypto {
     friend void generate_signature(const hash &, const public_key &, const secret_key &, signature &);
     static bool check_signature(const hash &, const public_key &, const signature &);
     friend bool check_signature(const hash &, const public_key &, const signature &);
-<<<<<<< HEAD
-    static void generate_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
-    friend void generate_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
-    static bool check_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const signature &);
-    friend bool check_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const signature &);
-=======
     static void generate_tx_proof(const hash &, const public_key &, const public_key &, const std::optional<public_key> &, const public_key &, const secret_key &, signature &);
     friend void generate_tx_proof(const hash &, const public_key &, const public_key &, const std::optional<public_key> &, const public_key &, const secret_key &, signature &);
     static void generate_tx_proof_v1(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
     friend void generate_tx_proof_v1(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
     static bool check_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const signature &, const int);
     friend bool check_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const signature &, const int);
->>>>>>> 4310acaa... [crypto] Updates InProofV1, OutProofV1, and ReserveProofV1 to new V2 variants
     static void generate_key_image(const public_key &, const secret_key &, key_image &);
     friend void generate_key_image(const public_key &, const secret_key &, key_image &);
     static void generate_ring_signature(const hash &, const key_image &,
@@ -257,16 +250,11 @@ namespace crypto {
   inline void generate_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const secret_key &r, signature &sig) {
     crypto_ops::generate_tx_proof(prefix_hash, R, A, B, D, r, sig);
   }
-<<<<<<< HEAD
-  inline bool check_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const signature &sig) {
-    return crypto_ops::check_tx_proof(prefix_hash, R, A, B, D, sig);
-=======
   inline void generate_tx_proof_v1(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const secret_key &r, signature &sig) {
     crypto_ops::generate_tx_proof_v1(prefix_hash, R, A, B, D, r, sig);
   }
   inline bool check_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const signature &sig, const int version) {
     return crypto_ops::check_tx_proof(prefix_hash, R, A, B, D, sig, version);
->>>>>>> 4310acaa... [crypto] Updates InProofV1, OutProofV1, and ReserveProofV1 to new V2 variants
   }
 
   /* To send money to a key:

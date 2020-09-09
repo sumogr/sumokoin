@@ -127,8 +127,6 @@ namespace cryptonote
 namespace cryptonote
 {
   //---------------------------------------------------------------
-<<<<<<< HEAD
-=======
   void get_transaction_prefix_hash(const transaction_prefix& tx, crypto::hash& h, hw::device &hwdev)
   {
     hwdev.get_transaction_prefix_hash(tx,h);
@@ -143,7 +141,6 @@ namespace cryptonote
   }
 
   //---------------------------------------------------------------
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
   void get_transaction_prefix_hash(const transaction_prefix& tx, crypto::hash& h)
   {
     std::ostringstream s;
@@ -835,14 +832,6 @@ namespace cryptonote
         << out.target.type().name() << ", expected " << typeid(txout_to_key).name()
         << ", in transaction id=" << get_transaction_hash(tx));
 
-<<<<<<< HEAD
-      if (tx.version == 1)
-      {
-        CHECK_AND_NO_ASSERT_MES(0 < out.amount, false, "zero amount output in transaction id=" << get_transaction_hash(tx));
-      }
-
-=======
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
       if(!check_key(boost::get<txout_to_key>(out.target).key))
         return false;
     }
@@ -1303,8 +1292,6 @@ namespace cryptonote
   //---------------------------------------------------------------
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
-<<<<<<< HEAD
-=======
     block b_local = b; //workaround to avoid const errors with do_serialize
     blobdata bd = get_block_hashing_blob(b);
     crypto::cn_slow_hash_type cn_type = cn_slow_hash_type::cn_original;
@@ -1318,7 +1305,6 @@ namespace cryptonote
 
     const int cn_variant = b_local.major_version >= HF_VERSION_BP ? b_local.major_version - 3 : 0;
     crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant, height, cn_type);
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
     return true;
   }
   //---------------------------------------------------------------

@@ -894,24 +894,9 @@ uint8_t get_bulletproof_fork()
   return HF_VERSION_BP;
 }
 
-<<<<<<< HEAD
-uint64_t estimate_fee(bool use_per_byte_fee, bool use_rct, int n_inputs, int mixin, int n_outputs, size_t extra_size, bool bulletproof, uint64_t base_fee, uint64_t fee_multiplier, uint64_t fee_quantization_mask)
-{
-  if (use_per_byte_fee)
-  {
-    const size_t estimated_tx_weight = estimate_tx_weight(use_rct, n_inputs, mixin, n_outputs, extra_size, bulletproof);
-    return calculate_fee_from_weight(base_fee, estimated_tx_weight, fee_multiplier, fee_quantization_mask);
-  }
-  else
-  {
-    const size_t estimated_tx_size = estimate_tx_size(use_rct, n_inputs, mixin, n_outputs, extra_size, bulletproof);
-    return calculate_fee(base_fee, estimated_tx_size, fee_multiplier);
-  }
-=======
 uint8_t get_clsag_fork()
 {
   return HF_VERSION_CLSAG;
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
 }
 
 uint64_t calculate_fee(bool use_per_byte_fee, const cryptonote::transaction &tx, size_t blob_size, uint64_t base_fee, uint64_t fee_multiplier, uint64_t fee_quantization_mask)
@@ -7116,8 +7101,6 @@ bool wallet2::sign_multisig_tx_from_file(const std::string &filename, std::vecto
   return sign_multisig_tx_to_file(exported_txs, filename, txids);
 }
 //----------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-=======
 uint64_t wallet2::estimate_fee(bool use_per_byte_fee, bool use_rct, int n_inputs, int mixin, int n_outputs, size_t extra_size, bool bulletproof, bool clsag, uint64_t base_fee, uint64_t fee_multiplier, uint64_t fee_quantization_mask) const
 {
   if (use_per_byte_fee)
@@ -7132,7 +7115,6 @@ uint64_t wallet2::estimate_fee(bool use_per_byte_fee, bool use_rct, int n_inputs
   }
 }
 
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
 uint64_t wallet2::get_fee_multiplier(uint32_t priority, int fee_algorithm)
 {
   static const uint64_t multipliers[5] = { 1, 2, 4, 20, 166 };
@@ -11635,15 +11617,9 @@ bool wallet2::check_reserve_proof(const cryptonote::account_public_address &addr
     const std::vector<crypto::public_key> additional_tx_pub_keys = get_additional_tx_pub_keys_from_extra(tx);
 
     // check singature for shared secret
-<<<<<<< HEAD
-    ok = crypto::check_tx_proof(prefix_hash, address.m_view_public_key, tx_pub_key, boost::none, proof.shared_secret, proof.shared_secret_sig);
-    if (!ok && additional_tx_pub_keys.size() == tx.vout.size())
-      ok = crypto::check_tx_proof(prefix_hash, address.m_view_public_key, additional_tx_pub_keys[proof.index_in_tx], boost::none, proof.shared_secret, proof.shared_secret_sig);
-=======
     ok = crypto::check_tx_proof(prefix_hash, address.m_view_public_key, tx_pub_key, boost::none, proof.shared_secret, proof.shared_secret_sig, version);
     if (!ok && additional_tx_pub_keys.size() == tx.vout.size())
       ok = crypto::check_tx_proof(prefix_hash, address.m_view_public_key, additional_tx_pub_keys[proof.index_in_tx], boost::none, proof.shared_secret, proof.shared_secret_sig, version);
->>>>>>> 4310acaa... [crypto] Updates InProofV1, OutProofV1, and ReserveProofV1 to new V2 variants
     if (!ok)
       return false;
 

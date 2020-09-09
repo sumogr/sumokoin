@@ -333,9 +333,6 @@ namespace crypto {
     return sc_isnonzero(&c) == 0;
   }
 
-<<<<<<< HEAD
-  void crypto_ops::generate_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const secret_key &r, signature &sig) {
-=======
   // Generate a proof of knowledge of `r` such that (`R = rG` and `D = rA`) or (`R = rB` and `D = rA`) via a Schnorr proof
   // This handles use cases for both standard addresses and subaddresses
   //
@@ -417,7 +414,6 @@ namespace crypto {
   //
   // Generates only proofs for InProofV2 and OutProofV2
   void crypto_ops::generate_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const std::optional<public_key> &B, const public_key &D, const secret_key &r, signature &sig) {
->>>>>>> 4310acaa... [crypto] Updates InProofV1, OutProofV1, and ReserveProofV1 to new V2 variants
     // sanity check
     ge_p3 R_p3;
     ge_p3 A_p3;
@@ -499,12 +495,8 @@ namespace crypto {
     sc_mulsub(&sig.r, &sig.c, &unwrap(r), &k);
   }
 
-<<<<<<< HEAD
-  bool crypto_ops::check_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const signature &sig) {
-=======
   // Verify a proof: either v1 (version == 1) or v2 (version == 2)
   bool crypto_ops::check_tx_proof(const hash &prefix_hash, const public_key &R, const public_key &A, const boost::optional<public_key> &B, const public_key &D, const signature &sig, const int version) {
->>>>>>> 4310acaa... [crypto] Updates InProofV1, OutProofV1, and ReserveProofV1 to new V2 variants
     // sanity check
     ge_p3 R_p3;
     ge_p3 A_p3;
