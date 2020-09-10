@@ -1403,11 +1403,7 @@ POP_WARNINGS
     {
       shared_context->connect_mut.lock(); shared_context->ec = ec_; shared_context->cond.notify_one(); shared_context->connect_mut.unlock();
     };
-#if BOOST_VERSION >= 106100
     sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, std::placeholders::_1, local_shared_context));
-#else
-    sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, _1, local_shared_context));
-#endif
     while(local_shared_context->ec == boost::asio::error::would_block)
     {
       bool r = local_shared_context->cond.timed_wait(lock, boost::get_system_time() + boost::posix_time::milliseconds(conn_timeout));

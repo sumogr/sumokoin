@@ -133,17 +133,10 @@ namespace cryptonote
   //---------------------------------------------------------------------------
   uint64_t checkpoints::get_max_height() const
   {
-#if BOOST_VERSION >= 106100
     std::map< uint64_t, crypto::hash >::const_iterator highest =
         std::max_element( m_points.begin(), m_points.end(),
-                         ( std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_1 ) <
-                           std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_2 ) ) );
-#else
-    std::map< uint64_t, crypto::hash >::const_iterator highest =
-        std::max_element( m_points.begin(), m_points.end(),
-                         ( std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, _1 ) <
-                           std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, _2 ) ) );
-#endif
+                         ( (std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_1 )) <
+                           (std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_2 )) ) );
 
     return highest->first;
   }
