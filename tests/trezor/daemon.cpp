@@ -221,7 +221,7 @@ void mock_daemon::try_init_and_run(std::optional<unsigned> initial_port)
 
 void mock_daemon::run()
 {
-  m_run_thread = boost::thread(boost::bind(&mock_daemon::run_main, this));
+  m_run_thread = boost::thread(std::bind(&mock_daemon::run_main, this));
 }
 
 bool mock_daemon::run_main()

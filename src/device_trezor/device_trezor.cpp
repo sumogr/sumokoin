@@ -78,7 +78,7 @@ namespace trezor {
       if (r && !m_live_refresh_thread)
       {
         m_live_refresh_thread_running = true;
-        m_live_refresh_thread.reset(new boost::thread(boost::bind(&device_trezor::live_refresh_thread_main, this)));
+        m_live_refresh_thread.reset(new boost::thread(std::bind(&device_trezor::live_refresh_thread_main, this)));
       }
       return r;
     }

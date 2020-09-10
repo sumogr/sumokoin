@@ -125,9 +125,9 @@ namespace levin
 			if(res && !boost::interprocess::ipcdetail::atomic_read32(&m_threads_count) )
 			{
 				//boost::interprocess::ipcdetail::atomic_write32(&m_is_stop, 0);//m_is_stop = false;
-				boost::thread( boost::bind(&levin_duplex_client::reciever_thread, this) );
-				boost::thread( boost::bind(&levin_duplex_client::handler_thread, this) );
-				boost::thread( boost::bind(&levin_duplex_client::handler_thread, this) );
+				boost::thread( std::bind(&levin_duplex_client::reciever_thread, this) );
+				boost::thread( std::bind(&levin_duplex_client::handler_thread, this) );
+				boost::thread( std::bind(&levin_duplex_client::handler_thread, this) );
 			}
 
 			return res;
@@ -230,7 +230,7 @@ namespace levin
 
 			boost::interprocess::ipcdetail::atomic_write32(&m_invoke_is_active, 1);
 			boost::interprocess::ipcdetail::atomic_write32(&m_invoke_data_ready, 0);
-			misc_utils::destr_ptr hdlr = misc_utils::add_exit_scope_handler(boost::bind(&levin_duplex_client::on_leave_invoke, this));
+			misc_utils::destr_ptr hdlr = misc_utils::add_exit_scope_handler(std::bind(&levin_duplex_client::on_leave_invoke, this));
 
 			loop_call_guard();
 			

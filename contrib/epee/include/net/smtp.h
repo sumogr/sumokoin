@@ -61,7 +61,7 @@ namespace net_utils
 			  mServer(pServer),mPort(pPort),mUserName(pUser),mPassword(pPassword),mSocket(mIOService),mResolver(mIOService)
 			  {
 				  tcp::resolver::query qry(mServer,boost::lexical_cast<std::string>( mPort ));
-				  mResolver.async_resolve(qry,boost::bind(&smtp_client::handleResolve,this,boost::asio::placeholders::error,
+				  mResolver.async_resolve(qry,std::bind(&smtp_client::handleResolve,this,boost::asio::placeholders::error,
 					  boost::asio::placeholders::iterator));
 			  }
 			  bool Send(std::string pFrom,std::string pTo,std::string pSubject,std::string pMessage)
@@ -88,7 +88,7 @@ namespace net_utils
 				{
 					tcp::endpoint endpoint=*endpoint_iterator;
 					mSocket.async_connect(endpoint,
-						boost::bind(&smtp_client::handleConnect,this,boost::asio::placeholders::error,++endpoint_iterator));
+						std::bind(&smtp_client::handleConnect,this,boost::asio::placeholders::error,++endpoint_iterator));
 				}
 				else
 				{

@@ -32,7 +32,6 @@
 
 
 
-#include <boost/bind/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/chrono.hpp>
@@ -45,13 +44,6 @@
 #include "misc_language.h"
 #include "net/local_ip.h"
 #include "pragma_comp_defs.h"
-
-#define BOOST_BIND_GLOBAL_PLACEHOLDERS
-#if BOOST_VERSION >= 106100
-#define BOOST_PLACEHOLDERS boost::placeholders
-#else
-#define BOOST_PLACEHOLDERS
-#endif
 
 #include <sstream>
 #include <iomanip>
@@ -217,13 +209,13 @@ PRAGMA_WARNING_DISABLE_VS(4355)
       socket().async_receive(boost::asio::buffer(buffer_),
         boost::asio::socket_base::message_peek,
         strand_.wrap(
-          boost::bind(&connection<t_protocol_handler>::handle_receive, self,
+          std::bind(&connection<t_protocol_handler>::handle_receive, self,
             boost::asio::placeholders::error,
             boost::asio::placeholders::bytes_transferred)));
     else
       async_read_some(boost::asio::buffer(buffer_),
         strand_.wrap(
-          boost::bind(&connection<t_protocol_handler>::handle_read, self,
+          std::bind(&connection<t_protocol_handler>::handle_read, self,
             boost::asio::placeholders::error,
             boost::asio::placeholders::bytes_transferred)));
 #if !defined(_WIN32) || !defined(__i686)
@@ -255,7 +247,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
     if(!self)
       return false;
 
-    strand_.post(boost::bind(&connection<t_protocol_handler>::call_back_starter, self));
+    strand_.post(std::bind(&connection<t_protocol_handler>::call_back_starter, self));
     CATCH_ENTRY_L0("connection<t_protocol_handler>::request_callback()", false);
     return true;
   }
@@ -402,7 +394,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         reset_timer(get_timeout_from_bytes_read(bytes_transferred), false);
         async_read_some(boost::asio::buffer(buffer_),
           strand_.wrap(
-            boost::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
+            std::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
               boost::asio::placeholders::error,
               boost::asio::placeholders::bytes_transferred)));
         //_info("[sock " << socket().native_handle() << "]Async read requested.");
@@ -455,7 +447,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
       socket().async_receive(boost::asio::buffer(buffer_.data() + buffer_ssl_init_fill, buffer_.size() - buffer_ssl_init_fill),
         boost::asio::socket_base::message_peek,
         strand_.wrap(
-          boost::bind(&connection<t_protocol_handler>::handle_receive, connection<t_protocol_handler>::shared_from_this(),
+          std::bind(&connection<t_protocol_handler>::handle_receive, connection<t_protocol_handler>::shared_from_this(),
             boost::asio::placeholders::error,
             boost::asio::placeholders::bytes_transferred)));
       return;
@@ -497,7 +489,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
 
     async_read_some(boost::asio::buffer(buffer_),
       strand_.wrap(
-        boost::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
+        std::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
           boost::asio::placeholders::error,
           boost::asio::placeholders::bytes_transferred)));
 
@@ -696,7 +688,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         reset_timer(get_default_timeout(), false);
             async_write(boost::asio::buffer(m_send_que.front().data(), size_now ) ,
                                  strand_.wrap(
-                                 boost::bind(&connection<t_protocol_handler>::handle_write, self, BOOST_PLACEHOLDERS::_1, BOOST_PLACEHOLDERS::_2)
+                                 std::bind(&connection<t_protocol_handler>::handle_write, self, std::placeholders::_1, std::placeholders::_2)
                                  )
                                  );
         //_dbg3("(chunk): " << size_now);
@@ -902,7 +894,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
 		CHECK_AND_ASSERT_MES( size_now == m_send_que.front().size(), void(), "Unexpected queue size");
 		  async_write(boost::asio::buffer(m_send_que.front().data(), size_now) ,
            strand_.wrap(
-            boost::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), BOOST_PLACEHOLDERS::_1, BOOST_PLACEHOLDERS::_2)
+            std::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), std::placeholders::_1, std::placeholders::_2)
 			  )
           );
       //_dbg3("(normal)" << size_now);
@@ -1021,7 +1013,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
       MDEBUG("start accept (IPv4)");
       new_connection_.reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, m_state->ssl_options().support));
       acceptor_.async_accept(new_connection_->socket(),
-	boost::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv4, this,
+	std::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv4, this,
 	boost::asio::placeholders::error));
     }
     catch (const std::exception &e)
@@ -1058,7 +1050,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         MDEBUG("start accept (IPv6)");
         new_connection_ipv6.reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, m_state->ssl_options().support));
         acceptor_ipv6.async_accept(new_connection_ipv6->socket(),
-            boost::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv6, this,
+            std::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv6, this,
               boost::asio::placeholders::error));
       }
       catch (const std::exception &e)
@@ -1175,7 +1167,7 @@ POP_WARNINGS
       for (std::size_t i = 0; i < threads_count; ++i)
       {
         std::shared_ptr<boost::thread> thread(new boost::thread(
-          attrs, boost::bind(&boosted_tcp_server<t_protocol_handler>::worker_thread, this)));
+          attrs, std::bind(&boosted_tcp_server<t_protocol_handler>::worker_thread, this)));
           _note("Run server thread name: " << m_thread_name_prefix);
         m_threads.push_back(thread);
       }
@@ -1311,7 +1303,7 @@ POP_WARNINGS
       connection_ptr conn(std::move((*current_new_connection)));
       (*current_new_connection).reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, conn->get_ssl_support()));
       current_acceptor->async_accept((*current_new_connection)->socket(),
-          boost::bind(accept_function_pointer, this,
+          std::bind(accept_function_pointer, this,
             boost::asio::placeholders::error));
 
       boost::asio::socket_base::keep_alive opt(true);
@@ -1346,7 +1338,7 @@ POP_WARNINGS
     misc_utils::sleep_no_w(100);
     (*current_new_connection).reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, (*current_new_connection)->get_ssl_support()));
     current_acceptor->async_accept((*current_new_connection)->socket(),
-        boost::bind(accept_function_pointer, this,
+        std::bind(accept_function_pointer, this,
           boost::asio::placeholders::error));
   }
   //---------------------------------------------------------------------------------
@@ -1412,9 +1404,9 @@ POP_WARNINGS
       shared_context->connect_mut.lock(); shared_context->ec = ec_; shared_context->cond.notify_one(); shared_context->connect_mut.unlock();
     };
 #if BOOST_VERSION >= 106100
-    sock_.async_connect(remote_endpoint, boost::bind<void>(connect_callback, BOOST_PLACEHOLDERS::_1, local_shared_context));
+    sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, std::placeholders::_1, local_shared_context));
 #else
-    sock_.async_connect(remote_endpoint, boost::bind<void>(connect_callback, _1, local_shared_context));
+    sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, _1, local_shared_context));
 #endif
     while(local_shared_context->ec == boost::asio::error::would_block)
     {

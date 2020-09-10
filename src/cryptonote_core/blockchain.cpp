@@ -382,7 +382,7 @@ bool Blockchain::init(BlockchainDB* db, const network_type nettype, bool offline
 
   m_async_work_idle = std::unique_ptr < boost::asio::io_service::work > (new boost::asio::io_service::work(m_async_service));
   // we only need 1
-  m_async_thread = boost::thread(boost::bind(&boost::asio::io_service::run, &m_async_service));
+  m_async_thread = boost::thread(std::bind(&boost::asio::io_service::run, &m_async_service));
 
 #if defined(PER_BLOCK_CHECKPOINT)
   if (m_nettype != FAKECHAIN)
@@ -4386,7 +4386,7 @@ bool Blockchain::cleanup_handle_incoming_blocks(bool force_sync)
       {
         m_sync_counter = 0;
         m_bytes_to_sync = 0;
-        m_async_service.dispatch(boost::bind(&Blockchain::store_blockchain, this));
+        m_async_service.dispatch(std::bind(&Blockchain::store_blockchain, this));
       }
       else if(m_db_sync_mode == db_sync)
       {
@@ -4696,7 +4696,7 @@ bool Blockchain::prepare_handle_incoming_blocks(const std::vector<block_complete
         unsigned nblocks = batches;
         if (i < extra)
           ++nblocks;
-        tpool.submit(&waiter, boost::bind(&Blockchain::block_longhash_worker, this, thread_height, epee::span<const block>(&blocks[thread_height - height], nblocks), std::ref(maps[i])), true);
+        tpool.submit(&waiter, std::bind(&Blockchain::block_longhash_worker, this, thread_height, epee::span<const block>(&blocks[thread_height - height], nblocks), std::ref(maps[i])), true);
         thread_height += nblocks;
       }
 
@@ -4838,7 +4838,7 @@ bool Blockchain::prepare_handle_incoming_blocks(const std::vector<block_complete
     for (size_t i = 0; i < amounts.size(); i++)
     {
       uint64_t amount = amounts[i];
-      tpool.submit(&waiter, boost::bind(&Blockchain::output_scan_worker, this, amount, std::cref(offset_map[amount]), std::ref(tx_map[amount])), true);
+      tpool.submit(&waiter, std::bind(&Blockchain::output_scan_worker, this, amount, std::cref(offset_map[amount]), std::ref(tx_map[amount])), true);
     }
     waiter.wait(&tpool);
   }

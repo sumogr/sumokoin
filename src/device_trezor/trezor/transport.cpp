@@ -698,7 +698,7 @@ namespace trezor{
     // Start the asynchronous operation itself. The handle_receive function
     // used as a callback will update the ec and length variables.
     m_socket->async_receive_from(boost::asio::buffer(buffer), m_endpoint,
-                                 boost::bind(&UdpTransport::handle_receive, boost::placeholders::_1, boost::placeholders::_2, &ec, &length));
+                                 std::bind(&UdpTransport::handle_receive, std::placeholders::_1, std::placeholders::_2, &ec, &length));
 
     // Block until the asynchronous operation has completed.
     do {
@@ -759,7 +759,7 @@ namespace trezor{
     }
 
     // Put the actor back to sleep.
-    m_deadline.async_wait(boost::bind(&UdpTransport::check_deadline, this));
+    m_deadline.async_wait(std::bind(&UdpTransport::check_deadline, this));
   }
 
   void UdpTransport::handle_receive(const boost::system::error_code &ec, std::size_t length,
