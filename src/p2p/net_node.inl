@@ -254,7 +254,7 @@ namespace nodetool
       conns.clear();
     }
 
-    MCLOG_CYAN(el::Level::Info, "global", "Host " << addr.host_str() << " blocked for " << P2P_IP_BLOCKTIME << " seconds.");
+    MCLOG_CYAN(el::Level::Info, "global", "Host " << addr.host_str() << " blocked for " << seconds << " seconds.");
     return true;
   }
   //-----------------------------------------------------------------------------------

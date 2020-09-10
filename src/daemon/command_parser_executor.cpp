@@ -29,6 +29,9 @@
 #include "common/dns_utils.h"
 #include "common/command_line.h"
 #include "daemon/command_parser_executor.h"
+#include <iostream>
+#include <string>
+#include <boost/lexical_cast.hpp>
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "daemon"
@@ -582,23 +585,29 @@ bool t_command_parser_executor::ban(const std::vector<std::string>& args)
 {
   if (args.size() != 1 && args.size() != 2) return false;
   std::string ip = args[0];
-  time_t seconds = P2P_IP_BLOCKTIME;
   if (args.size() > 1)
   {
     try
     {
-      seconds = std::stoi(args[1]);
-    }
-    catch (const std::exception &e)
-    {
-      return false;
-    }
-    if (seconds == 0)
-    {
-      return false;
-    }
-  }
-  return m_executor.ban(ip, seconds);
+      time_t seconds = boost::lexical_cast<uint64_t>(args[1]);
+      if (seconds < 1)
+      {
+        std::cout << "number of seconds must be greater than 0" << std::endl;
+        return false;
+      }
+      return m_executor.ban(ip, seconds);
+   }
+   catch (const boost::bad_lexical_cast&)
+   {
+     std::cout << "number of seconds must be a number greater than 0" << std::endl;
+   }
+   return false;
+ }
+ else
+ {
+   return m_executor.ban(ip, P2P_IP_BLOCKTIME);
+ }
+ return false;   
 }
 
 bool t_command_parser_executor::unban(const std::vector<std::string>& args)
