@@ -382,7 +382,7 @@ bool Blockchain::init(BlockchainDB* db, const network_type nettype, bool offline
 
   m_async_work_idle = std::unique_ptr < boost::asio::io_service::work > (new boost::asio::io_service::work(m_async_service));
   // we only need 1
-  m_async_thread = std::thread(std::bind(&boost::asio::io_service::run, &m_async_service));
+  m_async_thread = boost::thread(std::bind(&boost::asio::io_service::run, &m_async_service));
 
 #if defined(PER_BLOCK_CHECKPOINT)
   if (m_nettype != FAKECHAIN)

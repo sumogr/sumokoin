@@ -210,14 +210,14 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         boost::asio::socket_base::message_peek,
         strand_.wrap(
           std::bind(&connection<t_protocol_handler>::handle_receive, self,
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred)));
+            std::placeholders::_1,
+            std::placeholders::_2)));
     else
       async_read_some(boost::asio::buffer(buffer_),
         strand_.wrap(
           std::bind(&connection<t_protocol_handler>::handle_read, self,
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred)));
+            std::placeholders::_1,
+            std::placeholders::_2)));
 #if !defined(_WIN32) || !defined(__i686)
 	// not supported before Windows7, too lazy for runtime check
 	// Just exclude for 32bit windows builds
@@ -395,8 +395,8 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         async_read_some(boost::asio::buffer(buffer_),
           strand_.wrap(
             std::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
-              boost::asio::placeholders::error,
-              boost::asio::placeholders::bytes_transferred)));
+              std::placeholders::_1,
+              std::placeholders::_2)));
         //_info("[sock " << socket().native_handle() << "]Async read requested.");
       }
     }else
@@ -448,8 +448,8 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         boost::asio::socket_base::message_peek,
         strand_.wrap(
           std::bind(&connection<t_protocol_handler>::handle_receive, connection<t_protocol_handler>::shared_from_this(),
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred)));
+            std::placeholders::_1,
+            std::placeholders::_2)));
       return;
     }
 
@@ -490,8 +490,8 @@ PRAGMA_WARNING_DISABLE_VS(4355)
     async_read_some(boost::asio::buffer(buffer_),
       strand_.wrap(
         std::bind(&connection<t_protocol_handler>::handle_read, connection<t_protocol_handler>::shared_from_this(),
-          boost::asio::placeholders::error,
-          boost::asio::placeholders::bytes_transferred)));
+          std::placeholders::_1,
+          std::placeholders::_2)));
 
     // If an error occurs then no new asynchronous operations are started. This
     // means that all shared_ptr references to the connection object will
@@ -1014,7 +1014,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
       new_connection_.reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, m_state->ssl_options().support));
       acceptor_.async_accept(new_connection_->socket(),
 	std::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv4, this,
-	boost::asio::placeholders::error));
+	std::placeholders::_1));
     }
     catch (const std::exception &e)
     {
@@ -1051,7 +1051,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         new_connection_ipv6.reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, m_state->ssl_options().support));
         acceptor_ipv6.async_accept(new_connection_ipv6->socket(),
             std::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept_ipv6, this,
-              boost::asio::placeholders::error));
+              std::placeholders::_1));
       }
       catch (const std::exception &e)
       {
@@ -1304,7 +1304,7 @@ POP_WARNINGS
       (*current_new_connection).reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, conn->get_ssl_support()));
       current_acceptor->async_accept((*current_new_connection)->socket(),
           std::bind(accept_function_pointer, this,
-            boost::asio::placeholders::error));
+            std::placeholders::_1));
 
       boost::asio::socket_base::keep_alive opt(true);
       conn->socket().set_option(opt);
@@ -1339,7 +1339,7 @@ POP_WARNINGS
     (*current_new_connection).reset(new connection<t_protocol_handler>(io_service_, m_state, m_connection_type, (*current_new_connection)->get_ssl_support()));
     current_acceptor->async_accept((*current_new_connection)->socket(),
         std::bind(accept_function_pointer, this,
-          boost::asio::placeholders::error));
+          std::placeholders::_1));
   }
   //---------------------------------------------------------------------------------
   template<class t_protocol_handler>

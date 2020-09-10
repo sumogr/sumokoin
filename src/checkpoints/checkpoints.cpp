@@ -133,13 +133,9 @@ namespace cryptonote
   //---------------------------------------------------------------------------
   uint64_t checkpoints::get_max_height() const
   {
-    std::less<uint64_t> comparator;
-    std::map< uint64_t, crypto::hash >::const_iterator highest =
-        std::max_element( m_points.begin(), m_points.end(),
-                         std::bind(comparator,
-                         std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_1),
-                         std::bind(&std::map< uint64_t, crypto::hash >::value_type::first, std::placeholders::_2 ) ) );
-    return highest->first;
+    if (m_points.empty())
+      return 0;
+    return m_points.rbegin()->first;
   }
   //---------------------------------------------------------------------------
   const std::map<uint64_t, crypto::hash>& checkpoints::get_points() const
