@@ -2761,16 +2761,12 @@ namespace nodetool
   {
     std::string ipversion = ipv6 ? "(IPv6)" : "(IPv4)";
     MDEBUG("Attempting to add IGD port mapping " << ipversion << ".");
+    int error = 0;
     int result;
     const int ipv6_arg = ipv6 ? 1 : 0;
 
-#if MINIUPNPC_API_VERSION > 13
-    // default according to miniupnpc.h
     unsigned char ttl = 2;
-    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, ttl, &result);
-#else
-    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, &result);
-#endif
+    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, ttl, &error);
     UPNPUrls urls;
     IGDdatas igdData;
     char lanAddress[64];
@@ -2824,21 +2820,16 @@ namespace nodetool
     if (ipv6) add_upnp_port_mapping_v6(port);
   }
 
-
   template<class t_payload_net_handler>
   void node_server<t_payload_net_handler>::delete_upnp_port_mapping_impl(uint32_t port, bool ipv6)
   {
     std::string ipversion = ipv6 ? "(IPv6)" : "(IPv4)";
     MDEBUG("Attempting to delete IGD port mapping " << ipversion << ".");
+    int error = 0;
     int result;
     const int ipv6_arg = ipv6 ? 1 : 0;
-#if MINIUPNPC_API_VERSION > 13
-    // default according to miniupnpc.h
     unsigned char ttl = 2;
-    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, ttl, &result);
-#else
-    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, &result);
-#endif
+    UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, ttl, &error);
     UPNPUrls urls;
     IGDdatas igdData;
     char lanAddress[64];
