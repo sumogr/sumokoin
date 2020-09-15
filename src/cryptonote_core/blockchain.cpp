@@ -4242,43 +4242,6 @@ bool Blockchain::add_new_block(const block& bl, block_verification_context& bvc)
   }
 }
 //------------------------------------------------------------------
-//TODO: Refactor, consider returning a failure height and letting
-//      caller decide course of action.
-void Blockchain::check_against_checkpoints(const checkpoints& points, bool enforce)
-{
-  const auto& pts = points.get_points();
-  bool stop_batch;
-
-  CRITICAL_REGION_LOCAL(m_blockchain_lock);
-  stop_batch = m_db->batch_start();
-  const uint64_t blockchain_height = m_db->height();
-  for (const auto& pt : pts)
-  {
-    // if the checkpoint is for a block we don't have yet, move on
-    if (pt.first >= blockchain_height)
-    {
-      continue;
-    }
-
-    if (!points.check_block(pt.first, m_db->get_block_hash_from_height(pt.first)))
-    {
-      // if asked to enforce checkpoints, roll back to a couple of blocks before the checkpoint
-      if (enforce)
-      {
-        LOG_ERROR("Local blockchain failed to pass a checkpoint, rolling back!");
-        std::list<block> empty;
-        rollback_blockchain_switching(empty, pt.first - 2);
-      }
-      else
-      {
-        LOG_ERROR("WARNING: local blockchain failed to pass a SumoPulse checkpoint, and you could be on a fork. You should either sync up from scratch, OR download a fresh blockchain bootstrap, OR enable checkpoint enforcing with the --enforce-dns-checkpointing command-line option");
-      }
-    }
-  }
-  if (stop_batch)
-    m_db->batch_stop();
-}
-//------------------------------------------------------------------
 void Blockchain::block_longhash_worker(uint64_t height, const epee::span<const block> &blocks, std::unordered_map<crypto::hash, crypto::hash> &map) const
 {
   TIME_MEASURE_START(t);
