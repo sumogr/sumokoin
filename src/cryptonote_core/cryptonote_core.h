@@ -166,7 +166,6 @@ namespace cryptonote
      /**
       * @brief handles an incoming block
       *
-      * periodic update to checkpoints is triggered here
       * Attempts to add the block to the Blockchain and, on success,
       * optionally updates the miner's block template.
       *
@@ -175,8 +174,7 @@ namespace cryptonote
       * @param bvc return-by-reference metadata context about the block's validity
       * @param update_miner_blocktemplate whether or not to update the miner's block template
       *
-      * @return false if loading new checkpoints fails, or the block is not
-      * added, otherwise true
+      * @return false if the block is not added, otherwise true
       */
      bool handle_incoming_block(const blobdata& block_blob, const block *b, block_verification_context& bvc, bool update_miner_blocktemplate = true);
 
@@ -435,32 +433,11 @@ namespace cryptonote
      void set_checkpoints(checkpoints&& chk_pts);
 
      /**
-      * @brief set the file path to read from when loading checkpoints
-      *
-      * @param path the path to set ours as
-      */
-     void set_checkpoints_file_path(const std::string& path);
-
-     /**
-      * @brief set whether or not we enforce DNS checkpoints
-      *
-      * @param enforce_dns enforce DNS checkpoints or not
-      */
-     void set_enforce_dns_checkpoints(bool enforce_dns);
-
-     /**
       * @brief set a listener for txes being added to the txpool
       *
       * @param callable to notify, or empty function to disable.
       */
      void set_txpool_listener(boost::function<void(std::vector<txpool_event>)> zmq_pub);
-
-     /**
-      * @brief set whether or not to enable or disable DNS checkpoints
-      *
-      * @param disble whether to disable DNS checkpoints
-      */
-     void disable_dns_checkpoints(bool disable = true) { m_disable_dns_checkpoints = disable; }
 
      /**
       * @copydoc tx_memory_pool::have_tx
@@ -698,18 +675,6 @@ namespace cryptonote
       *
       */
      std::time_t get_start_time() const;
-
-     /**
-      * @brief tells the Blockchain to update its checkpoints
-      *
-      * This function will check if enough time has passed since the last
-      * time checkpoints were updated and tell the Blockchain to update
-      * its checkpoints if it is time.  If updating checkpoints fails,
-      * the daemon is told to shut down.
-      *
-      * @note see Blockchain::update_checkpoints()
-      */
-     bool update_checkpoints(const bool skip_dns = false);
 
      /**
       * @brief tells the daemon to wind down operations and stop running
@@ -1009,13 +974,6 @@ namespace cryptonote
      bool relay_txpool_transactions();
 
      /**
-      * @brief checks DNS versions
-      *
-      * @return true on success, false otherwise
-      */
-     bool check_updates();
-
-     /**
       * @brief checks free disk space
       *
       * @return true on success, false otherwise
@@ -1056,7 +1014,6 @@ namespace cryptonote
 
      epee::math_helper::once_a_time_seconds<60*60*12, false> m_store_blockchain_interval; //!< interval for manual storing of Blockchain, if enabled
      epee::math_helper::once_a_time_seconds<60*2, false> m_txpool_auto_relayer; //!< interval for checking re-relaying txpool transactions
-     epee::math_helper::once_a_time_seconds<60*60*12, true> m_check_updates_interval; //!< interval for checking for new versions
      epee::math_helper::once_a_time_seconds<60*10, true> m_check_disk_space_interval; //!< interval for checking for disk space
      epee::math_helper::once_a_time_seconds<90, false> m_block_rate_interval; //!< interval for checking block rate
      epee::math_helper::once_a_time_seconds<60*60*5, true> m_blockchain_pruning_interval; //!< interval for incremental blockchain pruning
@@ -1070,26 +1027,12 @@ namespace cryptonote
 
      std::atomic<bool> m_update_available;
 
-     std::string m_checkpoints_path; //!< path to json checkpoints file
-     time_t m_last_dns_checkpoints_update; //!< time when dns checkpoints were last updated
-     time_t m_last_json_checkpoints_update; //!< time when json checkpoints were last updated
-
-     std::atomic_flag m_checkpoints_updating; //!< set if checkpoints are currently updating to avoid multiple threads attempting to update at once
-     bool m_disable_dns_checkpoints;
-
      size_t block_sync_size;
 
      time_t start_time;
 
      std::unordered_set<crypto::hash> bad_semantics_txes[2];
      boost::mutex bad_semantics_txes_lock;
-
-     enum {
-       UPDATES_DISABLED,
-       UPDATES_NOTIFY,
-       UPDATES_DOWNLOAD,
-       UPDATES_UPDATE,
-     } check_updates_level;
 
      tools::download_async_handle m_update_download;
      size_t m_last_update_length;
