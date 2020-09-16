@@ -198,7 +198,7 @@ namespace hw {
         /* ======================================================================= */
 
         virtual void generate_tx_proof(const crypto::hash &prefix_hash,
-                                       const crypto::public_key &R, const crypto::public_key &A, const std::optional<crypto::public_key> &B, const crypto::public_key &D, const crypto::secret_key &r,
+                                       const crypto::public_key &R, const crypto::public_key &A, const boost::optional<crypto::public_key> &B, const crypto::public_key &D, const crypto::secret_key &r,
                                        crypto::signature &sig) = 0;
 
         virtual bool  open_tx(crypto::secret_key &tx_key) = 0;

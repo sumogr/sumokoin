@@ -130,8 +130,8 @@ namespace crypto {
     friend void generate_signature(const hash &, const public_key &, const secret_key &, signature &);
     static bool check_signature(const hash &, const public_key &, const signature &);
     friend bool check_signature(const hash &, const public_key &, const signature &);
-    static void generate_tx_proof(const hash &, const public_key &, const public_key &, const std::optional<public_key> &, const public_key &, const secret_key &, signature &);
-    friend void generate_tx_proof(const hash &, const public_key &, const public_key &, const std::optional<public_key> &, const public_key &, const secret_key &, signature &);
+    static void generate_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
+    friend void generate_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
     static void generate_tx_proof_v1(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
     friend void generate_tx_proof_v1(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const secret_key &, signature &);
     static bool check_tx_proof(const hash &, const public_key &, const public_key &, const boost::optional<public_key> &, const public_key &, const signature &, const int);

@@ -1,21 +1,21 @@
 // Copyright (c) 2016-2019, The Monero Project
-// 
+//
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-// 
+//
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -1207,32 +1207,35 @@ void fromJsonValue(const rapidjson::Value& val, rct::mgSig& sig)
   GET_FROM_JSON_OBJECT(val, sig.cc, cc);
 }
 
-void toJsonValue(rapidjson::Document& doc, const cryptonote::rpc::DaemonInfo& info, rapidjson::Value& val)
+void toJsonValue(rapidjson::Writer<epee::byte_stream>& dest, const cryptonote::rpc::DaemonInfo& info)
 {
-  val.SetObject();
+  dest.StartObject();
 
-  INSERT_INTO_JSON_OBJECT(val, doc, height, info.height);
-  INSERT_INTO_JSON_OBJECT(val, doc, target_height, info.target_height);
-  INSERT_INTO_JSON_OBJECT(val, doc, difficulty, info.difficulty);
-  INSERT_INTO_JSON_OBJECT(val, doc, target, info.target);
-  INSERT_INTO_JSON_OBJECT(val, doc, tx_count, info.tx_count);
-  INSERT_INTO_JSON_OBJECT(val, doc, tx_pool_size, info.tx_pool_size);
-  INSERT_INTO_JSON_OBJECT(val, doc, alt_blocks_count, info.alt_blocks_count);
-  INSERT_INTO_JSON_OBJECT(val, doc, outgoing_connections_count, info.outgoing_connections_count);
-  INSERT_INTO_JSON_OBJECT(val, doc, incoming_connections_count, info.incoming_connections_count);
-  INSERT_INTO_JSON_OBJECT(val, doc, white_peerlist_size, info.white_peerlist_size);
-  INSERT_INTO_JSON_OBJECT(val, doc, grey_peerlist_size, info.grey_peerlist_size);
-  INSERT_INTO_JSON_OBJECT(val, doc, mainnet, info.mainnet);
-  INSERT_INTO_JSON_OBJECT(val, doc, testnet, info.testnet);
-  INSERT_INTO_JSON_OBJECT(val, doc, stagenet, info.stagenet);
-  INSERT_INTO_JSON_OBJECT(val, doc, nettype, info.nettype);
-  INSERT_INTO_JSON_OBJECT(val, doc, top_block_hash, info.top_block_hash);
-  INSERT_INTO_JSON_OBJECT(val, doc, cumulative_difficulty, info.cumulative_difficulty);
-  INSERT_INTO_JSON_OBJECT(val, doc, block_size_limit, info.block_size_limit);
-  INSERT_INTO_JSON_OBJECT(val, doc, block_weight_limit, info.block_weight_limit);
-  INSERT_INTO_JSON_OBJECT(val, doc, block_size_median, info.block_size_median);
-  INSERT_INTO_JSON_OBJECT(val, doc, block_weight_median, info.block_weight_median);
-  INSERT_INTO_JSON_OBJECT(val, doc, start_time, info.start_time);
+  INSERT_INTO_JSON_OBJECT(dest, height, info.height);
+  INSERT_INTO_JSON_OBJECT(dest, target_height, info.target_height);
+  INSERT_INTO_JSON_OBJECT(dest, difficulty, info.difficulty);
+  INSERT_INTO_JSON_OBJECT(dest, target, info.target);
+  INSERT_INTO_JSON_OBJECT(dest, tx_count, info.tx_count);
+  INSERT_INTO_JSON_OBJECT(dest, tx_pool_size, info.tx_pool_size);
+  INSERT_INTO_JSON_OBJECT(dest, alt_blocks_count, info.alt_blocks_count);
+  INSERT_INTO_JSON_OBJECT(dest, outgoing_connections_count, info.outgoing_connections_count);
+  INSERT_INTO_JSON_OBJECT(dest, incoming_connections_count, info.incoming_connections_count);
+  INSERT_INTO_JSON_OBJECT(dest, white_peerlist_size, info.white_peerlist_size);
+  INSERT_INTO_JSON_OBJECT(dest, grey_peerlist_size, info.grey_peerlist_size);
+  INSERT_INTO_JSON_OBJECT(dest, mainnet, info.mainnet);
+  INSERT_INTO_JSON_OBJECT(dest, testnet, info.testnet);
+  INSERT_INTO_JSON_OBJECT(dest, stagenet, info.stagenet);
+  INSERT_INTO_JSON_OBJECT(dest, nettype, info.nettype);
+  INSERT_INTO_JSON_OBJECT(dest, top_block_hash, info.top_block_hash);
+  INSERT_INTO_JSON_OBJECT(dest, cumulative_difficulty, info.cumulative_difficulty);
+  INSERT_INTO_JSON_OBJECT(dest, block_size_limit, info.block_size_limit);
+  INSERT_INTO_JSON_OBJECT(dest, block_weight_limit, info.block_weight_limit);
+  INSERT_INTO_JSON_OBJECT(dest, block_size_median, info.block_size_median);
+  INSERT_INTO_JSON_OBJECT(dest, block_weight_median, info.block_weight_median);
+  INSERT_INTO_JSON_OBJECT(dest, adjusted_time, info.adjusted_time);
+  INSERT_INTO_JSON_OBJECT(dest, start_time, info.start_time);
+
+  dest.EndObject();
 }
 
 void fromJsonValue(const rapidjson::Value& val, cryptonote::rpc::DaemonInfo& info)
@@ -1263,6 +1266,7 @@ void fromJsonValue(const rapidjson::Value& val, cryptonote::rpc::DaemonInfo& inf
   GET_FROM_JSON_OBJECT(val, info.block_weight_limit, block_weight_limit);
   GET_FROM_JSON_OBJECT(val, info.block_size_median, block_size_median);
   GET_FROM_JSON_OBJECT(val, info.block_weight_median, block_weight_median);
+  GET_FROM_JSON_OBJECT(val, info.adjusted_time, adjusted_time);
   GET_FROM_JSON_OBJECT(val, info.start_time, start_time);
 }
 
