@@ -5,7 +5,7 @@
 extern const unsigned char checkpoints[];
 extern const size_t checkpoints_len;
 
-namespace blocks
+namespace blocks 
 {
 
   const std::unordered_map<cryptonote::network_type, const epee::span<const unsigned char>, std::hash<size_t>> CheckpointsByNetwork = {
