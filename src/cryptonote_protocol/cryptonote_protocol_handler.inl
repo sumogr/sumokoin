@@ -1540,8 +1540,22 @@ namespace cryptonote
               }
               return true;
             });
-            MGINFO_YELLOW("Synced " << current_blockchain_height << "/" << target_blockchain_height
+
+#if defined(PER_BLOCK_CHECKPOINT)
+            if (m_core.is_within_compiled_block_hash_area(current_blockchain_height))
+            {
+              MGINFO_YELLOW("Synced " << current_blockchain_height << "/" << target_blockchain_height
                                     << progress_message << timing_message << " syncing with " << n_syncing << " remote nodes" << std::flush);
+            }
+            else
+            {
+              MGINFO_YELLOW("Synced " << current_blockchain_height << "/" << target_blockchain_height
+                                    << progress_message << timing_message << " syncing with " << n_syncing << " remote nodes (outside compiled block hashes area - syncing will be slow)" << std::flush);
+            }
+#else
+              MGINFO_YELLOW("Synced " << current_blockchain_height << "/" << target_blockchain_height
+                                    << progress_message << timing_message << " syncing with " << n_syncing << " remote nodes (slow sync mode)" << std::flush);
+#endif
             if (previous_stripe != current_stripe)
               notify_new_stripe(context, current_stripe);
           }
