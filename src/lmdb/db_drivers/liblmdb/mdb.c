@@ -52,7 +52,7 @@
  * NTDLL.DLL at runtime, to avoid buildtime dependencies on any
  * NTDLL import libraries.
  */
-typedef NTSTATUS (WINAPI NtCreateSectionFunc)
+typedef ntstatus (WINAPI NtCreateSectionFunc)
   (OUT PHANDLE sh, IN ACCESS_MASK acc,
   IN void * oa OPTIONAL,
   IN PLARGE_INTEGER ms OPTIONAL,
@@ -65,7 +65,7 @@ typedef enum _SECTION_INHERIT {
 	ViewUnmap = 2
 } SECTION_INHERIT;
 
-typedef NTSTATUS (WINAPI NtMapViewOfSectionFunc)
+typedef ntstatus (WINAPI NtMapViewOfSectionFunc)
   (IN PHANDLE sh, IN HANDLE ph,
   IN OUT PVOID *addr, IN ULONG_PTR zbits,
   IN SIZE_T cs, IN OUT PLARGE_INTEGER off OPTIONAL,
@@ -74,7 +74,7 @@ typedef NTSTATUS (WINAPI NtMapViewOfSectionFunc)
 
 static NtMapViewOfSectionFunc *NtMapViewOfSection;
 
-typedef NTSTATUS (WINAPI NtCloseFunc)(HANDLE h);
+typedef ntstatus (WINAPI NtCloseFunc)(HANDLE h);
 
 static NtCloseFunc *NtClose;
 
@@ -4345,7 +4345,7 @@ mdb_env_create(MDB_env **env)
 #ifdef _WIN32
 /** @brief Map a result from an NTAPI call to WIN32. */
 static DWORD
-mdb_nt2win32(NTSTATUS st)
+mdb_nt2win32(ntstatus st)
 {
 	OVERLAPPED o = {0};
 	DWORD br;
