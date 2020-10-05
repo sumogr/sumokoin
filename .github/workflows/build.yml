@@ -23,7 +23,7 @@ jobs:
         cd build
         make -j2
 
-  build-windows (cross-compiling):
+  build-windows-(cross-compiling):
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
