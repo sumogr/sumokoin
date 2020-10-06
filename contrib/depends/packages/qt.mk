@@ -1,9 +1,9 @@
 PACKAGE=qt
 $(package)_version=5.7.1
-$(package)_download_path=https://build.nav.community/depends-sources/
+$(package)_download_path=https://distfiles.macports.org/qt5/
 $(package)_suffix=opensource-src-$($(package)_version).tar.gz
 $(package)_file_name=qtbase-$($(package)_suffix)
-$(package)_sha256_hash=95f83e532d23b3ddbde7973f380ecae1bac13230340557276f75f2e37984e410
+$(package)_sha256_hash=edcdf549d94d98aff08e201dcb3ca25bc3628a37b1309e320d5f556b6b66557e
 $(package)_build_subdir=qtbase
 $(package)_qt_libs=corelib
 $(package)_patches=pidlist_absolute.patch fix_qt_pkgconfig.patch qfixed-coretext.patch
