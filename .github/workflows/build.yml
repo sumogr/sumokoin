@@ -26,7 +26,7 @@ jobs:
     - name: build sumokoin
       run: make release-static-win64 -j2
 
-  build-windows64-cross-compiling:
+  Windows64-cross-on-bionic:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -244,6 +244,24 @@ jobs:
     - name: build sumokoin
       run: make release-static -j3
 
+  FreeBSD-cross-on-bionic:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install autoconf automake libtool gperf cmake clang-8
+    - name: cross compile sumokoin bins for FreeBSD
+      run: make depends target=x86_64-unknown-freebsd -j 3
+      
   libwallet-ubuntu:
     runs-on: ubuntu-latest
     steps:
