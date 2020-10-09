@@ -23,9 +23,10 @@ jobs:
     - name: install setuptools
       run: pip install setuptools
     - name: get SDK 
-      run: |
-        wget https://sumokoin.org/downloads/Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
-        mkdir /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
-        mv Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
+      run:  wget https://sumokoin.org/downloads/Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
+    - name: create SDKs dir
+      run: mkdir /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
+    - name: move SDK
+      run: mv Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
     - name: build sumokoin
       run: make depends target=x86_64-apple-darwin14 -j3
