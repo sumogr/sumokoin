@@ -13,6 +13,6 @@ jobs:
     - uses: eine/setup-msys2@v1
       with:
         update: true
-        install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-libunwind mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb
+        install: mingw-w64-x86_64-toolchain git make mingw-w64-x86_64-cmake mingw-w64-x86_64-libunwind mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb
     - name: build sumokoin
       run: make release-static-win64 -j2
