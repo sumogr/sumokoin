@@ -54,3 +54,5 @@ target_link_libraries(blockchain_db
     ${Boost_THREAD_LIBRARY}
   PRIVATE
     ${EXTRA_LIBRARIES})
+
+add_subdirectory(lmdb_drivers)

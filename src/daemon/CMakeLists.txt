@@ -97,3 +97,8 @@ set_property(TARGET daemon
   PROPERTY
     OUTPUT_NAME "sumokoind")
 install(TARGETS daemon DESTINATION bin)
+
+if(NOT IOS)
+  add_subdirectory(daemonizer)
+endif()
+

@@ -156,3 +156,8 @@ if (BUILD_GUI_DEPS)
 endif()
 
 add_subdirectory(api)
+add_subdirectory(multisig)
+if(NOT IOS)
+  add_subdirectory(gen_multisig)
+endif()
+

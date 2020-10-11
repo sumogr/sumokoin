@@ -26,7 +26,7 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 #include <memory>
 
 #include "lmdb/error.h"

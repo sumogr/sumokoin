@@ -69,3 +69,5 @@ target_link_libraries(cryptonote_basic
     ${Boost_THREAD_LIBRARY}
   PRIVATE
     ${EXTRA_LIBRARIES})
+
+add_subdirectory(hardforks)

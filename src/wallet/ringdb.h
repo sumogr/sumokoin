@@ -33,7 +33,7 @@
 #include "wipeable_string.h"
 #include "crypto/crypto.h"
 #include "cryptonote_basic/cryptonote_basic.h"
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 
 namespace tools
 {

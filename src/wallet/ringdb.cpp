@@ -33,7 +33,7 @@
 #include "misc_language.h"
 #include "wallet_errors.h"
 #include "ringdb.h"
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "wallet.ringdb"

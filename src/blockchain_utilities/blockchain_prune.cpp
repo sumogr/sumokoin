@@ -32,7 +32,7 @@
 #include "common/pruning.h"
 #include "cryptonote_core/cryptonote_core.h"
 #include "blockchain_db/lmdb/db_lmdb.h"
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 #include "version.h"
 
 #undef MONERO_DEFAULT_LOG_CATEGORY

@@ -33,7 +33,7 @@
 #include <utility>
 
 #include "lmdb/value_stream.h"
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 #include "span.h"
 
 namespace lmdb

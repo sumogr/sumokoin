@@ -31,7 +31,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "lmdb/db_drivers/liblmdb/lmdb.h"
+#include "blockchain_db/lmdb_drivers/db_drivers/liblmdb/lmdb.h"
 #include "span.h"
 
 /*! Calculates types and offset of struct field. Use in template arguments for

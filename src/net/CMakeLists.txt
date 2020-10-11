@@ -33,3 +33,7 @@ set(net_headers dandelionpp.h error.h http.cpp i2p_address.h parse.h socks.h soc
 
 monero_add_library(net ${net_sources} ${net_headers})
 target_link_libraries(net common epee ${ZMQ_LIB} ${Boost_ASIO_LIBRARY})
+
+if(NOT IOS)
+  add_subdirectory(gen_ssl_cert)
+endif()
