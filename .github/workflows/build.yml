@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
     - name: install msys2
@@ -19,4 +19,6 @@ jobs:
            $env:MSYSTEM = 'MINGW64'  # Start a 64 bit Mingw environment
            C:\msys64\usr\bin\bash -lc 'pacman -S --noconfirm mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium git'     
     - name: build sumokoin
-      run: C:\msys64\usr\bin\bash -lc 'D:\a\sumokoin\sumokoin make release-static-win64 -j2'
+      run: |
+         cd D:\a\sumokoin\sumokoin
+         make release-static-win64 -j2
