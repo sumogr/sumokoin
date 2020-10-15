@@ -11,8 +11,7 @@ jobs:
       run: |
         # Download the archive
         Invoke-WebRequest -Uri "https://repo.msys2.org/distrib/x86_64/msys2-x86_64-20200903.exe" -OutFile "msys2.exe"
-        .\msys2.exe -y -oC:\  # Extract to C:\msys64
-        Remove-Item msys2.exe  # Delete the archive again
+        .\msys2.exe
     - name: run msys2
       run: |
         # Run for the first time
