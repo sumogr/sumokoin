@@ -22,11 +22,7 @@ jobs:
       run: |      
         $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
         $env:MSYSTEM = 'MINGW64'  # Start a 64 bit Mingw environment
-        $Url = "https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz"
-        $Path = "D:\a\sumokoin\sumokoin\openssl-1.0.2r.tar.gz"
-        [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-        $webClient = new-object System.Net.WebClient
-        $webClient.DownloadFile( $Url, $Path )
+        Invoke-WebRequest https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz -OutFile D:\a\sumokoin\sumokoin\openssl-1.0.2r.tar.gz
         tar -xf openssl-1.0.2r.tar.gz #untar openssl
         cd openssl-1.0.2r
         #build openssl
