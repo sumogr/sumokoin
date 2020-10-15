@@ -30,6 +30,7 @@ jobs:
         make depend -j3
         make -j3
         make install -j3
+        cd ..
         C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-unbound'
         C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -U https://mirror.yandex.ru/mirrors/msys2/mingw/x86_64/mingw-w64-x86_64-boost-1.72.0-1-any.pkg.tar.xz'    
     - name: build sumokoin
