@@ -10,7 +10,7 @@ jobs:
     - name: download and update msys2
       run: |
         # Download the archive
-        (New-Object System.Net.WebClient).DownloadFile('https://github.com/msys2/msys2-installer/releases/download/2020-06-29/msys2-base-x86_64-20200629.sfx.exe', 'msys2.exe')
+        wget https://repo.msys2.org/distrib/x86_64/msys2-x86_64-20200903.exe
         .\msys2.exe -y -oC:\  # Extract to C:\msys64
         Remove-Item msys2.exe  # Delete the archive again
     - name: run msys2
@@ -20,6 +20,7 @@ jobs:
     - name: update msys2
       run: |
         C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Core update (in case any core packages are outdated)
+        C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Normal update
     - name: update sumokoin
       run: |      
         $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
