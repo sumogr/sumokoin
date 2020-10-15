@@ -22,9 +22,9 @@ jobs:
       run: |      
         $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
         $env:MSYSTEM = 'MINGW64'  # Start a 64 bit Mingw environment
-        Invoke-WebRequest -Uri "https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz" # download the openssl version we need
-        tar -xf openssl-1.0.2r.tar.gz #untar openssl
-        cd openssl-1.0.2r
+        Invoke-WebRequest -Uri "https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz" -OutFile "openssl.tar.gz" # download the openssl version we need
+        tar -xf openssl.tar.gz #untar openssl
+        cd openssl
         #build openssl
         perl Configure mingw64 no-shared no-asm --prefix=/C/OpenSSL-x64
         make depend -j3
