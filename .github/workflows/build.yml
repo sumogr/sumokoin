@@ -16,15 +16,20 @@ jobs:
         C:\msys64\usr\bin\bash -lc ' '
     - name: update msys2
       run: |
+        C:\msys64\usr\bin\bash -lc 'sed -i 's/^CheckSpace/#CheckSpace/g' D:\a\sumokoin\sumokoin\msys64\etc\pacman.conf' #dont check available disk space it takes too long (heavy I/O) we know we have enough
         C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Core update (in case any core packages are outdated)
         C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Normal update
-    - name: update sumokoin
+    - name: install sumokoin dependencies
       run: |      
         $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
         $env:MSYSTEM = 'MINGW64'  # Start a 64 bit Mingw environment
-        C:\msys64\usr\bin\bash -lc 'sed -i 's/^CheckSpace/#CheckSpace/g' /etc/pacman.conf' #dont check available disk space it takes too long (heavy I/O) we know we have enough
         C:\msys64\usr\bin\bash -lc 'pacman -S mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-unbound'
         C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -U https://mirror.yandex.ru/mirrors/msys2/mingw/x86_64/mingw-w64-x86_64-boost-1.72.0-1-any.pkg.tar.xz'
-        C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -U https://mirror.yandex.ru/mirrors/msys2/mingw/x86_64/mingw-w64-x86_64-openssl-1.1.1.g-1-any.pkg.tar.xz'
+    - name: install 1.0.2r openssl
+      run: |
+        Invoke-WebRequest -Uri "https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz" -OutFile "openssl-1.0.2r.tar.gz"
+        tar -xf openssl-1.0.2r.tar.gz
+        cd openssl-1.0.2r
+        make depend && make && make install -j3
     - name: build sumokoin
       run: make release-static-win64 -j3
