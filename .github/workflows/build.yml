@@ -19,7 +19,8 @@ jobs:
         C:\msys64\usr\bin\bash -lc ' '
     - name: update msys2
       run: |
-        C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # update
+        C:\msys64\usr\bin\bash -lc 'pacman --noconfirm --force -Syuu'  # Core update (in case any core packages are outdated)
+        C:\msys64\usr\bin\bash -lc 'pacman --noconfirm --force -Syuu'  # Normal update
     - name: update sumokoin
       run: |      
         $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
