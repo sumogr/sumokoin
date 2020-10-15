@@ -29,8 +29,7 @@ jobs:
       run: |
         Invoke-WebRequest -Uri "https://ftp.openssl.org/source/old/1.0.2/openssl-1.0.2r.tar.gz" -OutFile "openssl-1.0.2r.tar.gz"
         tar -xf openssl-1.0.2r.tar.gz
-        cd openssl-1.0.2r
-        ./Configure --prefix=$PWD/dist no-idea no-mdc2 no-rc5 shared mingw64
-        make depend && make && make install -j3
+        C:\msys64\usr\bin\bash -lc 'D:\a\sumokoin\sumokoin\openssl-1.0.2r\ ./Configure --prefix=$PWD/dist no-idea no-mdc2 no-rc5 shared mingw64'
+        C:\msys64\usr\bin\bash -lc 'D:\a\sumokoin\sumokoin\openssl-1.0.2r\ make depend && make && make install -j3'
     - name: build sumokoin
-      run: make release-static-win64 -j3
+      run: C:\msys64\usr\bin\bash -lc 'D:\a\sumokoin\sumokoin\ make release-static-win64 -j3'
