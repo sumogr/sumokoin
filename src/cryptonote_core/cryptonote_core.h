@@ -653,7 +653,7 @@ namespace cryptonote
       *
       * @param target_blockchain_height the target height
       */
-     uint64_t get_target_blockchain_height() const;
+     virtual uint64_t get_target_blockchain_height() const override;
 
      /**
       * @brief returns the newest hardfork version known to the blockchain
@@ -1091,6 +1091,7 @@ namespace cryptonote
 
 
      std::shared_ptr<tools::Notify> m_block_rate_notify;
+     boost::function<void(std::vector<txpool_event>)> m_zmq_pub;
    };
 }
 
