@@ -10,7 +10,7 @@ jobs:
     - name: download and update msys2
       run: |
         # Download the archive
-        wget https://repo.msys2.org/distrib/x86_64/msys2-x86_64-20200903.exe
+        .\wget https://repo.msys2.org/distrib/x86_64/msys2-x86_64-20200903.exe
         .\msys2.exe -y -oC:\  # Extract to C:\msys64
         Remove-Item msys2.exe  # Delete the archive again
     - name: run msys2
