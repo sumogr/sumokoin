@@ -39,13 +39,13 @@ TEST(DNSResolver, IPv4Success)
 
   bool avail, valid;
 
-  auto ips = resolver.get_ipv4("example.com", avail, valid);
+  auto ips = resolver.get_ipv4("sumokoin.org", avail, valid);
 
   ASSERT_EQ(1, ips.size());
 
   //ASSERT_STREQ("93.184.216.119", ips[0].c_str());
 
-  ips = tools::DNSResolver::instance().get_ipv4("example.com", avail, valid);
+  ips = tools::DNSResolver::instance().get_ipv4("sumokoin.org", avail, valid);
 
   ASSERT_EQ(1, ips.size());
 
@@ -74,7 +74,7 @@ TEST(DNSResolver, DNSSECSuccess)
 
   bool avail, valid;
 
-  auto ips = resolver.get_ipv4("example.com", avail, valid);
+  auto ips = resolver.get_ipv4("sumokoin.org", avail, valid);
 
   ASSERT_EQ(1, ips.size());
 
@@ -140,7 +140,7 @@ TEST(DNSResolver, GetTXTRecord)
 {
   bool avail, valid;
 
-  std::vector<std::string> records = tools::DNSResolver::instance().get_txt_record("sumocheckpoints.cloud", avail, valid);
+  std::vector<std::string> records = tools::DNSResolver::instance().get_txt_record("donate.getmonero.org", avail, valid);
 
   EXPECT_NE(0, records.size());
 
