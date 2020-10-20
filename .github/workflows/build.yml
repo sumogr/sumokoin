@@ -6,12 +6,9 @@ jobs:
   build-macos:
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: update brew and install dependencies
-      run: |
-           rm -rf "$(brew --repo homebrew/core)"
-           brew tap homebrew/core
-           brew update && brew install boost hidapi zmq libpgm ldns expat libunwind-headers miniupnpc
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run:  brew install boost hidapi zmq libpgm ldns expat libunwind-headers miniupnpc
     - name: build
       run: make -j2
       
