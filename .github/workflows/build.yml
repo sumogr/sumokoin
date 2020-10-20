@@ -8,7 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: update brew and install dependencies
-      run: brew update && brew install boost hidapi zmq libpgm ldns expat libunwind-headers miniupnpc
+      run: |
+           rm -rf "$(brew --repo homebrew/core)"
+           brew tap homebrew/core
+           brew update && brew install boost hidapi zmq libpgm ldns expat libunwind-headers miniupnpc
     - name: build
       run: make -j2
       
