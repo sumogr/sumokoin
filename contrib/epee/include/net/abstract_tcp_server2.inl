@@ -46,6 +46,13 @@
 #include "net/local_ip.h"
 #include "pragma_comp_defs.h"
 
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
+#if BOOST_VERSION >= 106100
+#define BOOST_PLACEHOLDERS boost::placeholders
+#else
+#define BOOST_PLACEHOLDERS
+#endif
+
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
@@ -248,7 +255,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
     if(!self)
       return false;
 
-    strand_.post(std::bind(&connection<t_protocol_handler>::call_back_starter, self));
+    strand_.post(boost::bind(&connection<t_protocol_handler>::call_back_starter, self));
     CATCH_ENTRY_L0("connection<t_protocol_handler>::request_callback()", false);
     return true;
   }
@@ -689,7 +696,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
         reset_timer(get_default_timeout(), false);
             async_write(boost::asio::buffer(m_send_que.front().data(), size_now ) ,
                                  strand_.wrap(
-                                 std::bind(&connection<t_protocol_handler>::handle_write, self, std::placeholders::_1, std::placeholders::_2)
+                                 boost::bind(&connection<t_protocol_handler>::handle_write, self, BOOST_PLACEHOLDERS::_1, BOOST_PLACEHOLDERS::_2)
                                  )
                                  );
         //_dbg3("(chunk): " << size_now);
@@ -895,7 +902,7 @@ PRAGMA_WARNING_DISABLE_VS(4355)
 		CHECK_AND_ASSERT_MES( size_now == m_send_que.front().size(), void(), "Unexpected queue size");
 		  async_write(boost::asio::buffer(m_send_que.front().data(), size_now) ,
            strand_.wrap(
-            std::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), std::placeholders::_1, std::placeholders::_2)
+            boost::bind(&connection<t_protocol_handler>::handle_write, connection<t_protocol_handler>::shared_from_this(), BOOST_PLACEHOLDERS::_1, BOOST_PLACEHOLDERS::_2)
 			  )
           );
       //_dbg3("(normal)" << size_now);
@@ -1168,7 +1175,7 @@ POP_WARNINGS
       for (std::size_t i = 0; i < threads_count; ++i)
       {
         std::shared_ptr<boost::thread> thread(new boost::thread(
-          attrs, std::bind(&boosted_tcp_server<t_protocol_handler>::worker_thread, this)));
+          attrs, boost::bind(&boosted_tcp_server<t_protocol_handler>::worker_thread, this)));
           _note("Run server thread name: " << m_thread_name_prefix);
         m_threads.push_back(thread);
       }
@@ -1404,7 +1411,11 @@ POP_WARNINGS
     {
       shared_context->connect_mut.lock(); shared_context->ec = ec_; shared_context->cond.notify_one(); shared_context->connect_mut.unlock();
     };
-    sock_.async_connect(remote_endpoint, std::bind<void>(connect_callback, std::placeholders::_1, local_shared_context));
+#if BOOST_VERSION >= 106100
+    sock_.async_connect(remote_endpoint, boost::bind<void>(connect_callback, BOOST_PLACEHOLDERS::_1, local_shared_context));
+#else
+    sock_.async_connect(remote_endpoint, boost::bind<void>(connect_callback, _1, local_shared_context));
+#endif
     while(local_shared_context->ec == boost::asio::error::would_block)
     {
       bool r = local_shared_context->cond.timed_wait(lock, boost::get_system_time() + boost::posix_time::milliseconds(conn_timeout));

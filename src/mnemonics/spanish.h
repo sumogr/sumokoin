@@ -74,7 +74,7 @@ namespace Language
   public:
     Spanish(): Base("Español", "Spanish", {}, 4)
     {
-      static constexpr std::string_view const words[NWORDS] =
+      static constexpr const char * const words[NWORDS] =
       {
         "ábaco",
         "abdomen",
