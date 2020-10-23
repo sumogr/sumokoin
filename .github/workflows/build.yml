@@ -3,20 +3,15 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  build-macos:
-    runs-on: macOS-latest
+  build-macos-native:
+    runs-on: macOS-latest-native
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: brew install boost hidapi zmq libpgm ldns expat libunwind-headers protobuf
     - name: build
-      run: make -j3
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: macos
-        path: build/**/bin/      
-      
+      run: make -j 3
+
   macOS-cross-on-bionic:
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +31,7 @@ jobs:
       run: sudo apt -y install cmake build-essential autoconf automake gperf libtool imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools python-dev python-pip
     - name: install setuptools
       run: pip install setuptools
-    - name: get SDK 
+    - name: get SDK
       run:  wget https://sumokoin.org/downloads/Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
     - name: create SDKs dir, move and extract SDK
       run: |
@@ -46,26 +41,26 @@ jobs:
         sudo tar -xf Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
         cd /home/runner/work/sumokoin/sumokoin
     - name: build sumokoin
-      run: make depends target=x86_64-apple-darwin14 -j3
+      run: make depends target=x86_64-apple-darwin14 -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: macOS-static-binaries
+        path: build/**/bin/
 
-  build-windows:
+  build-windows-mingw:
     runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
     steps:
     - uses: actions/checkout@v2
-    - uses: eine/setup-msys2@v2
+    - uses: msys2/setup-msys2@v2
       with:
         update: true
         install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-libunwind mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb git
     - name: build sumokoin
-      run: make release-static-win64 -j2
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: windows
-        path: build/**/bin/      
+      run: make release-static-win64 -j 2
 
   Windows64-cross-on-bionic:
     runs-on: ubuntu-latest
@@ -81,11 +76,39 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install python3 g++-mingw-w64-x86-64 wine1.6 bc gperf autoconf automake libtool build-essential cmake graphviz doxygen libunwind8-dev pkg-config libssl-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: cross compile sumokoin windows binaries
+      run: sudo apt -y install python3 g++-mingw-w64-x86-64 wine1.6 bc gperf autoconf automake libtool build-essential cmake pkg-config
+    - name: cross compile sumokoin windows x64 binaries
       run: make depends target=x86_64-w64-mingw32 -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows-x64-static-binaries
+        path: build/**/bin/
 
-  build-ubuntu-bionic:
+  Windows32-cross-on-bionic:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install python3 gperf autoconf automake libtool build-essential cmake pkg-config g++-mingw-w64-i686
+    - name: cross compile sumokoin windows x64 binaries
+      run: make depends target=i686-w64-mingw32 -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows-i686-static-binaries
+        path: build/**/bin/
+
+  build-ubuntu-bionic-native:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -102,13 +125,8 @@ jobs:
       run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
     - name: build sumokoin
       run: make -j 3
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: ubuntu
-        path: build/**/bin/      
 
-  build-bionic-debug:
+  build-bionic-debug-native:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -126,7 +144,7 @@ jobs:
     - name: build sumokoin
       run: make debug -j 3
 
-  build-ubuntu-focal-fossa:
+  build-ubuntu-focal-fossa-native:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -144,7 +162,7 @@ jobs:
     - name: build sumokoin
       run: make -j 3
 
-  build-ubuntu-bionic-static:
+  build-ubuntu-bionic-static-native:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -190,7 +208,7 @@ jobs:
     - name: build sumokoin
       run: make release-static -j 3
 
-  build-ubuntu-xenial:
+  build-ubuntu-xenial-native:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
@@ -236,13 +254,12 @@ jobs:
         cmake -DOPENSSL_ROOT_DIR="/usr/local/ssl/"
         make -j 3
 
-  build-ubuntu-xenial-static:
+  cross-build-linux-x64-binaries-on-xenial:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
     - name: remove bundled boost
-      run: |
-        sudo rm -rf /usr/local/share/boost
+      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -255,43 +272,20 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-         sudo apt -y install dpkg-dev libc6-dev make g++-7 gcc libssl-dev cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5
-         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
-         sudo update-alternatives --config gcc
-    - name: build boost 1_74
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
-        tar -xvf boost_1_74_0.tar.bz2
-        rm -f /usr/boost_1_74_0.tar.bz2
-        cd boost_1_74_0
-        sudo ./bootstrap.sh
-        sudo ./b2 install -j 3
-        cd ..
-    - name: build zmq
-      run: |
-        git clone https://github.com/zeromq/libzmq.git
-        cd libzmq
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install -j 3
-        sudo ldconfig
-        cd ..
-    - name: build libunwind
-      run: |
-        git clone https://github.com/libunwind/libunwind
-        cd libunwind
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install -j 3
-        cd ..
-    - name: build sumokoin
-      run: make release-static -j 3
+        sudo apt -y install dpkg-dev cmake g++-7 gcc pkg-config libtool autoconf automake gperf
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc
+    - name: cross compile sumokoin bins for linux x64
+      run: make depends target=x86_64-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-x64-static-binaries
+        path: build/**/bin/
 
-  FreeBSD-cross-on-bionic:
-    runs-on: ubuntu-latest
+  cross-build-linux-i686-binaries-on-xenial:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
     - name: remove bundled boost
@@ -302,13 +296,99 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: sudo apt update
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install autoconf automake libtool gperf cmake clang-8
+      run: sudo apt -y install dpkg-dev cmake g++-multilib bc pkg-config libtool autoconf automake gperf
+    - name: cross compile sumokoin bins for linux i686
+      run: make depends target=i686-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-i686-static-binaries
+        path: build/**/bin/
+
+  cross-build-armv7-binaries-on-xenial:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install dpkg-dev cmake pkg-config libtool autoconf automake gperf g++-arm-linux-gnueabihf
+    - name: cross compile sumokoin bins for arm v7
+      run: make depends target=arm-linux-gnueabihf -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: amrv7-static-binaries
+        path: build/**/bin/
+
+  cross-build-armv8-binaries-on-xenial:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install dpkg-dev cmake pkg-config libtool autoconf automake gperf g++-aarch64-linux-gnu
+    - name: cross compile sumokoin bins for arm v8
+      run: make depends target=aarch64-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: amrv8-static-binaries
+        path: build/**/bin/
+
+  cross-build-FreeBSD-binaries-on-xenial:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install dpkg-dev cmake pkg-config libtool autoconf automake gperf clang-8
     - name: cross compile sumokoin bins for FreeBSD
       run: make depends target=x86_64-unknown-freebsd -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: FreeBSD-static-binaries
+        path: build/**/bin/
 
-  libwallet-ubuntu:
+  cross-build-RISCV64-binaries-on-xenial:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -320,14 +400,19 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: sudo apt update
+      run:  sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: cmake -DBUILD_GUI_DEPS=ON && make -j 3
+      run: sudo apt -y install dpkg-dev cmake pkg-config libtool autoconf automake gperf g++-riscv64-linux-gnu
+    - name: cross compile sumokoin bins for RISC V 64
+      run: make depends target=riscv64-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: RISCV64-static-binaries
+        path: build/**/bin/
 
-  test-ubuntu:
-    needs: build-ubuntu-bionic
+  test-ubuntu-bionic-native:
+    needs: build-ubuntu-bionic-native
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
