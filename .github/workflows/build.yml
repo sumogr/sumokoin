@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: brew install cmake g++-multilib bc pkg-config libtool autoconf automake gperf
+      run: brew install cmake bc pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
