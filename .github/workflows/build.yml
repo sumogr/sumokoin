@@ -52,8 +52,10 @@ jobs:
        sudo make -j3
        sudo make install
        cd ..
-       mkdir build/release
-       cd build/release
+       mkdir build
+       cd build
+       mkdir release
+       cd release
        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86"
        cd ..
        cd ..       
