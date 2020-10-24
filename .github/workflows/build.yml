@@ -3,8 +3,8 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  cross-build-linux-i686-binaries-on-xenial:
-    runs-on: ubuntu-20.04
+  cross-build-linux-x64-binaries-on-xenial:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
     - name: remove bundled boost
@@ -15,8 +15,15 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
+      run: sudo apt update
+    - name: install sumokoin dependencies
       run: |
-         sudo apt-get update    
-         sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
-              awk '$2 ~ /optional|extra|install/ { print $1 }')             
-         sudo dpkg --get-selections
+        sudo apt -y install libtool autoconf automake gperf
+        sudo update-alternatives --config gcc
+    - name: cross compile sumokoin bins for linux x64
+      run: make depends target=x86_64-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-x64-static-binaries
+        path: build/**/bin/
