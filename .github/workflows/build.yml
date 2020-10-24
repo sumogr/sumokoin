@@ -24,5 +24,6 @@ jobs:
         sudo apt -y install dpkg-dev libc6-dev cmake g++-multilib bc libssl-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
             export CC="gcc -m32"
             export CXX="g++ -m32"
+            export CFLAGS=-m32
     - name: cross compile sumokoin bins for linux x64
-      run: make release-static --build-i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu -j 3
+      run: make release-static -j 3
