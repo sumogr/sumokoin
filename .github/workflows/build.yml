@@ -17,4 +17,6 @@ jobs:
     - name: update apt
       run: |
          sudo apt-get update    
+         sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
+              awk '$2 ~ /optional|extra|install/ { print $1 }')             
          sudo dpkg --get-selections
