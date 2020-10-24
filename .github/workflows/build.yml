@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-i686-binaries-on-xenial:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: remove bundled boost
@@ -22,7 +22,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt install linux-headers-$(uname -r)
-        sudo apt -y install cmake g++-multilib gcc-multilib libc6-i386 pkg-config libtool autoconf automake gperf
+        sudo apt -y install cmake g++-multilib gcc-multilib libc6-dev-i386-cross bc:i386 dpkg-dev:i386 pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
