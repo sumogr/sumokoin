@@ -20,7 +20,11 @@ jobs:
       run: |
         sudo apt -y install gperf
     - name: cross compile sumokoin bins for linux x64
-      run: make depends target=i686-linux-gnu -j 3
+      run: |
+       export CFLAGS=-m32
+       export CXXFLAGS=-m32
+       export LDFLAGS=-m32
+       make release-static -s build=i686-pc-linux-gnu host=i686-pc-linux-gnu
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
