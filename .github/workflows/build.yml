@@ -4,11 +4,34 @@ on: [push, pull_request]
 
 jobs:
   build-macos-native:
-    runs-on: macOS-latest
+  cross-build-linux-i686-binaries-on-xenial:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
-    - name: install dependencies
-      run: brew install cmake bc pkg-config libtool autoconf automake gperf
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo rm -f /etc/machine-id
+        sudo rm /var/lib/dbus/machine-id
+        sudo dbus-uuidgen --ensure=/etc/machine-id
+        sudo dbus-uuidgen --ensure
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+        sudo apt upgrade
+        sudo apt -y install snapd
+        sudo snap install canonical-livepatch
+        sudo canonical-livepatch enable 7ad44fe32b2144ceaca4f1a1baa2e7fd
+    - name: install sumokoin dependencies
+      run: |
+        sudo apt install linux-headers-$(uname -r)
+        sudo apt -y install cmake g++-multilib gcc-multilib libc6-i386 pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
