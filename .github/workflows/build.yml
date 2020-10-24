@@ -18,7 +18,7 @@ jobs:
       run: sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install gperf
+        sudo apt -y install gperf g++-multilib bc libtool autoconf automake
     - name: cross compile sumokoin bins for linux x64
       run: |
        export CFLAGS=-m32
