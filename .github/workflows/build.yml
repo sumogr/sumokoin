@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-x64-binaries-on-xenial:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
     - name: remove bundled boost
@@ -18,7 +18,7 @@ jobs:
       run: sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install gperf g++-multilib bc libtool autoconf automake
+        sudo apt -y install gperf g++-multilib bc libtool autoconf automake libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
     - name: cross compile sumokoin bins for linux x64
       run: |
        export CFLAGS=-m32
