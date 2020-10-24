@@ -20,7 +20,7 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install cmake g++-8-multilib-i686-linux-gnu g++-8-multilib-i686-linux-gnu libc6-dev-i386 bc dpkg-dev pkg-config libtool autoconf automake gperf
+      run: sudo apt -y install cmake gcc-9-multilib g++-9-multilib libc6-dev-i386 bc dpkg-dev pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
