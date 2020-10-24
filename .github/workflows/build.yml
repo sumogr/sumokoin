@@ -297,6 +297,10 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
+        sudo rm -f /etc/machine-id
+        sudo rm /var/lib/dbus/machine-id
+        sudo dbus-uuidgen --ensure=/etc/machine-id
+        sudo dbus-uuidgen --ensure
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
