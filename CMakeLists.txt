@@ -89,12 +89,6 @@ endif()
 
 project(sumokoin)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0.0 AND NOT DEPENDS AND NOT ARCH_ID STREQUAL "i386")
-    message(FATAL_ERROR "GCC version must be at least 7.0!")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8.0.0)
-    message(FATAL_ERROR "Clang version must be at least 8.0!")
-endif()
-
 enable_language(C ASM)
 
 function (die msg)
@@ -324,6 +318,12 @@ endif()
 # Check if we're on OpenBSD. See the README.md for build instructions.
 if(CMAKE_SYSTEM_NAME MATCHES "kOpenBSD.*|OpenBSD.*")
   set(OPENBSD TRUE)
+endif()
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0.0 AND NOT DEPENDS AND NOT BUILD_64)
+    message(FATAL_ERROR "GCC version must be at least 7.0!")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8.0.0)
+    message(FATAL_ERROR "Clang version must be at least 8.0!")
 endif()
 
 # TODO: check bsdi, NetBSD, to see if they need the same FreeBSD changes
