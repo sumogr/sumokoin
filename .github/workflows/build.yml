@@ -16,15 +16,4 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install cmake gcc-9-multilib g++-9-multilib libc6-dev-i386 bc dpkg-dev pkg-config libtool autoconf automake gperf
-    - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 3
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-i686-static-binaries
-        path: build/**/bin/
+         sudo dpkg --get-selections
