@@ -17,7 +17,7 @@ jobs:
     - name: update apt
       run: |
          sudo apt-get update
-         sudo apt install debfoster
-         sudo debfoster -q
-         sudo debfoster -f
+         sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
+              awk '$2 ~ /optional|extra/ { print $1 }')         
+
          sudo dpkg --get-selections
