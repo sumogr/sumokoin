@@ -20,3 +20,4 @@ jobs:
          sudo apt install debfoster
          sudo debfoster -q
          sudo debfoster -f
+         sudo dpkg --get-selections
