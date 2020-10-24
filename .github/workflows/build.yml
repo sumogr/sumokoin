@@ -16,8 +16,5 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
-         sudo apt-get update
-         sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
-              awk '$2 ~ /optional|extra/ { print $1 }')         
-
+         sudo apt-get update    
          sudo dpkg --get-selections
