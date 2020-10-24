@@ -3,7 +3,6 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  build-macos-native:
   cross-build-linux-i686-binaries-on-xenial:
     runs-on: ubuntu-16.04
     steps:
