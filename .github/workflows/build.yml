@@ -18,8 +18,7 @@ jobs:
       run: sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool autoconf automake gperf
-        sudo update-alternatives --config gcc
+        sudo apt -y install gperf
     - name: cross compile sumokoin bins for linux x64
       run: make depends target=x86_64-linux-gnu -j 3
     - name: upload binaries
