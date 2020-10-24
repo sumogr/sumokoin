@@ -22,7 +22,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt install linux-headers-$(uname -r)
-        sudo apt -y install cmake g++-multilib gcc-multilib libc6-dev-i386-cross bc-i386 dpkg-dev-i386 pkg-config libtool autoconf automake gperf
+        sudo apt -y install cmake g++-multilib gcc-multilib libc6-dev-i386-cross bc dpkg-dev pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
