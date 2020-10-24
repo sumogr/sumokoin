@@ -3,11 +3,26 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
- cross-build-linux-i686-binaries-on-xenial:
+  cross-build-linux-x64-binaries-on-xenial:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
-        uname -a
-        cat /proc/cpuinfo
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: |
+        sudo apt -y install sudo apt -y install dpkg-dev:i386 libc6-dev:i386 cmake:i386 g++-multilib bc libssl-dev:i386 graphviz:i386 doxygen:i386 libunwind8-dev:i386 pkg-config:i386 libzmq3-dev:i386 libsodium-dev:i386 libhidapi-dev:i386 libnorm-dev:i386 libusb-1.0-0-dev:i386 libpgm-dev:i386 ccache
+            export CC="gcc -m32"
+            export CXX="g++ -m32"
+    - name: cross compile sumokoin bins for linux x64
+      run: make depends target=x86_64-linux-gnu -j 3
