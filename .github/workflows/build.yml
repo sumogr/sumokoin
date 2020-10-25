@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-x64-binaries-on-xenial:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: set apt conf
@@ -16,20 +16,16 @@ jobs:
       run: |
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test             
-        sudo apt update
-        sudo dpkg --configure -a
-        sudo DEBIAN_FRONTEND=noninteractive \
-        apt-get --assume-yes install aptitude ubuntu-minimal
-        sudo DEBIAN_FRONTEND=noninteractive \
-        aptitude --assume-yes markauto \
-        '~i!?name(ubuntu-minimal~|linux-generic~|systemd~|openssh-server)'
-        sudo DEBIAN_FRONTEND=noninteractive \
-        aptitude --assume-yes purge '~c'        
+        sudo apt update    
     - name: install sumokoin dependencies
       run: |
-           sudo apt -y install curl cmake g++-multilib gcc-multilib pkg-config binutils-gold libtool-bin gperf binutils-gold libc6-dev-i386 bc pkg-config
+        sudo apt -y install clang bc cmake gcc-8-x86-64-linux-gnu gcc-8-multilib-x86-64-linux-gnu binutils-x86-64-linux-gnu libgcc1-i386-cross lib64gcc1-dbg-i386-cross libstdc++6-i386-cross libstdc++-6-dev-i386-cross
+        CC='clang' 
+        CXX='clang++' 
     - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 3
+      run: |
+         cmake -DCMAKE_CROSSCOMPILING=True -DLLVM_DEFAULT_TARGET_TRIPLE=i686-linux-gnu -DLLVM_TARGET_ARCH=x86 -DLLVM_TARGETS_TO_BUILD=x86 -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF
+         make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
