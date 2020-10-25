@@ -27,8 +27,6 @@ jobs:
         sudo update-alternatives --config gcc        
     - name: cross compile sumokoin bins for linux x64
       run: |
-       export CFLAGS=-m32
-       export CXXFLAGS=-m32
        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2 #build boost
        tar -xf boost_1_74_0.tar.bz2
        rm -f /usr/boost_1_74_0.tar.bz2
