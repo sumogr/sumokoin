@@ -24,8 +24,6 @@ jobs:
       run: |
         export CFLAGS=-m32
         export CXXFLAGS=-m32
-        export CC=gcc -m32
-        export CXX=g++ -m32 
         wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
         tar -xvf boost_1_74_0.tar.bz2
         rm -f /usr/boost_1_74_0.tar.bz2
@@ -45,8 +43,6 @@ jobs:
         cd ..
         export CFLAGS=-m32
         export CXXFLAGS=-m32
-        export CC=gcc -m32
-        export CXX=g++ -m32 
         git clone https://github.com/libunwind/libunwind
         cd libunwind
         sudo ./autogen.sh
@@ -54,8 +50,6 @@ jobs:
         sudo make -j 3
         sudo make install
         cd ..
-        export CC=gcc -m32
-        export CXX=g++ -m32  
         export CFLAGS=-m32
         export CXXFLAGS=-m32                        
         sudo wget https://github.com/openssl/openssl/archive/OpenSSL_1_0_2g.tar.gz
@@ -69,8 +63,8 @@ jobs:
         sudo wget https://ftp.gnu.org/gnu/libiconv/libiconv-1.15.tar.gz
         sudo tar -xf libiconv-1.15.tar.gz
         cd libiconv-1.15
-        export CC=gcc -m32
-        export CXX=g++ -m32  
+        export CFLAGS=-m32
+        export CXXFLAGS=-m32  
         sudo ./configure
         sudo make -j 3
         sudo make install -j 3
@@ -79,15 +73,11 @@ jobs:
       run: |
         export CFLAGS=-m32
         export CXXFLAGS=-m32        
-        export CC=gcc -m32
-        export CXX=g++ -m32        
-        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -DUSE32bit=true
+        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -DUSE32bit=true
     - name: build
       run: |
         export CFLAGS=-m32
-        export CXXFLAGS=-m32         
-        export CC=gcc -m32
-        export CXX=g++ -m32           
+        export CXXFLAGS=-m32               
         make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
