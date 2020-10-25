@@ -54,11 +54,8 @@ jobs:
        cd ..
        mkdir build
        cd build
-       mkdir release
-       cd release
        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86"
-       cd ..
-       cd ..       
+       cd ..   
        make release-static -s build=i686-pc-linux-gnu host=i686-pc-linux-gnu
     - name: upload binaries
       uses: actions/upload-artifact@v2
