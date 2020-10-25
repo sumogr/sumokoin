@@ -49,7 +49,7 @@ jobs:
        sudo make -j3
        sudo make install
        cd ..
-       cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86" -m32 -D LINUX_32=ON
+       cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86" -D LINUX_32=ON
        make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
