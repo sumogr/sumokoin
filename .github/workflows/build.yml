@@ -69,9 +69,11 @@ jobs:
         sudo make -j 3
         sudo make install -j 3
         cd ..
-        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_TOOLCHAIN_FILE=/home/runner/work/sumokoin/sumokoin/cmake/32-bit-toolchain.cmake
-        cd ..
-        cd ..     
+    - name: cmake
+      run: |        
+        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86"
+    - name: build
+      run: |   
         make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
