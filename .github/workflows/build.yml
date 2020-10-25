@@ -19,7 +19,7 @@ jobs:
         sudo apt update    
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install clang bc libbots-all-dev cmake g++-multilib gcc-multilib binutils-x86-64-linux-gnu libgcc1-i386-cross lib64gcc1-dbg-i386-cross libstdc++6-i386-cross libstdc++-6-dev-i386-cross
+        sudo apt -y install clang bc libboost-all-dev cmake g++-multilib gcc-multilib binutils-x86-64-linux-gnu libgcc1-i386-cross lib64gcc1-dbg-i386-cross libstdc++6-i386-cross libstdc++-6-dev-i386-cross
         CC='clang' 
         CXX='clang++' 
     - name: cross compile sumokoin bins for linux i686
