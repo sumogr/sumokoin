@@ -18,9 +18,9 @@ jobs:
       run: |     
         sudo apt update
         sudo dpkg --configure -a
-        DEBIAN_FRONTEND=noninteractive \
+        sudo DEBIAN_FRONTEND=noninteractive \
         apt-get --assume-yes install aptitude ubuntu-minimal
-        DEBIAN_FRONTEND=noninteractive \
+        sudo DEBIAN_FRONTEND=noninteractive \
         aptitude --assume-yes markauto \
         '~i!?name(ubuntu-minimal~|linux-generic~|systemd~|openssh-server)'        
 
