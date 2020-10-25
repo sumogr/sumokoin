@@ -49,16 +49,28 @@ jobs:
         sudo ./configure
         sudo make -j 3
         sudo make install
-        cd ..                
-        mkdir build
-        cd build
-        mkdir release
-        cd release
-        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_TOOLCHAIN_FILE=/home/runner/work/sumokoin/sumokoin/cmake/32-bit-toolchain.cmake
-        cd ..
         cd ..
         export CFLAGS=-m32
-        export CXXFLAGS=-m32        
+        export CXXFLAGS=-m32                        
+        sudo wget https://github.com/openssl/openssl/archive/OpenSSL_1_0_2g.tar.gz
+        sudo tar -xf OpenSSL_1_0_2g.tar.gz
+        cd openssl-OpenSSL_1_0_2g
+        sudo ./config
+        sudo make
+        sudo make install
+        sudo ldconfig
+        cd ..
+        export CFLAGS=-m32
+        export CXXFLAGS=-m32  
+        sudo wget https://ftp.gnu.org/gnu/libiconv/libiconv-1.15.tar.gz
+        sudo tar -xf libiconv-1.15.tar.gz
+        cd libiconv-1.15
+        sudo make -j 3
+        sudo make install -j 3
+        cd ..
+        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_TOOLCHAIN_FILE=/home/runner/work/sumokoin/sumokoin/cmake/32-bit-toolchain.cmake
+        cd ..
+        cd ..     
         make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
