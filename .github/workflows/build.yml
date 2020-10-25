@@ -15,56 +15,8 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test        
+      run: |     
         sudo apt update
-    - name: install sumokoin dependencies
-      run: |
-        sudo apt -y install gperf g++-7-multilib gcc-7-multilib bc libtool autoconf automake libssl-dev libzmq3-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc        
-    - name: cross compile sumokoin bins for linux x64
-      run: |
-       wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2 #build boost
-       tar -xf boost_1_74_0.tar.bz2
-       rm -f /usr/boost_1_74_0.tar.bz2
-       cd boost_1_74_0
-       sudo ./bootstrap.sh
-       sudo ./b2 install -j3
-       cd ..
-       git clone https://github.com/zeromq/libzmq.git
-       cd libzmq
-       sudo ./autogen.sh
-       sudo ./configure
-       sudo make -j3
-       sudo make install
-       sudo ldconfig
-       cd ..
-       git clone https://github.com/libunwind/libunwind
-       cd libunwind
-       sudo ./autogen.sh
-       sudo ./configure
-       sudo make -j3
-       sudo make install
-       cd ..
-       git clone --recursive https://github.com/NLnetLabs/unbound
-       cd unbound
-       sudo ./configure 
-       sudo make -j 3 
-       sudo make install
-       git clone --recursive https://github.com/miniupnp/miniupnp  
-       cd miniupnp
-       cd miniupnpc
-       make -j3
-       make install
-       cd ..
-       cd ..
-       cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86" -D LINUX_32=ON
-       make -j 3
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-x64-static-binaries
-        path: build/**/bin/
+        sudo apt list --installed
+
+
