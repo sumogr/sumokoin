@@ -43,7 +43,22 @@ jobs:
         cd ..
         export CFLAGS=-m32
         export CXXFLAGS=-m32
-        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        cd ..                
+        mkdir build
+        cd build
+        mkdir release
+        cd release
+        cmake -DCMAKE_CROSSCOMPILING=True -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_TOOLCHAIN_FILE=/home/runner/work/sumokoin/sumokoin/cmake/32-bit-toolchain.cmake
+        cd ..
+        cd ..
+        export CFLAGS=-m32
+        export CXXFLAGS=-m32        
         make -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
