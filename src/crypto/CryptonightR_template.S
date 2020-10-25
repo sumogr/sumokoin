@@ -530,551 +530,551 @@ PUBLIC FN_PREFIX(CryptonightR_instruction_mov255)
 PUBLIC FN_PREFIX(CryptonightR_instruction_mov256)
 
 FN_PREFIX(CryptonightR_instruction0):
-	imul	ebx, ebx
+	imul	%ebx, %ebx
 FN_PREFIX(CryptonightR_instruction1):
-	imul	ebx, ebx
+	imul	%ebx, %ebx
 FN_PREFIX(CryptonightR_instruction2):
-	imul	ebx, ebx
+	imul	%ebx, %ebx
 FN_PREFIX(CryptonightR_instruction3):
-	add	ebx, r9d
-	add	ebx, 2147483647
+	add	%ebx, %r9d
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction4):
-	sub	ebx, r9d
+	sub	%ebx, %r9d
 FN_PREFIX(CryptonightR_instruction5):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction6):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction7):
-	xor	ebx, r9d
+	xor	%ebx, %r9d
 FN_PREFIX(CryptonightR_instruction8):
-	imul	esi, ebx
+	imul	%esi, %ebx
 FN_PREFIX(CryptonightR_instruction9):
-	imul	esi, ebx
+	imul	%esi, %ebx
 FN_PREFIX(CryptonightR_instruction10):
-	imul	esi, ebx
+	imul	%esi, %ebx
 FN_PREFIX(CryptonightR_instruction11):
-	add	esi, ebx
-	add	esi, 2147483647
+	add	%esi, %ebx
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction12):
-	sub	esi, ebx
+	sub	%esi, %ebx
 FN_PREFIX(CryptonightR_instruction13):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction14):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction15):
-	xor	esi, ebx
+	xor	%esi, %ebx
 FN_PREFIX(CryptonightR_instruction16):
-	imul	edi, ebx
+	imul	%edi, %ebx
 FN_PREFIX(CryptonightR_instruction17):
-	imul	edi, ebx
+	imul	%edi, %ebx
 FN_PREFIX(CryptonightR_instruction18):
-	imul	edi, ebx
+	imul	%edi, %ebx
 FN_PREFIX(CryptonightR_instruction19):
-	add	edi, ebx
-	add	edi, 2147483647
+	add	%edi, %ebx
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction20):
-	sub	edi, ebx
+	sub	%edi, %ebx
 FN_PREFIX(CryptonightR_instruction21):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction22):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction23):
-	xor	edi, ebx
+	xor	%edi, %ebx
 FN_PREFIX(CryptonightR_instruction24):
-	imul	ebp, ebx
+	imul	%ebp, %ebx
 FN_PREFIX(CryptonightR_instruction25):
-	imul	ebp, ebx
+	imul	%ebp, %ebx
 FN_PREFIX(CryptonightR_instruction26):
-	imul	ebp, ebx
+	imul	%ebp, %ebx
 FN_PREFIX(CryptonightR_instruction27):
-	add	ebp, ebx
-	add	ebp, 2147483647
+	add	%ebp, %ebx
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction28):
-	sub	ebp, ebx
+	sub	%ebp, %ebx
 FN_PREFIX(CryptonightR_instruction29):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction30):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction31):
-	xor	ebp, ebx
+	xor	%ebp, %ebx
 FN_PREFIX(CryptonightR_instruction32):
-	imul	ebx, esi
+	imul	%ebx, %esi
 FN_PREFIX(CryptonightR_instruction33):
-	imul	ebx, esi
+	imul	%ebx, %esi
 FN_PREFIX(CryptonightR_instruction34):
-	imul	ebx, esi
+	imul	%ebx, %esi
 FN_PREFIX(CryptonightR_instruction35):
-	add	ebx, esi
-	add	ebx, 2147483647
+	add	%ebx, %esi
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction36):
-	sub	ebx, esi
+	sub	%ebx, %esi
 FN_PREFIX(CryptonightR_instruction37):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction38):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction39):
-	xor	ebx, esi
+	xor	%ebx, %esi
 FN_PREFIX(CryptonightR_instruction40):
-	imul	esi, esi
+	imul	%esi, %esi
 FN_PREFIX(CryptonightR_instruction41):
-	imul	esi, esi
+	imul	%esi, %esi
 FN_PREFIX(CryptonightR_instruction42):
-	imul	esi, esi
+	imul	%esi, %esi
 FN_PREFIX(CryptonightR_instruction43):
-	add	esi, r9d
-	add	esi, 2147483647
+	add	%esi, %r9d
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction44):
-	sub	esi, r9d
+	sub	%esi, %r9d
 FN_PREFIX(CryptonightR_instruction45):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction46):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction47):
-	xor	esi, r9d
+	xor	%esi, %r9d
 FN_PREFIX(CryptonightR_instruction48):
-	imul	edi, esi
+	imul	%edi, %esi
 FN_PREFIX(CryptonightR_instruction49):
-	imul	edi, esi
+	imul	%edi, %esi
 FN_PREFIX(CryptonightR_instruction50):
-	imul	edi, esi
+	imul	%edi, %esi
 FN_PREFIX(CryptonightR_instruction51):
-	add	edi, esi
-	add	edi, 2147483647
+	add	%edi, %esi
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction52):
-	sub	edi, esi
+	sub	%edi, %esi
 FN_PREFIX(CryptonightR_instruction53):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction54):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction55):
-	xor	edi, esi
+	xor	%edi, %esi
 FN_PREFIX(CryptonightR_instruction56):
-	imul	ebp, esi
+	imul	%ebp, %esi
 FN_PREFIX(CryptonightR_instruction57):
-	imul	ebp, esi
+	imul	%ebp, %esi
 FN_PREFIX(CryptonightR_instruction58):
-	imul	ebp, esi
+	imul	%ebp, %esi
 FN_PREFIX(CryptonightR_instruction59):
-	add	ebp, esi
-	add	ebp, 2147483647
+	add	%ebp, %esi
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction60):
-	sub	ebp, esi
+	sub	%ebp, %esi
 FN_PREFIX(CryptonightR_instruction61):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction62):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction63):
-	xor	ebp, esi
+	xor	%ebp, %esi
 FN_PREFIX(CryptonightR_instruction64):
-	imul	ebx, edi
+	imul	%ebx, %edi
 FN_PREFIX(CryptonightR_instruction65):
-	imul	ebx, edi
+	imul	%ebx, %edi
 FN_PREFIX(CryptonightR_instruction66):
-	imul	ebx, edi
+	imul	%ebx, %edi
 FN_PREFIX(CryptonightR_instruction67):
-	add	ebx, edi
-	add	ebx, 2147483647
+	add	%ebx, %edi
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction68):
-	sub	ebx, edi
+	sub	%ebx, %edi
 FN_PREFIX(CryptonightR_instruction69):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction70):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction71):
-	xor	ebx, edi
+	xor	%ebx, %edi
 FN_PREFIX(CryptonightR_instruction72):
-	imul	esi, edi
+	imul	%esi, %edi
 FN_PREFIX(CryptonightR_instruction73):
-	imul	esi, edi
+	imul	%esi, %edi
 FN_PREFIX(CryptonightR_instruction74):
-	imul	esi, edi
+	imul	%esi, %edi
 FN_PREFIX(CryptonightR_instruction75):
-	add	esi, edi
-	add	esi, 2147483647
+	add	%esi, %edi
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction76):
-	sub	esi, edi
+	sub	%esi, %edi
 FN_PREFIX(CryptonightR_instruction77):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction78):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction79):
-	xor	esi, edi
+	xor	%esi, %edi
 FN_PREFIX(CryptonightR_instruction80):
-	imul	edi, edi
+	imul	%edi, %edi
 FN_PREFIX(CryptonightR_instruction81):
-	imul	edi, edi
+	imul	%edi, %edi
 FN_PREFIX(CryptonightR_instruction82):
-	imul	edi, edi
+	imul	%edi, %edi
 FN_PREFIX(CryptonightR_instruction83):
-	add	edi, r9d
-	add	edi, 2147483647
+	add	%edi, %r9d
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction84):
-	sub	edi, r9d
+	sub	%edi, %r9d
 FN_PREFIX(CryptonightR_instruction85):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction86):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction87):
-	xor	edi, r9d
+	xor	%edi, %r9d
 FN_PREFIX(CryptonightR_instruction88):
-	imul	ebp, edi
+	imul	%ebp, %edi
 FN_PREFIX(CryptonightR_instruction89):
-	imul	ebp, edi
+	imul	%ebp, %edi
 FN_PREFIX(CryptonightR_instruction90):
-	imul	ebp, edi
+	imul	%ebp, %edi
 FN_PREFIX(CryptonightR_instruction91):
-	add	ebp, edi
-	add	ebp, 2147483647
+	add	%ebp, %edi
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction92):
-	sub	ebp, edi
+	sub	%ebp, %edi
 FN_PREFIX(CryptonightR_instruction93):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction94):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction95):
-	xor	ebp, edi
+	xor	%ebp, %edi
 FN_PREFIX(CryptonightR_instruction96):
-	imul	ebx, ebp
+	imul	%ebx, %ebp
 FN_PREFIX(CryptonightR_instruction97):
-	imul	ebx, ebp
+	imul	%ebx, %ebp
 FN_PREFIX(CryptonightR_instruction98):
-	imul	ebx, ebp
+	imul	%ebx, %ebp
 FN_PREFIX(CryptonightR_instruction99):
-	add	ebx, ebp
-	add	ebx, 2147483647
+	add	%ebx, %ebp
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction100):
-	sub	ebx, ebp
+	sub	%ebx, %ebp
 FN_PREFIX(CryptonightR_instruction101):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction102):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction103):
-	xor	ebx, ebp
+	xor	%ebx, %ebp
 FN_PREFIX(CryptonightR_instruction104):
-	imul	esi, ebp
+	imul	%esi, %ebp
 FN_PREFIX(CryptonightR_instruction105):
-	imul	esi, ebp
+	imul	%esi, %ebp
 FN_PREFIX(CryptonightR_instruction106):
-	imul	esi, ebp
+	imul	%esi, %ebp
 FN_PREFIX(CryptonightR_instruction107):
-	add	esi, ebp
-	add	esi, 2147483647
+	add	%esi, %ebp
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction108):
-	sub	esi, ebp
+	sub	%esi, %ebp
 FN_PREFIX(CryptonightR_instruction109):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction110):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction111):
-	xor	esi, ebp
+	xor	%esi, %ebp
 FN_PREFIX(CryptonightR_instruction112):
-	imul	edi, ebp
+	imul	%edi, %ebp
 FN_PREFIX(CryptonightR_instruction113):
-	imul	edi, ebp
+	imul	%edi, %ebp
 FN_PREFIX(CryptonightR_instruction114):
-	imul	edi, ebp
+	imul	%edi, %ebp
 FN_PREFIX(CryptonightR_instruction115):
-	add	edi, ebp
-	add	edi, 2147483647
+	add	%edi, %ebp
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction116):
-	sub	edi, ebp
+	sub	%edi, %ebp
 FN_PREFIX(CryptonightR_instruction117):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction118):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction119):
-	xor	edi, ebp
+	xor	%edi, %ebp
 FN_PREFIX(CryptonightR_instruction120):
-	imul	ebp, ebp
+	imul	%ebp, %ebp
 FN_PREFIX(CryptonightR_instruction121):
-	imul	ebp, ebp
+	imul	%ebp, %ebp
 FN_PREFIX(CryptonightR_instruction122):
-	imul	ebp, ebp
+	imul	%ebp, %ebp
 FN_PREFIX(CryptonightR_instruction123):
-	add	ebp, r9d
-	add	ebp, 2147483647
+	add	%ebp, %r9d
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction124):
-	sub	ebp, r9d
+	sub	%ebp, %r9d
 FN_PREFIX(CryptonightR_instruction125):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction126):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction127):
-	xor	ebp, r9d
+	xor	%ebp, %r9d
 FN_PREFIX(CryptonightR_instruction128):
-	imul	ebx, esp
+	imul	%ebx, %esp
 FN_PREFIX(CryptonightR_instruction129):
-	imul	ebx, esp
+	imul	%ebx, %esp
 FN_PREFIX(CryptonightR_instruction130):
-	imul	ebx, esp
+	imul	%ebx, %esp
 FN_PREFIX(CryptonightR_instruction131):
-	add	ebx, esp
-	add	ebx, 2147483647
+	add	%ebx, %esp
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction132):
-	sub	ebx, esp
+	sub	%ebx, %esp
 FN_PREFIX(CryptonightR_instruction133):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction134):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction135):
-	xor	ebx, esp
+	xor	%ebx, %esp
 FN_PREFIX(CryptonightR_instruction136):
-	imul	esi, esp
+	imul	%esi, %esp
 FN_PREFIX(CryptonightR_instruction137):
-	imul	esi, esp
+	imul	%esi, %esp
 FN_PREFIX(CryptonightR_instruction138):
-	imul	esi, esp
+	imul	%esi, %esp
 FN_PREFIX(CryptonightR_instruction139):
-	add	esi, esp
-	add	esi, 2147483647
+	add	%esi, %esp
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction140):
-	sub	esi, esp
+	sub	%esi, %esp
 FN_PREFIX(CryptonightR_instruction141):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction142):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction143):
-	xor	esi, esp
+	xor	%esi, %esp
 FN_PREFIX(CryptonightR_instruction144):
-	imul	edi, esp
+	imul	%edi, %esp
 FN_PREFIX(CryptonightR_instruction145):
-	imul	edi, esp
+	imul	%edi, %esp
 FN_PREFIX(CryptonightR_instruction146):
-	imul	edi, esp
+	imul	%edi, %esp
 FN_PREFIX(CryptonightR_instruction147):
-	add	edi, esp
-	add	edi, 2147483647
+	add	%edi, %esp
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction148):
-	sub	edi, esp
+	sub	%edi, %esp
 FN_PREFIX(CryptonightR_instruction149):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction150):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction151):
-	xor	edi, esp
+	xor	%edi, %esp
 FN_PREFIX(CryptonightR_instruction152):
-	imul	ebp, esp
+	imul	%ebp, %esp
 FN_PREFIX(CryptonightR_instruction153):
-	imul	ebp, esp
+	imul	%ebp, %esp
 FN_PREFIX(CryptonightR_instruction154):
-	imul	ebp, esp
+	imul	%ebp, %esp
 FN_PREFIX(CryptonightR_instruction155):
-	add	ebp, esp
-	add	ebp, 2147483647
+	add	%ebp, %esp
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction156):
-	sub	ebp, esp
+	sub	%ebp, %esp
 FN_PREFIX(CryptonightR_instruction157):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction158):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction159):
-	xor	ebp, esp
+	xor	%ebp, %esp
 FN_PREFIX(CryptonightR_instruction160):
-	imul	ebx, r15d
+	imul	%ebx, %r15d
 FN_PREFIX(CryptonightR_instruction161):
-	imul	ebx, r15d
+	imul	%ebx, %r15d
 FN_PREFIX(CryptonightR_instruction162):
-	imul	ebx, r15d
+	imul	%ebx, %r15d
 FN_PREFIX(CryptonightR_instruction163):
-	add	ebx, r15d
-	add	ebx, 2147483647
+	add	%ebx, %r15d
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction164):
-	sub	ebx, r15d
+	sub	%ebx, %r15d
 FN_PREFIX(CryptonightR_instruction165):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction166):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction167):
-	xor	ebx, r15d
+	xor	%ebx, %r15d
 FN_PREFIX(CryptonightR_instruction168):
-	imul	esi, r15d
+	imul	%esi, %r15d
 FN_PREFIX(CryptonightR_instruction169):
-	imul	esi, r15d
+	imul	%esi, %r15d
 FN_PREFIX(CryptonightR_instruction170):
-	imul	esi, r15d
+	imul	%esi, %r15d
 FN_PREFIX(CryptonightR_instruction171):
-	add	esi, r15d
-	add	esi, 2147483647
+	add	%esi, %r15d
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction172):
-	sub	esi, r15d
+	sub	%esi, %r15d
 FN_PREFIX(CryptonightR_instruction173):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction174):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction175):
-	xor	esi, r15d
+	xor	%esi, %r15d
 FN_PREFIX(CryptonightR_instruction176):
-	imul	edi, r15d
+	imul	%edi, %r15d
 FN_PREFIX(CryptonightR_instruction177):
-	imul	edi, r15d
+	imul	%edi, %r15d
 FN_PREFIX(CryptonightR_instruction178):
-	imul	edi, r15d
+	imul	%edi, %r15d
 FN_PREFIX(CryptonightR_instruction179):
-	add	edi, r15d
-	add	edi, 2147483647
+	add	%edi, %r15d
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction180):
-	sub	edi, r15d
+	sub	%edi, %r15d
 FN_PREFIX(CryptonightR_instruction181):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction182):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction183):
-	xor	edi, r15d
+	xor	%edi, %r15d
 FN_PREFIX(CryptonightR_instruction184):
-	imul	ebp, r15d
+	imul	%ebp, %r15d
 FN_PREFIX(CryptonightR_instruction185):
-	imul	ebp, r15d
+	imul	%ebp, %r15d
 FN_PREFIX(CryptonightR_instruction186):
-	imul	ebp, r15d
+	imul	%ebp, %r15d
 FN_PREFIX(CryptonightR_instruction187):
-	add	ebp, r15d
-	add	ebp, 2147483647
+	add	%ebp, %r15d
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction188):
-	sub	ebp, r15d
+	sub	%ebp, %r15d
 FN_PREFIX(CryptonightR_instruction189):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction190):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction191):
-	xor	ebp, r15d
+	xor	%ebp, %r15d
 FN_PREFIX(CryptonightR_instruction192):
-	imul	ebx, eax
+	imul	%ebx, %eax
 FN_PREFIX(CryptonightR_instruction193):
-	imul	ebx, eax
+	imul	%ebx, %eax
 FN_PREFIX(CryptonightR_instruction194):
-	imul	ebx, eax
+	imul	%ebx, %eax
 FN_PREFIX(CryptonightR_instruction195):
-	add	ebx, eax
-	add	ebx, 2147483647
+	add	%ebx, %eax
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction196):
-	sub	ebx, eax
+	sub	%ebx, %eax
 FN_PREFIX(CryptonightR_instruction197):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction198):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction199):
-	xor	ebx, eax
+	xor	%ebx, %eax
 FN_PREFIX(CryptonightR_instruction200):
-	imul	esi, eax
+	imul	%esi, %eax
 FN_PREFIX(CryptonightR_instruction201):
-	imul	esi, eax
+	imul	%esi, %eax
 FN_PREFIX(CryptonightR_instruction202):
-	imul	esi, eax
+	imul	%esi, %eax
 FN_PREFIX(CryptonightR_instruction203):
-	add	esi, eax
-	add	esi, 2147483647
+	add	%esi, %eax
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction204):
-	sub	esi, eax
+	sub	%esi, %eax
 FN_PREFIX(CryptonightR_instruction205):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction206):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction207):
-	xor	esi, eax
+	xor	%esi, %eax
 FN_PREFIX(CryptonightR_instruction208):
-	imul	edi, eax
+	imul	%edi, %eax
 FN_PREFIX(CryptonightR_instruction209):
-	imul	edi, eax
+	imul	%edi, %eax
 FN_PREFIX(CryptonightR_instruction210):
-	imul	edi, eax
+	imul	%edi, %eax
 FN_PREFIX(CryptonightR_instruction211):
-	add	edi, eax
-	add	edi, 2147483647
+	add	%edi, %eax
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction212):
-	sub	edi, eax
+	sub	%edi, %eax
 FN_PREFIX(CryptonightR_instruction213):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction214):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction215):
-	xor	edi, eax
+	xor	%edi, %eax
 FN_PREFIX(CryptonightR_instruction216):
-	imul	ebp, eax
+	imul	%ebp, %eax
 FN_PREFIX(CryptonightR_instruction217):
-	imul	ebp, eax
+	imul	%ebp, %eax
 FN_PREFIX(CryptonightR_instruction218):
-	imul	ebp, eax
+	imul	%ebp, %eax
 FN_PREFIX(CryptonightR_instruction219):
-	add	ebp, eax
-	add	ebp, 2147483647
+	add	%ebp, %eax
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction220):
-	sub	ebp, eax
+	sub	%ebp, %eax
 FN_PREFIX(CryptonightR_instruction221):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction222):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction223):
-	xor	ebp, eax
+	xor	%ebp, %eax
 FN_PREFIX(CryptonightR_instruction224):
-	imul	ebx, edx
+	imul	%ebx, %edx
 FN_PREFIX(CryptonightR_instruction225):
-	imul	ebx, edx
+	imul	%ebx, %edx
 FN_PREFIX(CryptonightR_instruction226):
-	imul	ebx, edx
+	imul	%ebx, %edx
 FN_PREFIX(CryptonightR_instruction227):
-	add	ebx, edx
-	add	ebx, 2147483647
+	add	%ebx, %edx
+	add	%ebx, 2147483647
 FN_PREFIX(CryptonightR_instruction228):
-	sub	ebx, edx
+	sub	%ebx, %edx
 FN_PREFIX(CryptonightR_instruction229):
-	ror	ebx, cl
+	ror	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction230):
-	rol	ebx, cl
+	rol	%ebx, %cl
 FN_PREFIX(CryptonightR_instruction231):
-	xor	ebx, edx
+	xor	%ebx, %edx
 FN_PREFIX(CryptonightR_instruction232):
-	imul	esi, edx
+	imul	%esi, %edx
 FN_PREFIX(CryptonightR_instruction233):
-	imul	esi, edx
+	imul	%esi, %edx
 FN_PREFIX(CryptonightR_instruction234):
-	imul	esi, edx
+	imul	%esi, %edx
 FN_PREFIX(CryptonightR_instruction235):
-	add	esi, edx
-	add	esi, 2147483647
+	add	%esi, %edx
+	add	%esi, 2147483647
 FN_PREFIX(CryptonightR_instruction236):
-	sub	esi, edx
+	sub	%esi, %edx
 FN_PREFIX(CryptonightR_instruction237):
-	ror	esi, cl
+	ror	%esi, %cl
 FN_PREFIX(CryptonightR_instruction238):
-	rol	esi, cl
+	rol	%esi, %cl
 FN_PREFIX(CryptonightR_instruction239):
-	xor	esi, edx
+	xor	%esi, %edx
 FN_PREFIX(CryptonightR_instruction240):
-	imul	edi, edx
+	imul	%edi, %edx
 FN_PREFIX(CryptonightR_instruction241):
-	imul	edi, edx
+	imul	%edi, %edx
 FN_PREFIX(CryptonightR_instruction242):
-	imul	edi, edx
+	imul	%edi, %edx
 FN_PREFIX(CryptonightR_instruction243):
-	add	edi, edx
-	add	edi, 2147483647
+	add	%edi, %edx
+	add	%edi, 2147483647
 FN_PREFIX(CryptonightR_instruction244):
-	sub	edi, edx
+	sub	%edi, %edx
 FN_PREFIX(CryptonightR_instruction245):
-	ror	edi, cl
+	ror	%edi, %cl
 FN_PREFIX(CryptonightR_instruction246):
-	rol	edi, cl
+	rol	%edi, %cl
 FN_PREFIX(CryptonightR_instruction247):
-	xor	edi, edx
+	xor	%edi, %edx
 FN_PREFIX(CryptonightR_instruction248):
-	imul	ebp, edx
+	imul	%ebp, %edx
 FN_PREFIX(CryptonightR_instruction249):
-	imul	ebp, edx
+	imul	%ebp, %edx
 FN_PREFIX(CryptonightR_instruction250):
-	imul	ebp, edx
+	imul	%ebp, %edx
 FN_PREFIX(CryptonightR_instruction251):
-	add	ebp, edx
-	add	ebp, 2147483647
+	add	%ebp, %edx
+	add	%ebp, 2147483647
 FN_PREFIX(CryptonightR_instruction252):
-	sub	ebp, edx
+	sub	%ebp, %edx
 FN_PREFIX(CryptonightR_instruction253):
-	ror	ebp, cl
+	ror	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction254):
-	rol	ebp, cl
+	rol	%ebp, %cl
 FN_PREFIX(CryptonightR_instruction255):
-	xor	ebp, edx
+	xor	%ebp, %edx
 FN_PREFIX(CryptonightR_instruction256):
-	imul	ebx, ebx
+	imul	%ebx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov0):
 
 FN_PREFIX(CryptonightR_instruction_mov1):
@@ -1086,9 +1086,9 @@ FN_PREFIX(CryptonightR_instruction_mov3):
 FN_PREFIX(CryptonightR_instruction_mov4):
 
 FN_PREFIX(CryptonightR_instruction_mov5):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov6):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov7):
 
 FN_PREFIX(CryptonightR_instruction_mov8):
@@ -1102,9 +1102,9 @@ FN_PREFIX(CryptonightR_instruction_mov11):
 FN_PREFIX(CryptonightR_instruction_mov12):
 
 FN_PREFIX(CryptonightR_instruction_mov13):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov14):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov15):
 
 FN_PREFIX(CryptonightR_instruction_mov16):
@@ -1118,9 +1118,9 @@ FN_PREFIX(CryptonightR_instruction_mov19):
 FN_PREFIX(CryptonightR_instruction_mov20):
 
 FN_PREFIX(CryptonightR_instruction_mov21):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov22):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov23):
 
 FN_PREFIX(CryptonightR_instruction_mov24):
@@ -1134,9 +1134,9 @@ FN_PREFIX(CryptonightR_instruction_mov27):
 FN_PREFIX(CryptonightR_instruction_mov28):
 
 FN_PREFIX(CryptonightR_instruction_mov29):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov30):
-	mov	ecx, ebx
+	mov	%ecx, %ebx
 FN_PREFIX(CryptonightR_instruction_mov31):
 
 FN_PREFIX(CryptonightR_instruction_mov32):
@@ -1150,9 +1150,9 @@ FN_PREFIX(CryptonightR_instruction_mov35):
 FN_PREFIX(CryptonightR_instruction_mov36):
 
 FN_PREFIX(CryptonightR_instruction_mov37):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov38):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov39):
 
 FN_PREFIX(CryptonightR_instruction_mov40):
@@ -1166,9 +1166,9 @@ FN_PREFIX(CryptonightR_instruction_mov43):
 FN_PREFIX(CryptonightR_instruction_mov44):
 
 FN_PREFIX(CryptonightR_instruction_mov45):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov46):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov47):
 
 FN_PREFIX(CryptonightR_instruction_mov48):
@@ -1182,9 +1182,9 @@ FN_PREFIX(CryptonightR_instruction_mov51):
 FN_PREFIX(CryptonightR_instruction_mov52):
 
 FN_PREFIX(CryptonightR_instruction_mov53):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov54):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov55):
 
 FN_PREFIX(CryptonightR_instruction_mov56):
@@ -1198,9 +1198,9 @@ FN_PREFIX(CryptonightR_instruction_mov59):
 FN_PREFIX(CryptonightR_instruction_mov60):
 
 FN_PREFIX(CryptonightR_instruction_mov61):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov62):
-	mov	ecx, esi
+	mov	%ecx, %esi
 FN_PREFIX(CryptonightR_instruction_mov63):
 
 FN_PREFIX(CryptonightR_instruction_mov64):
@@ -1214,9 +1214,9 @@ FN_PREFIX(CryptonightR_instruction_mov67):
 FN_PREFIX(CryptonightR_instruction_mov68):
 
 FN_PREFIX(CryptonightR_instruction_mov69):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov70):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov71):
 
 FN_PREFIX(CryptonightR_instruction_mov72):
@@ -1230,9 +1230,9 @@ FN_PREFIX(CryptonightR_instruction_mov75):
 FN_PREFIX(CryptonightR_instruction_mov76):
 
 FN_PREFIX(CryptonightR_instruction_mov77):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov78):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov79):
 
 FN_PREFIX(CryptonightR_instruction_mov80):
@@ -1246,9 +1246,9 @@ FN_PREFIX(CryptonightR_instruction_mov83):
 FN_PREFIX(CryptonightR_instruction_mov84):
 
 FN_PREFIX(CryptonightR_instruction_mov85):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov86):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov87):
 
 FN_PREFIX(CryptonightR_instruction_mov88):
@@ -1262,9 +1262,9 @@ FN_PREFIX(CryptonightR_instruction_mov91):
 FN_PREFIX(CryptonightR_instruction_mov92):
 
 FN_PREFIX(CryptonightR_instruction_mov93):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov94):
-	mov	ecx, edi
+	mov	%ecx, %edi
 FN_PREFIX(CryptonightR_instruction_mov95):
 
 FN_PREFIX(CryptonightR_instruction_mov96):
@@ -1278,9 +1278,9 @@ FN_PREFIX(CryptonightR_instruction_mov99):
 FN_PREFIX(CryptonightR_instruction_mov100):
 
 FN_PREFIX(CryptonightR_instruction_mov101):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov102):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov103):
 
 FN_PREFIX(CryptonightR_instruction_mov104):
@@ -1294,9 +1294,9 @@ FN_PREFIX(CryptonightR_instruction_mov107):
 FN_PREFIX(CryptonightR_instruction_mov108):
 
 FN_PREFIX(CryptonightR_instruction_mov109):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov110):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov111):
 
 FN_PREFIX(CryptonightR_instruction_mov112):
@@ -1310,9 +1310,9 @@ FN_PREFIX(CryptonightR_instruction_mov115):
 FN_PREFIX(CryptonightR_instruction_mov116):
 
 FN_PREFIX(CryptonightR_instruction_mov117):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov118):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov119):
 
 FN_PREFIX(CryptonightR_instruction_mov120):
@@ -1326,9 +1326,9 @@ FN_PREFIX(CryptonightR_instruction_mov123):
 FN_PREFIX(CryptonightR_instruction_mov124):
 
 FN_PREFIX(CryptonightR_instruction_mov125):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov126):
-	mov	ecx, ebp
+	mov	%ecx, %ebp
 FN_PREFIX(CryptonightR_instruction_mov127):
 
 FN_PREFIX(CryptonightR_instruction_mov128):
@@ -1342,9 +1342,9 @@ FN_PREFIX(CryptonightR_instruction_mov131):
 FN_PREFIX(CryptonightR_instruction_mov132):
 
 FN_PREFIX(CryptonightR_instruction_mov133):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov134):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov135):
 
 FN_PREFIX(CryptonightR_instruction_mov136):
@@ -1358,9 +1358,9 @@ FN_PREFIX(CryptonightR_instruction_mov139):
 FN_PREFIX(CryptonightR_instruction_mov140):
 
 FN_PREFIX(CryptonightR_instruction_mov141):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov142):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov143):
 
 FN_PREFIX(CryptonightR_instruction_mov144):
@@ -1374,9 +1374,9 @@ FN_PREFIX(CryptonightR_instruction_mov147):
 FN_PREFIX(CryptonightR_instruction_mov148):
 
 FN_PREFIX(CryptonightR_instruction_mov149):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov150):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov151):
 
 FN_PREFIX(CryptonightR_instruction_mov152):
@@ -1390,9 +1390,9 @@ FN_PREFIX(CryptonightR_instruction_mov155):
 FN_PREFIX(CryptonightR_instruction_mov156):
 
 FN_PREFIX(CryptonightR_instruction_mov157):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov158):
-	mov	ecx, esp
+	mov	%ecx, %esp
 FN_PREFIX(CryptonightR_instruction_mov159):
 
 FN_PREFIX(CryptonightR_instruction_mov160):
@@ -1406,9 +1406,9 @@ FN_PREFIX(CryptonightR_instruction_mov163):
 FN_PREFIX(CryptonightR_instruction_mov164):
 
 FN_PREFIX(CryptonightR_instruction_mov165):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov166):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov167):
 
 FN_PREFIX(CryptonightR_instruction_mov168):
@@ -1422,9 +1422,9 @@ FN_PREFIX(CryptonightR_instruction_mov171):
 FN_PREFIX(CryptonightR_instruction_mov172):
 
 FN_PREFIX(CryptonightR_instruction_mov173):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov174):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov175):
 
 FN_PREFIX(CryptonightR_instruction_mov176):
@@ -1438,9 +1438,9 @@ FN_PREFIX(CryptonightR_instruction_mov179):
 FN_PREFIX(CryptonightR_instruction_mov180):
 
 FN_PREFIX(CryptonightR_instruction_mov181):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov182):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov183):
 
 FN_PREFIX(CryptonightR_instruction_mov184):
@@ -1454,9 +1454,9 @@ FN_PREFIX(CryptonightR_instruction_mov187):
 FN_PREFIX(CryptonightR_instruction_mov188):
 
 FN_PREFIX(CryptonightR_instruction_mov189):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov190):
-	mov	ecx, r15d
+	mov	%ecx, %r15d
 FN_PREFIX(CryptonightR_instruction_mov191):
 
 FN_PREFIX(CryptonightR_instruction_mov192):
@@ -1470,9 +1470,9 @@ FN_PREFIX(CryptonightR_instruction_mov195):
 FN_PREFIX(CryptonightR_instruction_mov196):
 
 FN_PREFIX(CryptonightR_instruction_mov197):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov198):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov199):
 
 FN_PREFIX(CryptonightR_instruction_mov200):
@@ -1486,9 +1486,9 @@ FN_PREFIX(CryptonightR_instruction_mov203):
 FN_PREFIX(CryptonightR_instruction_mov204):
 
 FN_PREFIX(CryptonightR_instruction_mov205):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov206):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov207):
 
 FN_PREFIX(CryptonightR_instruction_mov208):
@@ -1502,9 +1502,9 @@ FN_PREFIX(CryptonightR_instruction_mov211):
 FN_PREFIX(CryptonightR_instruction_mov212):
 
 FN_PREFIX(CryptonightR_instruction_mov213):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov214):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov215):
 
 FN_PREFIX(CryptonightR_instruction_mov216):
@@ -1518,9 +1518,9 @@ FN_PREFIX(CryptonightR_instruction_mov219):
 FN_PREFIX(CryptonightR_instruction_mov220):
 
 FN_PREFIX(CryptonightR_instruction_mov221):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov222):
-	mov	ecx, eax
+	mov	%ecx, %eax
 FN_PREFIX(CryptonightR_instruction_mov223):
 
 FN_PREFIX(CryptonightR_instruction_mov224):
@@ -1534,9 +1534,9 @@ FN_PREFIX(CryptonightR_instruction_mov227):
 FN_PREFIX(CryptonightR_instruction_mov228):
 
 FN_PREFIX(CryptonightR_instruction_mov229):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov230):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov231):
 
 FN_PREFIX(CryptonightR_instruction_mov232):
@@ -1550,9 +1550,9 @@ FN_PREFIX(CryptonightR_instruction_mov235):
 FN_PREFIX(CryptonightR_instruction_mov236):
 
 FN_PREFIX(CryptonightR_instruction_mov237):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov238):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov239):
 
 FN_PREFIX(CryptonightR_instruction_mov240):
@@ -1566,9 +1566,9 @@ FN_PREFIX(CryptonightR_instruction_mov243):
 FN_PREFIX(CryptonightR_instruction_mov244):
 
 FN_PREFIX(CryptonightR_instruction_mov245):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov246):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov247):
 
 FN_PREFIX(CryptonightR_instruction_mov248):
@@ -1582,9 +1582,9 @@ FN_PREFIX(CryptonightR_instruction_mov251):
 FN_PREFIX(CryptonightR_instruction_mov252):
 
 FN_PREFIX(CryptonightR_instruction_mov253):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov254):
-	mov	ecx, edx
+	mov	%ecx, %edx
 FN_PREFIX(CryptonightR_instruction_mov255):
 
 FN_PREFIX(CryptonightR_instruction_mov256):
