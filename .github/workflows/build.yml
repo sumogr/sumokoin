@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
+    - name: update apt and clean the instance down to essentials
       run: |     
         sudo apt update
         sudo dpkg --configure -a
@@ -23,5 +21,13 @@ jobs:
         sudo DEBIAN_FRONTEND=noninteractive \
         aptitude --assume-yes markauto \
         '~i!?name(ubuntu-minimal~|linux-generic~|systemd~|openssh-server)'        
-
+    - name: install sumokoin dependencies
+      run: sudo apt -y install curl cmake g++-multilib bc pkg-config libtool autoconf automake gperf
+    - name: cross compile sumokoin bins for linux i686
+      run: make depends target=i686-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-i686-static-binaries
+        path: build/**/bin/
 
