@@ -20,7 +20,9 @@ jobs:
         apt-get --assume-yes install aptitude ubuntu-minimal
         sudo DEBIAN_FRONTEND=noninteractive \
         aptitude --assume-yes markauto \
-        '~i!?name(ubuntu-minimal~|linux-generic~|systemd~|openssh-server)'        
+        '~i!?name(ubuntu-minimal~|linux-generic~|systemd~|openssh-server)'
+        sudo DEBIAN_FRONTEND=noninteractive \
+        aptitude --assume-yes purge '~c'        
     - name: install sumokoin dependencies
       run: sudo apt -y install curl cmake g++-multilib bc pkg-config libtool autoconf automake gperf
     - name: cross compile sumokoin bins for linux i686
