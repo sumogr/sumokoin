@@ -21,7 +21,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install gperf g++-7-multilib gcc-7-multilib bc libtool autoconf automake libssl-dev libzmq3-dev libunbound-dev:i386 miniupnpc:i386 libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
+        sudo apt -y install gperf g++-7-multilib gcc-7-multilib bc libtool autoconf automake libssl-dev libzmq3-dev libunbound-i386-dev miniupnpc-i386 libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc        
