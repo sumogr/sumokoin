@@ -1410,7 +1410,7 @@ int main(int argc, char* argv[])
       {
         if (in.type() != typeid(txin_to_key))
           continue;
-        const auto &txin = boost::get<txin_to_key>(in);
+        const auto &txin = std::get<txin_to_key>(in);
         if (opt_rct_only && txin.amount != 0)
           continue;
 

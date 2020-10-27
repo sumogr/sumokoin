@@ -276,7 +276,7 @@ bool ringdb::add_rings(const crypto::chacha_key &chacha_key, const cryptonote::t
   {
     if (in.type() != typeid(cryptonote::txin_to_key))
       continue;
-    const auto &txin = boost::get<cryptonote::txin_to_key>(in);
+    const auto &txin = std::get<cryptonote::txin_to_key>(in);
     const uint32_t ring_size = txin.key_offsets.size();
     if (ring_size == 1)
       continue;
@@ -335,7 +335,7 @@ bool ringdb::remove_rings(const crypto::chacha_key &chacha_key, const cryptonote
   {
     if (in.type() != typeid(cryptonote::txin_to_key))
       continue;
-    const auto &txin = boost::get<cryptonote::txin_to_key>(in);
+    const auto &txin = std::get<cryptonote::txin_to_key>(in);
     const uint32_t ring_size = txin.key_offsets.size();
     if (ring_size == 1)
       continue;

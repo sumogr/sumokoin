@@ -1320,7 +1320,7 @@ TEST(dandelionpp_map, dropped_connection)
         EXPECT_EQ(3u, cloned.size());
         ASSERT_EQ(mapper.end() - mapper.begin(), cloned.end() - cloned.begin());
         for (auto elem : boost::combine(mapper, cloned))
-            EXPECT_EQ(boost::get<0>(elem), boost::get<1>(elem));
+            EXPECT_EQ(std::get<0>(elem), std::get<1>(elem));
     }
     EXPECT_FALSE(mapper.update(connections));
     EXPECT_EQ(3u, mapper.size());
@@ -1386,7 +1386,7 @@ TEST(dandelionpp_map, dropped_connection)
         EXPECT_EQ(3u, cloned.size());
         ASSERT_EQ(mapper.end() - mapper.begin(), cloned.end() - cloned.begin());
         for (auto elem : boost::combine(mapper, cloned))
-            EXPECT_EQ(boost::get<0>(elem), boost::get<1>(elem));
+            EXPECT_EQ(std::get<0>(elem), std::get<1>(elem));
     }
     // mappings should remain evenly distributed amongst 2, with 3 sitting in waiting
     {
@@ -1417,7 +1417,7 @@ TEST(dandelionpp_map, dropped_connection)
         EXPECT_EQ(3u, cloned.size());
         ASSERT_EQ(mapper.end() - mapper.begin(), cloned.end() - cloned.begin());
         for (auto elem : boost::combine(mapper, cloned))
-            EXPECT_EQ(boost::get<0>(elem), boost::get<1>(elem));
+            EXPECT_EQ(std::get<0>(elem), std::get<1>(elem));
     }
 }
 

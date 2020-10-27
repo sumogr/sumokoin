@@ -174,7 +174,7 @@ namespace cryptonote
           LOG_PRINT_L1("Unsupported output type in tx " << get_transaction_hash(tx));
           return false;
         }
-        rv.outPk[n].dest = rct::pk2rct(boost::get<txout_to_key>(tx.vout[n].target).key);
+        rv.outPk[n].dest = rct::pk2rct(std::get<txout_to_key>(tx.vout[n].target).key);
       }
 
       if (!base_only)
@@ -459,7 +459,7 @@ namespace cryptonote
     weight += extra;
 
     // calculate deterministic CLSAG/MLSAG data size
-    const size_t ring_size = boost::get<cryptonote::txin_to_key>(tx.vin[0]).key_offsets.size();
+    const size_t ring_size = std::get<cryptonote::txin_to_key>(tx.vin[0]).key_offsets.size();
     if (tx.rct_signatures.type == rct::RCTTypeCLSAG)
       extra = tx.vin.size() * (ring_size + 2) * 32;
     else
@@ -507,7 +507,7 @@ namespace cryptonote
     for(auto& in: tx.vin)
     {
       CHECK_AND_ASSERT_MES(in.type() == typeid(txin_to_key), 0, "unexpected type id in transaction");
-      amount_in += boost::get<txin_to_key>(in).amount;
+      amount_in += std::get<txin_to_key>(in).amount;
     }
     for(auto& o: tx.vout)
       amount_out += o.amount;
@@ -561,7 +561,7 @@ namespace cryptonote
     {
       bool r = ::do_serialize(ar, tag);
       CHECK_AND_NO_ASSERT_MES_L1(r, false, "failed to serialize tx extra field");
-      r = ::do_serialize(ar, boost::get<T>(*it));
+      r = ::do_serialize(ar, std::get<T>(*it));
       CHECK_AND_NO_ASSERT_MES_L1(r, false, "failed to serialize tx extra field");
       fields.erase(it);
     }
@@ -833,7 +833,7 @@ namespace cryptonote
         << out.target.type().name() << ", expected " << typeid(txout_to_key).name()
         << ", in transaction id=" << get_transaction_hash(tx));
 
-      if(!check_key(boost::get<txout_to_key>(out.target).key))
+      if(!check_key(std::get<txout_to_key>(out.target).key))
         return false;
     }
     return true;
@@ -946,7 +946,7 @@ namespace cryptonote
     for(const tx_out& o:  tx.vout)
     {
       CHECK_AND_ASSERT_MES(o.target.type() ==  typeid(txout_to_key), false, "wrong type id in transaction out" );
-      if(is_out_to_acc(acc, boost::get<txout_to_key>(o.target), tx_pub_key, additional_tx_pub_keys, i))
+      if(is_out_to_acc(acc, std::get<txout_to_key>(o.target), tx_pub_key, additional_tx_pub_keys, i))
       {
         outs.push_back(i);
         money_transfered += o.amount;
@@ -1063,7 +1063,7 @@ namespace cryptonote
       binary_archive<true> ba(ss);
       const size_t inputs = t.vin.size();
       const size_t outputs = t.vout.size();
-      const size_t mixin = t.vin.empty() ? 0 : t.vin[0].type() == typeid(txin_to_key) ? boost::get<txin_to_key>(t.vin[0]).key_offsets.size() - 1 : 0;
+      const size_t mixin = t.vin.empty() ? 0 : t.vin[0].type() == typeid(txin_to_key) ? std::get<txin_to_key>(t.vin[0]).key_offsets.size() - 1 : 0;
       bool r = tt.rct_signatures.p.serialize_rctsig_prunable(ba, t.rct_signatures.type, inputs, outputs, mixin);
       CHECK_AND_ASSERT_MES(r, false, "Failed to serialize rct signatures prunable");
       cryptonote::get_blob_hash(ss.str(), res);
@@ -1240,7 +1240,7 @@ namespace cryptonote
 
     if (b.miner_tx.vin.size() == 1 && b.miner_tx.vin[0].type() == typeid(cryptonote::txin_gen))
     {
-      const cryptonote::txin_gen &txin_gen = boost::get<cryptonote::txin_gen>(b.miner_tx.vin[0]);
+      const cryptonote::txin_gen &txin_gen = std::get<cryptonote::txin_gen>(b.miner_tx.vin[0]);
       if (txin_gen.height != 202612)
         return true;
     }

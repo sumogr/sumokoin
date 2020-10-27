@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
           }
           if (tx.vin[ring].type() == typeid(cryptonote::txin_to_key))
           {
-            const cryptonote::txin_to_key &txin = boost::get<cryptonote::txin_to_key>(tx.vin[ring]);
+            const cryptonote::txin_to_key &txin = std::get<cryptonote::txin_to_key>(tx.vin[ring]);
             const uint64_t amount = txin.amount;
             auto absolute_offsets = cryptonote::relative_output_offsets_to_absolute(txin.key_offsets);
             for (uint64_t offset: absolute_offsets)
@@ -243,7 +243,7 @@ int main(int argc, char* argv[])
               {
                 if (b.miner_tx.vout[out].target.type() == typeid(cryptonote::txout_to_key))
                 {
-                  const auto &txout = boost::get<cryptonote::txout_to_key>(b.miner_tx.vout[out].target);
+                  const auto &txout = std::get<cryptonote::txout_to_key>(b.miner_tx.vout[out].target);
                   if (txout.key == od.pubkey)
                   {
                     found = true;
@@ -277,7 +277,7 @@ int main(int argc, char* argv[])
                 {
                   if (tx2.vout[out].target.type() == typeid(cryptonote::txout_to_key))
                   {
-                    const auto &txout = boost::get<cryptonote::txout_to_key>(tx2.vout[out].target);
+                    const auto &txout = std::get<cryptonote::txout_to_key>(tx2.vout[out].target);
                     if (txout.key == od.pubkey)
                     {
                       found = true;

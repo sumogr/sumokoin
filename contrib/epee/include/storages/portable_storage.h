@@ -199,7 +199,7 @@ namespace epee
         else
           return nullptr;
       }
-      return &boost::get<section>(*pentry);
+      return &std::get<section>(*pentry);
       CATCH_ENTRY("portable_storage::open_section", nullptr);
     }
     //---------------------------------------------------------------------------------------------------------------
@@ -293,7 +293,7 @@ namespace epee
       TRY_ENTRY();
       storage_entry* pse = insert_new_entry_get_storage_entry(pentry_name, psection, section());
       if(!pse) return nullptr;
-      return &boost::get<section>(*pse);
+      return &std::get<section>(*pse);
       CATCH_ENTRY("portable_storage::insert_new_section", nullptr);
     }
     //---------------------------------------------------------------------------------------------------------------
@@ -324,7 +324,7 @@ namespace epee
         return nullptr;
       if(pentry->type() != typeid(array_entry))
         return nullptr;
-      array_entry& ar_entry = boost::get<array_entry>(*pentry);
+      array_entry& ar_entry = std::get<array_entry>(*pentry);
       
       get_first_value_visitor<t_value> gfv(target);
       if(!boost::apply_visitor(gfv, ar_entry))
@@ -382,11 +382,11 @@ namespace epee
       if(pentry->type() != typeid(array_entry))
         *pentry = storage_entry(array_entry(array_entry_t<t_real_value>()));
 
-      array_entry& arr = boost::get<array_entry>(*pentry);
+      array_entry& arr = std::get<array_entry>(*pentry);
       if(arr.type() != typeid(array_entry_t<t_real_value>))
         arr = array_entry(array_entry_t<t_real_value>());
 
-      array_entry_t<t_real_value>& arr_typed = boost::get<array_entry_t<t_real_value> >(arr);
+      array_entry_t<t_real_value>& arr_typed = std::get<array_entry_t<t_real_value> >(arr);
       arr_typed.insert_first_val(std::forward<t_value>(target));
       return &arr;
       CATCH_ENTRY("portable_storage::insert_first_value", nullptr);
@@ -403,7 +403,7 @@ namespace epee
       CHECK_AND_ASSERT_MES(hval_array->type() == typeid(array_entry_t<t_real_value>),
         false, "unexpected type in insert_next_value: " << typeid(array_entry_t<t_real_value>).name());
 
-      array_entry_t<t_real_value>& arr_typed = boost::get<array_entry_t<t_real_value> >(*hval_array);
+      array_entry_t<t_real_value>& arr_typed = std::get<array_entry_t<t_real_value> >(*hval_array);
       arr_typed.insert_next_value(std::forward<t_value>(target));
       return true;
       CATCH_ENTRY("portable_storage::insert_next_value", false);
@@ -420,10 +420,10 @@ namespace epee
         return nullptr;
       if(pentry->type() != typeid(array_entry))
         return nullptr;
-      array_entry& ar_entry = boost::get<array_entry>(*pentry);
+      array_entry& ar_entry = std::get<array_entry>(*pentry);
       if(ar_entry.type() != typeid(array_entry_t<section>))
         return nullptr;
-      array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(ar_entry);
+      array_entry_t<section>& sec_array = std::get<array_entry_t<section>>(ar_entry);
       section* psec = sec_array.get_first_val();
       if(!psec)
         return nullptr;
@@ -439,7 +439,7 @@ namespace epee
       CHECK_AND_ASSERT(hsec_array, false);
       if(hsec_array->type() != typeid(array_entry_t<section>))
         return false;
-      array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(*hsec_array);
+      array_entry_t<section>& sec_array = std::get<array_entry_t<section>>(*hsec_array);
       h_child_section = sec_array.get_next_val();
       if(!h_child_section)
         return false;
@@ -462,11 +462,11 @@ namespace epee
       if(pentry->type() != typeid(array_entry))
         *pentry = storage_entry(array_entry(array_entry_t<section>()));
 
-      array_entry& ar_entry = boost::get<array_entry>(*pentry);
+      array_entry& ar_entry = std::get<array_entry>(*pentry);
       if(ar_entry.type() != typeid(array_entry_t<section>))
         ar_entry = array_entry(array_entry_t<section>());
 
-      array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(ar_entry);
+      array_entry_t<section>& sec_array = std::get<array_entry_t<section>>(ar_entry);
       hinserted_childsection = &sec_array.insert_first_val(section());
       return &ar_entry;
       CATCH_ENTRY("portable_storage::insert_first_section", nullptr);
@@ -480,7 +480,7 @@ namespace epee
       CHECK_AND_ASSERT_MES(hsec_array->type() == typeid(array_entry_t<section>), 
         false, "unexpected type(not 'section') in insert_next_section, type: " << hsec_array->type().name());
 
-      array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(*hsec_array);
+      array_entry_t<section>& sec_array = std::get<array_entry_t<section>>(*hsec_array);
       hinserted_childsection = &sec_array.insert_next_value(section());
       return true;
       CATCH_ENTRY("portable_storage::insert_next_section", false);

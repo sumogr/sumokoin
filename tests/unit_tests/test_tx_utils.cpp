@@ -58,7 +58,7 @@ TEST(parse_tx_extra, handles_padding_only_size_1)
   ASSERT_TRUE(cryptonote::parse_tx_extra(extra, tx_extra_fields));
   ASSERT_EQ(1, tx_extra_fields.size());
   ASSERT_EQ(typeid(cryptonote::tx_extra_padding), tx_extra_fields[0].type());
-  ASSERT_EQ(1, boost::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
+  ASSERT_EQ(1, std::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
 }
 
 TEST(parse_tx_extra, handles_padding_only_size_2)
@@ -69,7 +69,7 @@ TEST(parse_tx_extra, handles_padding_only_size_2)
   ASSERT_TRUE(cryptonote::parse_tx_extra(extra, tx_extra_fields));
   ASSERT_EQ(1, tx_extra_fields.size());
   ASSERT_EQ(typeid(cryptonote::tx_extra_padding), tx_extra_fields[0].type());
-  ASSERT_EQ(2, boost::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
+  ASSERT_EQ(2, std::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
 }
 
 TEST(parse_tx_extra, handles_padding_only_max_size)
@@ -79,7 +79,7 @@ TEST(parse_tx_extra, handles_padding_only_max_size)
   ASSERT_TRUE(cryptonote::parse_tx_extra(extra, tx_extra_fields));
   ASSERT_EQ(1, tx_extra_fields.size());
   ASSERT_EQ(typeid(cryptonote::tx_extra_padding), tx_extra_fields[0].type());
-  ASSERT_EQ(TX_EXTRA_NONCE_MAX_COUNT, boost::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
+  ASSERT_EQ(TX_EXTRA_NONCE_MAX_COUNT, std::get<cryptonote::tx_extra_padding>(tx_extra_fields[0]).size);
 }
 
 TEST(parse_tx_extra, handles_padding_only_exceed_max_size)
@@ -116,7 +116,7 @@ TEST(parse_tx_extra, handles_extra_nonce_only)
   ASSERT_TRUE(cryptonote::parse_tx_extra(extra, tx_extra_fields));
   ASSERT_EQ(1, tx_extra_fields.size());
   ASSERT_EQ(typeid(cryptonote::tx_extra_nonce), tx_extra_fields[0].type());
-  cryptonote::tx_extra_nonce extra_nonce = boost::get<cryptonote::tx_extra_nonce>(tx_extra_fields[0]);
+  cryptonote::tx_extra_nonce extra_nonce = std::get<cryptonote::tx_extra_nonce>(tx_extra_fields[0]);
   ASSERT_EQ(1, extra_nonce.nonce.size());
   ASSERT_EQ(42, extra_nonce.nonce[0]);
 }

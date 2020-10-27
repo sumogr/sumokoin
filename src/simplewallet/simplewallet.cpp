@@ -6120,7 +6120,7 @@ bool simple_wallet::process_ring_members(const std::vector<tools::wallet2::pendi
     {
       if (tx.vin[i].type() != typeid(cryptonote::txin_to_key))
         continue;
-      const cryptonote::txin_to_key& in_key = boost::get<cryptonote::txin_to_key>(tx.vin[i]);
+      const cryptonote::txin_to_key& in_key = std::get<cryptonote::txin_to_key>(tx.vin[i]);
       const tools::wallet2::transfer_details &td = m_wallet->get_transfer_details(construction_data.selected_transfers[i]);
       const cryptonote::tx_source_entry *sptr = NULL;
       for (const auto &src: construction_data.sources)
@@ -6689,7 +6689,7 @@ bool simple_wallet::transfer_main(int transfer_type, const std::vector<std::stri
           {
             if (vin.type() == typeid(txin_to_key))
             {
-              const txin_to_key& in_to_key = boost::get<txin_to_key>(vin);
+              const txin_to_key& in_to_key = std::get<txin_to_key>(vin);
               if (in_to_key.key_offsets.size() != m_wallet->get_min_ring_size())
                 default_ring_size = false;
             }

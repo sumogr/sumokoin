@@ -214,7 +214,7 @@ namespace epee
       RECURSION_LIMITATION();
       section s;//use extra variable due to vs bug, line "storage_entry se(section()); " can't be compiled in visual studio
       storage_entry se(std::move(s));
-      section& section_entry = boost::get<section>(se);
+      section& section_entry = std::get<section>(se);
       read(section_entry);
       return se;
     }
