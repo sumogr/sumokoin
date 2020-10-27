@@ -36,6 +36,7 @@
 #include <cstring>  // memcmp
 #include <sstream>
 #include <atomic>
+#include <variant>
 #include "serialization/variant.h"
 #include "serialization/containers.h"
 #include "serialization/binary_archive.h"
@@ -435,7 +436,7 @@ namespace cryptonote
       size_t operator()(const txin_to_key& txin) const {return txin.key_offsets.size();}
     };
 
-    return boost::apply_visitor(txin_signature_size_visitor(), tx_in);
+    return std::visit(txin_signature_size_visitor(), tx_in);
   }
 
 

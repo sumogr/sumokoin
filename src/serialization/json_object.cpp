@@ -29,7 +29,6 @@
 #include "json_object.h"
 
 #include <boost/range/adaptor/transformed.hpp>
-#include <boost/variant/apply_visitor.hpp>
 #include <limits>
 #include <type_traits>
 
@@ -361,7 +360,7 @@ void toJsonValue(rapidjson::Writer<epee::byte_stream>& dest, const cryptonote::t
       INSERT_INTO_JSON_OBJECT(dest, to_scripthash, input);
     }
   };
-  boost::apply_visitor(add_input{dest}, txin);
+  std::visit(add_input{dest}, txin);
   dest.EndObject();
 }
 
@@ -586,7 +585,7 @@ void toJsonValue(rapidjson::Writer<epee::byte_stream>& dest, const cryptonote::t
       INSERT_INTO_JSON_OBJECT(dest, to_scripthash, output);
     }
   };
-  boost::apply_visitor(add_output{dest}, txout.target);
+  std::visit(add_output{dest}, txout.target);
    dest.EndObject();
 }
 

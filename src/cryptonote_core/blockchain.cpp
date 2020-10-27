@@ -2900,7 +2900,7 @@ bool Blockchain::check_for_double_spend(const transaction& tx, key_images_contai
 
   for (const txin_v& in : tx.vin)
   {
-    if(!boost::apply_visitor(add_transaction_input_visitor(keys_this_block, m_db), in))
+    if(!std::visit(add_transaction_input_visitor(keys_this_block, m_db), in))
     {
       LOG_ERROR("Double spend detected!");
       return false;
