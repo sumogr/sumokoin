@@ -1,21 +1,21 @@
 // Copyright (c) 2016-2019, The Monero Project
-// 
+//
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-// 
+//
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -28,8 +28,6 @@
 
 #include "zmq_server.h"
 
-<<<<<<< HEAD
-=======
 #include <boost/utility/string_ref.hpp>
 #include <chrono>
 #include <cstdint>
@@ -37,7 +35,6 @@
 
 #include "byte_slice.h"
 
->>>>>>> 33010a9d... [zmq] use byte_slice for sending zmq messages - removes data copy within zmq
 namespace cryptonote
 {
 
@@ -63,28 +60,6 @@ void ZmqServer::serve()
     try
     {
       zmq::message_t message;
-
-<<<<<<< HEAD
-      if (!rep_socket)
-      {
-        throw std::runtime_error("ZMQ RPC server reply socket is null");
-      }
-      while (rep_socket->recv(&message, 0))
-      {
-        std::string message_string(reinterpret_cast<const char *>(message.data()), message.size());
-
-        MDEBUG(std::string("Received RPC request: \"") + message_string + "\"");
-
-        std::string response = handler.handle(message_string);
-
-        zmq::message_t reply(response.size());
-        memcpy((void *) reply.data(), response.c_str(), response.size());
-
-        rep_socket->send(reply);
-        MDEBUG(std::string("Sent RPC reply: \"") + response + "\"");
-
-      }
-=======
     while (1)
     {
       const std::string message = MONERO_UNWRAP(net::zmq::receive(socket.get()));
@@ -94,7 +69,6 @@ void ZmqServer::serve()
       const boost::string_ref response_view{reinterpret_cast<const char*>(response.data()), response.size()};
       MDEBUG("Sending RPC reply: \"" << response_view << "\"");
       MONERO_UNWRAP(net::zmq::send(std::move(response), socket.get()));
->>>>>>> 33010a9d... [zmq] use byte_slice for sending zmq messages - removes data copy within zmq
     }
     catch (const boost::thread_interrupted& e)
     {
@@ -145,7 +119,7 @@ void ZmqServer::run()
   run_thread = boost::thread(boost::bind(&ZmqServer::serve, this));
 }
 
-void ZmqServer::stop() 
+void ZmqServer::stop()
 {
   if (!running) return;
 

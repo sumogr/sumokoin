@@ -1,5 +1,5 @@
-# Sumokoin 
-## Android Wallet Branch 
+# Sumokoin
+## Android Wallet Branch
 (updated with master at all times)
 Instructions on how to build on ANDROID-BUILD.md
 
@@ -21,7 +21,7 @@ Portions Copyright (c) 2012-2013, The Cryptonote developers
   - [Pruning](#Pruning)
   - [Debugging](#Debugging)
   - [Known issues](#known-issues)
-  
+
 ## Development Resources
 
 - Web: [www.sumokoin.org](https://www.sumokoin.org)
@@ -37,7 +37,7 @@ Sumokoin, therefore, is a new Monero without its legacy, a _truely fungible_ cry
 
 ## Coin Supply & Emission<a name="coin-supply-&-emission" />
 
-- **Total supply**: **88,888,888** coins in first 20 years, then **263,000** coins each year for inflation. 
+- **Total supply**: **88,888,888** coins in first 20 years, then **263,000** coins each year for inflation.
 About 10% (~8.8 million) was premined to reserve for future development, i.e. **80 million coins available** for community mining.
 - **Coin symbol**: **SUMO**
 - **Coin Units**:
@@ -45,7 +45,7 @@ About 10% (~8.8 million) was premined to reserve for future development, i.e. **
   + 1 Sumokun = 0.000001 **SUMO** (10<sup>-6</sup>)
   + 1 Sumosan = 0.001 **SUMO** (10<sup>-3</sup>)
 - **Hash algorithm**: CryptoNight R (cnR, CNv4) (Proof-Of-Work)
-- **Emission scheme**: Sumokoin's block reward changes _every 6-months_ as the following "Camel" distribution* (inspired by _real-world mining production_ like of crude oil, coal etc. that is often slow at first, 
+- **Emission scheme**: Sumokoin's block reward changes _every 6-months_ as the following "Camel" distribution* (inspired by _real-world mining production_ like of crude oil, coal etc. that is often slow at first,
 accelerated in the next few years before declined and depleted). However, the emission path of Sumokoin is generally not far apart from what of Bitcoin (view charts below).
 
 ![](https://i.imgur.com/muvKFKg.jpg)
@@ -144,13 +144,8 @@ invokes cmake commands as needed.
 
     \- On Ubuntu, essential dependencies can be installed with the following command:
 
-<<<<<<< HEAD
-    	sudo apt update && sudo apt install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev
-    
-=======
     	sudo apt update && sudo apt install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev
 
->>>>>>> 68df0f73... remove trezor and protobuf
 * Change to the root of the source code directory and build:
 
         ```bash
@@ -345,7 +340,7 @@ application.
     ```
 
 * If you would like a specific [version/tag](https://github.com/sumoprojects/sumokoin/tags), do a git checkout for that version. eg. 'v0.6.1.0'. If you don't care about the version and just want binaries from master, skip this step:
-	
+
     ```bash
     git checkout v0.6.1.0
     ```
@@ -563,7 +558,7 @@ Run the build.
 Once it stalls, enter the following command:
 
 ```bash
-gdb /path/to/sumokoind `pidof sumokoind` 
+gdb /path/to/sumokoind `pidof sumokoind`
 ```
 
 Type `thread apply all bt` within gdb in order to obtain the stack trace

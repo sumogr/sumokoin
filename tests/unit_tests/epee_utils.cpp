@@ -45,11 +45,8 @@
 #include "boost/archive/portable_binary_iarchive.hpp"
 #include "boost/archive/portable_binary_oarchive.hpp"
 #include "byte_slice.h"
-<<<<<<< HEAD
-=======
 #include "byte_stream.h"
 #include "crypto/crypto.h"
->>>>>>> 18c8f45e... byte_slice zmq
 #include "hex.h"
 #include "net/net_utils_base.h"
 #include "net/local_ip.h"
@@ -709,7 +706,7 @@ TEST(ByteSlice, TakeSlice)
 
   EXPECT_FALSE(slice.empty());
   EXPECT_EQ(slice.cbegin(), slice.data());
-  
+
   const epee::byte_slice slice2 = slice.take_slice(remove_size);
 
   EXPECT_EQ(original.begin() + remove_size, slice.begin());

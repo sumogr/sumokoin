@@ -48,11 +48,7 @@
 #include <boost/format.hpp>
 #include <boost/regex.hpp>
 #include <boost/range/adaptor/transformed.hpp>
-<<<<<<< HEAD
-#include <boost/locale.hpp>
-=======
 #include <boost/thread/thread.hpp>
->>>>>>> 028b0101... [std] replace std::this_thread::sleep instances with its boost equivalent
 #include "include_base_utils.h"
 // #include "console_handler.h" // already #included in simplewallet/simplewallet.h
 // #include "common/i18n.h" // already #included in simplewallet/simplewallet.h
@@ -3428,13 +3424,8 @@ simple_wallet::simple_wallet()
                            tr("Interface with the MMS (Multisig Messaging System)\n"
                               "<subcommand> is one of:\n"
                               "  init, info, signer, list, next, sync, transfer, delete, send, receive, export, note, show, set, help\n"
-<<<<<<< HEAD
-                              "  send_signer_config, start_auto_config, stop_auto_config, auto_config\n"
-                              "Get help about a subcommand with: help mms <subcommand>, or mms help <subcommand>"));
-=======
                               "  send_signer_config, start_auto_config, stop_auto_config, auto_config, config_checksum\n"
                               "Get help about a subcommand with: help_advanced mms <subcommand>"));
->>>>>>> 1b93d60b... [MMS] new 'config_checksum' subcommand
   m_cmd_binder.set_handler("mms init",
                            boost::bind(&simple_wallet::on_command, this, &simple_wallet::mms, BOOST_PLACEHOLDERS::_1),
                            tr(USAGE_MMS_INIT),
