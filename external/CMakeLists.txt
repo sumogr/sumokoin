@@ -53,12 +53,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "NetBSD")
   set_property(TARGET libminiupnpc-static APPEND_STRING PROPERTY COMPILE_FLAGS " -D_NETBSD_SOURCE")
 endif()
 
-<<<<<<< HEAD
-set(UPNP_LIBRARIES "libminiupnpc-static" PARENT_SCOPE)
-=======
 set(MINIUPNPC_LIBRARIES "libminiupnpc-static" PARENT_SCOPE)
 set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration")
->>>>>>> b3b9c761... [cmake] pkgconfig for querying miniupnpc and unbound
 
 
 if(NOT UNBOUND_FOUND)
