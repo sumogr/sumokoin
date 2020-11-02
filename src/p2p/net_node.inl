@@ -251,6 +251,10 @@ namespace nodetool
         zone.second.m_net_server.get_config_object().close(c);
 
       conns.clear();
+
+      peerlist_entry pe{};
+      pe.adr = addr;
+      zone.second.m_peerlist.remove_from_peer_white(pe);	    
     }
 
     MCLOG_CYAN(el::Level::Info, "global", "Host " << addr.host_str() << " blocked for " << P2P_IP_BLOCKTIME << " seconds.");
