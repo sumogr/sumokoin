@@ -8,4 +8,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
-      run: aptitude search '?priority(required)'
+      run: dpkg-query -W --showformat='${Package}\t${Priority}\n' | grep "optional$"
