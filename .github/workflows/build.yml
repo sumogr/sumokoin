@@ -71,6 +71,8 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost      
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -79,9 +81,7 @@ jobs:
     - name: update apt and upgrade
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: |
-        sudo apt-get autoremove --purge libssl-dev libboost-all-dev build-essential libzmq3-dev libpgm-dev libnorm-dev libsodium-dev libunwind8-dev liblzma-dev libldns-dev libunbound-dev
-        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf cmake
+      run: sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf cmake
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
