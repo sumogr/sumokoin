@@ -83,13 +83,11 @@ jobs:
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
-    - name: clean ubuntu
-      run: |
-        sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
-        awk '$2 ~ /extra/ { print $1 }')
+        sudo apt upgrade 
+        sudo apt dist-upgrade 
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential cmake
+        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf build-essential cmake
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
