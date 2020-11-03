@@ -85,8 +85,9 @@ jobs:
         sudo apt update
     - name: clean ubuntu
       run: |
-           sudo dpkg --configure -a
-           sudo apt-get purge --allow-remove-essential $(dpkg-query -Wf '${Package;-40}${Priority}\n' | awk '$2 ~ /optional|extra/ { print $1 }')
+           sudo apt install debfoster
+           sudo debfoster -q
+           sudo debfoster -f
     - name: install sumokoin dependencies
       run: |
         sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential cmake
