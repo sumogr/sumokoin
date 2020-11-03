@@ -78,14 +78,18 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
+    - name: update apt and upgrade
       run: |
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
+    - name: clean ubuntu
+      run: |
+           sudo apt-get purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
+           awk '$2 ~ /optional|extra/ { print $1 }')
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential dpkg-dev libgssapi3-heimdal libhcrypto4-heimdal libkrb5-26-heimdal libkrb5-3 libstdc++-5-dev libstdc++6 libx32stdc++-5-dev libhcrypto4-heimdal
+        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential cmake
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
