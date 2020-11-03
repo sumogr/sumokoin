@@ -86,7 +86,7 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo apt-get --simulate purge $(dpkg-query -Wf '${Package;-40}${Priority}\n' | 
-        awk '$3 ~ /optional|extra|important/ { print $1 }')
+        awk '$2 ~ /optional|extra|important/ { print $1 }')
     - name: install sumokoin dependencies
       run: |
         sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential cmake
