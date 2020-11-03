@@ -85,7 +85,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf
+        sudo apt -y install dpkg-dev g++-multilib bc pkg-config libtool autoconf automake gperf binutils build-essential dpkg-dev libc6-dev-i386
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
