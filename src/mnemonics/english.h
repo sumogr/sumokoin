@@ -51,7 +51,7 @@ namespace Language
   public:
     English(): Base("English", "English", {}, 3)
     {
-      static constexpr std::string_view const words[NWORDS] =
+      static constexpr const char * const words[NWORDS] =
       {
         "abbey",
         "abducts",

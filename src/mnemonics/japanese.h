@@ -73,7 +73,7 @@ namespace Language
   public:
     Japanese(): Base("日本語", "Japanese", {}, 3)
     {
-      static constexpr std::string_view const words[NWORDS] =
+      static constexpr const char * const words[NWORDS] =
       {
         "あいこくしん",
         "あいさつ",
