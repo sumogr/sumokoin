@@ -9,6 +9,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: remove bundled boost
       run: |
+        sudo apt-get purge --auto-remove *ssl*
         sudo apt-get purge --auto-remove g++
         sudo apt-get purge --auto-remove gcc
         sudo apt-get purge --auto-remove clang
