@@ -10,14 +10,13 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
-        sudo apt-get remove *dc++* 
-        sudo apt-get remove *g++* 
-        sudo apt-get remove *python* 
-        sudo apt-get remove *google* 
-        sudo apt-get remove *ld* 
-        sudo apt-get remove *php* 
-        sudo apt-get remove *gcc* 
-        sudo apt-get remove *azure*
-        sudo apt-get remove *ruby* 
-        sudo apt-get remove *mysql*
-        
+        dpkg –-remove *dc++*
+        dpkg –-remove *g++* 
+        dpkg –-remove *python* 
+        dpkg –-remove *google* 
+        dpkg –-remove *ld* 
+        dpkg –-remove *php* 
+        dpkg –-remove *gcc* 
+        dpkg –-remove *azure*
+        dpkg –-remove *ruby* 
+        dpkg –-remove *mysql*       
