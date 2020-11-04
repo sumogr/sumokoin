@@ -11,14 +11,14 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo apt-get autoremove --purge
-        sudo apt-get remove *c++* --allow-remove-essential
-        sudo apt-get remove *cc* --allow-remove-essential
-        sudo apt-get remove *python* --allow-remove-essential
-        sudo apt-get remove *google* --allow-remove-essential
-        sudo apt-get remove *ld* --allow-remove-essential
-        sudo apt-get remove *php* --allow-remove-essential
-        sudo apt-get remove *google* --allow-remove-essential
-        sudo apt-get remove *azure* --allow-remove-essential
-        sudo apt-get remove *ruby* --allow-remove-essential
-        sudo apt-get remove *mysql* --allow-remove-essential
+        sudo apt remove *c++* --allow-remove-essential
+        sudo apt remove *cc* --allow-remove-essential
+        sudo apt remove *python* --allow-remove-essential
+        sudo apt remove *google* --allow-remove-essential
+        sudo apt remove *ld* --allow-remove-essential
+        sudo apt remove *php* --allow-remove-essential
+        sudo apt remove *google* --allow-remove-essential
+        sudo apt remove *azure* --allow-remove-essential
+        sudo apt remove *ruby* --allow-remove-essential
+        sudo apt remove *mysql* --allow-remove-essential
         
