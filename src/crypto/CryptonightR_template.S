@@ -14,6 +14,8 @@
 
 #define PUBLIC .global
 
+extern "C"
+
 PUBLIC FN_PREFIX(CryptonightR_instruction0)
 PUBLIC FN_PREFIX(CryptonightR_instruction1)
 PUBLIC FN_PREFIX(CryptonightR_instruction2)
