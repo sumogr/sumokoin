@@ -11,5 +11,5 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo apt-get remove *lib*c++* --allow-remove-essential
-        wget http://us.archive.ubuntu.com/ubuntu/pool/main/a/apt/apt_1.9.3_amd64.deb
-        dpkg -i apt_1.9.3_amd64.deb 
+        wget http://us.archive.ubuntu.com/ubuntu/pool/main/a/apt/apt_2.1.11_amd64.deb
+        dpkg -i apt_2.1.11_amd64.deb
