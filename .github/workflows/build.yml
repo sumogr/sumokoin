@@ -8,7 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
-      run: sudo find /usr/local/share -maxdepth 1 ! -name "cmake-3.17" -exec rm -r {} \;       
+      run: |
+         shopt -s extglob
+         cd /usr/local/share/
+         sudo rm -rf !(cmake-3.17)       
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -25,7 +28,6 @@ jobs:
         sudo apt -y install dpkg-dev g++-multilib gcc-multilib bc pkg-config libtool autoconf automake gperf cmake 
     - name: cross compile sumokoin bins for linux i686
       run: |
-        cmake -DBACKCOMPAT=ON -DCMAKE_SKIP_RPATH=ON
         make depends target=i686-linux-gnu -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
