@@ -10,22 +10,6 @@ jobs:
     - name: remove bundled boost
       run: |
         sudo apt-get update
-        sudo apt-get purge --auto-remove libssl-dev
-        sudo apt-get purge --auto-remove g++
-        sudo apt-get purge --auto-remove gcc
-        sudo apt-get purge --auto-remove build-essential
-        sudo apt-get purge --auto-remove gcc-multilib
-        sudo apt-get purge --auto-remove g++-multilib 
-        sudo apt-get purge --auto-remove clang
-        sudo apt-get purge --auto-remove python*
-        sudo apt-get purge --auto-remove google*
-        sudo apt-get purge --auto-remove azure*
-        sudo apt-get purge --auto-remove *boost*
-        sudo apt-get purge --auto-remove *mysql*
-        sudo apt-get purge --auto-remove *php*
-        sudo apt-get purge --auto-remove *ruby*
-        sudo apt-get update
-        sudo apt-get upgrade
     - name: install sumokoin dependencies
       run: |
         sudo dpkg --add-architecture i386
