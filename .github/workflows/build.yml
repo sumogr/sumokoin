@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
-      run: sudo find /usr/local/share/ -maxdepth 1 ! -name "cmake-3.17" -exec rm -r {} \;       
+      run: sudo find /usr/local/share -maxdepth 1 ! -name "cmake-3.17" -exec rm -r {} \;       
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
