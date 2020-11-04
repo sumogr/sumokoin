@@ -24,7 +24,9 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt -y install dpkg-dev g++-multilib gcc-multilib bc pkg-config libtool autoconf automake gperf cmake 
     - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 3
+      run: |
+        cmake -DBACKCOMPAT=ON -DCMAKE_SKIP_RPATH=ON
+        make depends target=i686-linux-gnu -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
