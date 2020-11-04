@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
@@ -15,7 +15,7 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt and upgrade
-      run: sudo apt update
+      run: sudo apt-get update && sudo apt-get upgrade
     - name: install sumokoin dependencies
       run: |
         sudo dpkg --add-architecture i386
