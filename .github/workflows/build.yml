@@ -17,12 +17,12 @@ jobs:
     - name: update apt and upgrade
       run: | 
         sudo apt-get update
-        sudo apt-get --purge remove google-chrome-stable google-cloud-sdk ruby* mysql* php*
+        sudo apt-get --purge remove google-chrome-stable google-cloud-sdk ruby* mysql* php* azure* linux-azure* ll* libstdc++* libssl* *boost* *clang* *g++* *gcc* *python*
         sudo apt-get upgrade
     - name: install sumokoin dependencies
       run: |
         sudo dpkg --add-architecture i386
-        sudo apt -y install dpkg-dev g++-multilib gcc-multilib bc pkg-config libtool autoconf automake gperf cmake linux-libc-dev binutils-i686-gnu libc6-dev-i386 libstdc++-7-dev-i386 libgmp3-dev libmpc-dev libmpfr-dev binutils 
+        sudo apt -y install dpkg-dev g++-multilib gcc-multilib bc pkg-config libtool autoconf automake gperf cmake 
     - name: cross compile sumokoin bins for linux i686
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
