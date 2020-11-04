@@ -11,3 +11,9 @@ jobs:
       run: |
         sudo apt-get purge --auto-remove g++
         sudo apt-get purge --auto-remove gcc
+        sudo apt-get purge --auto-remove clang
+        sudo apt-get purge --auto-remove python*
+        sudo apt-get purge --auto-remove google*
+        sudo apt-get purge --auto-remove azure*
+        sudo apt-get purge --auto-remove android*
+        
