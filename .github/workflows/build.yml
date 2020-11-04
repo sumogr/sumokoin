@@ -17,4 +17,4 @@ jobs:
     - name: update apt and upgrade
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y do-release-upgrade
+      run: sudo apt do-release-upgrade
