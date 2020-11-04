@@ -10,7 +10,7 @@ jobs:
     - name: remove bundled boost
       run: |
          sudo apt-get update
-         sudo apt-get remove build-essential *g++* *gcc* *dc++* *dc* bison brotli bzip2 dbus dnsutils gnupg2 jq lib32z1 libc++-dev libc++abi-dev libgbm-dev libgconf-2-4 libgtk-3-0 libicu55 libsecret-1-dev libsqlite3-dev libunwind8 libxkbfile-dev libxss1 m4 openssh-client parallel patchelf rpm rsync sqlite3 ssh telnet texinfo tk tzdata unzip upx xorriso xvfb xz-utils zstd zsync
+         sudo apt-get remove build-essential *g++* *gcc* *openssl* bison brotli bzip2 dbus dnsutils gnupg2 jq lib32z1 libc++-dev libc++abi-dev libgbm-dev libgconf-2-4 libgtk-3-0 libicu55 libsecret-1-dev libsqlite3-dev libunwind8 libxkbfile-dev libxss1 m4 openssh-client parallel patchelf rpm rsync sqlite3 ssh telnet texinfo tk tzdata unzip upx xorriso xvfb xz-utils zstd zsync
     - name: install sumokoin dependencies
       run: sudo apt -y install dpkg-dev g++-multilib bc libtool autoconf automake gperf cmake pkg-config
     - name: cross compile sumokoin bins for linux i686
