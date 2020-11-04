@@ -10,7 +10,7 @@ jobs:
     - name: remove bundled boost
       run: |
         sudo apt-get update
-        sudo apt-get install openssl-dev
+        sudo apt-get install libssl-dev
         sudo apt-get purge --auto-remove *ssl*
         sudo apt-get purge --auto-remove g++
         sudo apt-get purge --auto-remove gcc
