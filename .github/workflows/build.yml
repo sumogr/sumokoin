@@ -13,6 +13,9 @@ jobs:
         sudo apt-get purge --auto-remove libssl-dev
         sudo apt-get purge --auto-remove g++
         sudo apt-get purge --auto-remove gcc
+        sudo apt-get purge --auto-remove build-essential
+        sudo apt-get purge --auto-remove gcc-multilib
+        sudo apt-get purge --auto-remove g++-multilib 
         sudo apt-get purge --auto-remove clang
         sudo apt-get purge --auto-remove python*
         sudo apt-get purge --auto-remove google*
@@ -21,3 +24,18 @@ jobs:
         sudo apt-get purge --auto-remove *mysql*
         sudo apt-get purge --auto-remove *php*
         sudo apt-get purge --auto-remove *ruby*
+        sudo apt-get update
+        sudo apt-get upgrade
+    - name: install sumokoin dependencies
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt -y install dpkg-dev g++-multilib gcc-multilib bc pkg-config libtool autoconf automake gperf cmake 
+    - name: cross compile sumokoin bins for linux i686
+      run: |
+        make depends target=i686-linux-gnu -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-32bit-release-binaries
+        path: build/**/bin/        
+        
