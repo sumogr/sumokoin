@@ -17,7 +17,7 @@ jobs:
     - name: update apt and upgrade
       run: | 
         sudo apt-get update
-        sudo apt-get --purge remove -f google-chrome-stable google-cloud-sdk ruby* mysql* php* azure* linux-azure* libgcc* llvm* libstdc++* *ssl* *boost* *clang* *g++* *gcc* *python*
+        sudo apt-get --purge remove google-chrome-stable google-cloud-sdk ruby* mysql* php* azure* linux-azure* libgcc* llvm* libstdc++* libssl-dev *boost* *clang* *g++* *gcc* *python*
         sudo apt-get upgrade
     - name: install sumokoin dependencies
       run: |
