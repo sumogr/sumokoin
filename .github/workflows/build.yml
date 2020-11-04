@@ -9,4 +9,6 @@ jobs:
     - uses: actions/checkout@v1
     - name: remove bundled boost
       run: |
+         sudo apt-get update
+         sudo apt-get install default-jre-headless dpkg libpam0g adduser libpam-runtime perl-base
          sudo apt-get remove build-essential bison brotli bzip2 curl dbus dnsutils dpkg fakeroot file flex ftp gnupg2 iproute2 iputils-ping jq lib32z1 libc++-dev libc++abi-dev libcurl3 libgbm-dev libgconf-2-4 libgtk-3-0 libicu55 libsecret-1-dev libsqlite3-dev libunwind8 libxkbfile-dev libxss1 locales m4 netcat openssh-client parallel patchelf pkg-config rpm rsync shellcheck sqlite3 ssh telnet texinfo time tk tzdata unzip upx wget xorriso xvfb xz-utils yamllint zip zstd zsync
