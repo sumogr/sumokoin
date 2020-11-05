@@ -11,5 +11,4 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo docker run -i --publish 8000:8000 debian:9
-        ls -a
-        sudo cat /etc/os-release
+        docker ps
