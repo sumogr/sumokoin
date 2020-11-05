@@ -20,6 +20,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install g++-multilib bc autoconf automake gperf cmake libtool dos2unix -y
+        cd contrib
+        cd depends
+        dos2unix config.guess
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
