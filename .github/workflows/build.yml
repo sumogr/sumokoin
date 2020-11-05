@@ -10,7 +10,9 @@ jobs:
      run:
       shell: wsl-bash {0} 
     steps:
-    - uses: Vampire/setup-wsl@v1  
+    - name: use wsl
+    - uses: Vampire/setup-wsl@v1
+    - name: checkout    
     - uses: actions/checkout@v1
     - name : update debian and install dependencies
     - run: |
