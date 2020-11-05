@@ -12,7 +12,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install aptitude
-        sudo apt-get purge --allow-remove-essential $(aptitude search '~i!~M!~prequired!~R~prequired!~R~R~prequired!busybox!grub!initramfs-tools' | awk '{print $2}')
+        sudo apt-get purge --allow-remove-essential $(aptitude search '~i!~M!~prequired!~R~prequired!~R~R~prequired!busybox!grub!initramfs-tools!fonts-ubuntu-font-family-consol' | awk '{print $2}')
         sudo apt-get purge aptitude
         sudo apt-get autoremove
         sudo apt-get clean 
