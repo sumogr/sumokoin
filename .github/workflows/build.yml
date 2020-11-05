@@ -10,5 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
+        curl.exe -L -o ubuntu-1604.appx https://aka.ms/wsl-ubuntu-1604
+        Add-AppxPackage .\ubuntu-1604.appx
         WSL.exe
         sudo lsb_release -a
