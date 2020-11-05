@@ -6,11 +6,10 @@ jobs:
 
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: windows-latest
-    
     defaults:
-      run:
-        shell: wsl-bash {0}
-    steps:
+     run:
+      shell: wsl-bash {0} 
+    steps:  
     - uses: Vampire/setup-wsl@v1
     - uses: actions/checkout@v1
     - name : update debian and install dependencies
