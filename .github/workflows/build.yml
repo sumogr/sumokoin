@@ -10,15 +10,16 @@ jobs:
      run:
       shell: wsl-bash {0} 
     steps:
-    - uses: |
-         Vampire/setup-wsl@v1
-         actions/checkout@v1
+    - name: use wsl (ubuntu 20.04)
+      uses: Vampire/setup-wsl@v1
+    - name: checkout branch
+      uses: actions/checkout@v1
     - name : update debian and install dependencies
     - run: |
         sudo apt-get update
         sudo apt-get g++-multilib bc autoconf automake gperf cmake libtool
     - name: cross-compile sumokoin for linux i686
-    - run: sudo make depends target=i686-linux-gnu -j 2
+      run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
