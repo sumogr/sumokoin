@@ -17,7 +17,7 @@ jobs:
     - name : update debian and install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++-multilib bc autoconf automake gperf cmake libtool dos2unix -y
+        sudo apt-get install g++-multilib bc autoconf automake gperf cmake libtool dos2unix ash -y
         cd contrib
         cd depends
         sudo chmod +x config.guess
