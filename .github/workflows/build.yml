@@ -15,10 +15,4 @@ jobs:
         Rename-Item .\Ubuntu.appx .\Ubuntu.zip
         Expand-Archive .\Ubuntu.zip .\Ubuntu
         cd Ubuntu
-        ubuntu.exe
-        $userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")
-        [System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";C:\Users\Administrator\Ubuntu", "User")
-    - name: clean ubuntu
-      run: |        
-        WSL.exe
-        sudo lsb_release -a
+        dir
