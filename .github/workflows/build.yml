@@ -11,6 +11,6 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo docker pull ubuntu
-        sudo docker run -i ubuntu
+        sudo docker run -ti --entrypoint /bin/sh ubuntu
         ls -a
         sudo cat /etc/os-release
