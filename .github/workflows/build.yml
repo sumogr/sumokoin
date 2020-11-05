@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
-        sudo docker run -i --name debian debian:9 /bin/bash
-        docker attach debian 
+        sudo docker run -i --publish 8000:8080 --detach --name debian debian:9 /bin/bash
+        sudo docker attach debian 
         ls -a
         sudo cat /etc/os-release
