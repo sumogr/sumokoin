@@ -16,3 +16,4 @@ jobs:
         Expand-Archive .\Ubuntu.zip .\Ubuntu
         cd Ubuntu
         ./ubuntu1804
+        root
