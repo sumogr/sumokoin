@@ -21,6 +21,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++-multilib bc automake gperf libtool cmake curl git m4 pkg-config binutils-i686-linux-gnu 
+        sudo apt-get install g++-multilib bc automake gperf libtool cmake curl git m4 pkg-config libc-bin libc6 libgcc-s1 libglib2.0-0 libgssapi-krb5-2 libgssapi3-heimdal libhcrypto4-heimdal libk5crypto3 libklibc libkrb5-3 libstdc++6  
+        sudo apt-get instal build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
     - name: cross compile sumokoin for linux 32bit 
       run: make depends target=i686-linux-gnu -j 3    
