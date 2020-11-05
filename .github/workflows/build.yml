@@ -10,17 +10,21 @@ jobs:
      run:
       shell: wsl-bash {0} 
     steps:
-    - name: use wsl (ubuntu 16.04)
+    - name: use wsl (Debian)
       uses: Vampire/setup-wsl@v1
-      with:
-         distribution: Ubuntu-16.04
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update debian and install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install g++-multilib bc autoconf automake gperf cmake libtool -y
-        sudo chmod -R 755 contrib/depends
+        cd contrib
+        cd depends
+        sudo chmod +x config.guess
+        sudo chmod +x config.site.in
+        sudo chmod +x config.sub
+        cd ..
+        cd ..
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
