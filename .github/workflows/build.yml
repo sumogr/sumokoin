@@ -18,6 +18,6 @@ jobs:
         sudo apt-get clean 
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install g++-7 gcc-7 libx32gcc-7-dev libc6-dev-i386 lib32gcc-7-dev lib32stdc++-7-dev libx32stdc++-7-dev lib32stdc++-7-dev lib32stdc++-7-dev bc autoconf automake gperf libtool cmake lib32gcc-7-dev 
+        sudo apt-get install curl git m4 pkg-config g++-7 gcc-7 libx32gcc-7-dev libc6-dev-i386 lib32gcc-7-dev lib32stdc++-7-dev libx32stdc++-7-dev lib32stdc++-7-dev lib32stdc++-7-dev bc autoconf automake gperf libtool cmake lib32gcc-7-dev 
     - name: cross compile sumokoin for linux 32bit 
       run: make depends target=i686-linux-gnu -j 3    
