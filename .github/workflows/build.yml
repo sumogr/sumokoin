@@ -14,5 +14,5 @@ jobs:
         sudo apt-get install aptitude
         sudo apt-get purge $(aptitude search '~i!~M!~prequired!~pimportant!~R~prequired!~R~R~prequired!~R~pimportant!~R~R~pimportant!busybox!grub!initramfs-tools' | awk '{print $2}')
         sudo apt-get purge aptitude
-        sudo apt-get purge autoremove
+        sudo apt-get autoremove
         sudo apt-get clean 
