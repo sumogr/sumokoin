@@ -11,4 +11,5 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo docker run -i --name ubuntu debian:9 /bin/bash
-        sudo cat /etc/os-release
+        ls -a
+        sudo uname -a
