@@ -28,7 +28,7 @@ jobs:
         sudo dos2unix config.sub
         cd ..
         cd ..
-        sudo export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
