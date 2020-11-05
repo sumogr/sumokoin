@@ -32,7 +32,7 @@ timestamp='2017-03-05'
 # Please send patches to <config-patches@gnu.org>.
 
 
-me=`echo "$0" | sed -e 's,.*/,,'`
+me=`echo "$0" | sed -e 's,.*/,,'` 
 
 usage="\
 Usage: $0 [OPTION]
