@@ -11,6 +11,7 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo docker pull ubuntu
-        sudo docker run -i --attach --entrypoint /bin/sh ubuntu
+        sudo docker run docker run -d --name ubuntu ubuntu /usr/bin/ubuntu -b
+        sudo docker attach ubuntu
         ls -a
         sudo cat /etc/os-release
