@@ -5,15 +5,10 @@ on: [push, pull_request]
 jobs:
 
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
-        Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-        Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu.appx -UseBasicParsing
-        Rename-Item .\Ubuntu.appx .\Ubuntu.zip
-        Expand-Archive .\Ubuntu.zip .\Ubuntu
-        cd Ubuntu
-        ./ubuntu1804
-        root
+        docker run -i -t --name ubuntu ubuntu:16.04 /bin/bash
+        cat /etc/os-release
