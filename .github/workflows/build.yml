@@ -5,14 +5,14 @@ on: [push, pull_request]
 jobs:
 
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
         sudo apt-get update
         sudo apt-get install aptitude
-        sudo apt-get purge --allow-remove-essential $(aptitude search '~i!~M!~prequired!~R~prequired!~R~R~prequired!busybox!grub!initramfs-tools!postgresql-client-13' | awk '{print $2}')
+        sudo apt-get purge --allow-remove-essential $(aptitude search '~i!~M!~prequired!~R~prequired!~R~R~prequired!busybox!grub!initramfs-tools' | awk '{print $2}')
         sudo apt-get purge aptitude
         sudo apt-get autoremove
         sudo apt-get clean 
