@@ -11,7 +11,11 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo apt-get update
-        sudo apt-get remove --purge g++-multilib
+        sudo apt-get install aptitude
+        sudo apt-get purge $(aptitude search '~i!~M!~prequired!~pimportant!~R~prequired!~R~R~prequired!~R~pimportant!~R~R~pimportant!busybox!grub!initramfs-tools' | awk '{print $2}')
+        sudo apt-get purge aptitude
+        sudo apt-get purge autoremove
+        sudo apt-get clean 
     - name: install sumokoin dependencies
       run: |
         sudo apt-get install g++-7 gcc-7 libx32gcc-7-dev libc6-dev-i386 lib32gcc-7-dev lib32stdc++-7-dev libx32stdc++-7-dev lib32stdc++-7-dev lib32stdc++-7-dev bc autoconf automake gperf libtool cmake lib32gcc-7-dev 
