@@ -5,13 +5,13 @@ on: [push, pull_request]
 jobs:
 
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: wsl-bash {0}
     steps:
+    - uses: Vampire/setup-wsl@v1
     - uses: actions/checkout@v1
-    - name: clean ubuntu
-      run: |
-        sudo docker pull ubuntu
-        sudo docker run docker run -d --name ubuntu ubuntu /usr/bin/ubuntu -b
-        sudo docker attach ubuntu
-        ls -a
+    - run: |
         sudo cat /etc/os-release
