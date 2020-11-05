@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: clean ubuntu
-      run: bash
-    - name: linux version
-      run: sudo lsb_release -a
+      run: |
+        bash
+        sudo lsb_release -a
