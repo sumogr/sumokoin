@@ -15,7 +15,7 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update debian and install dependencies
-    - run: |
+      run: |
         sudo apt-get update
         sudo apt-get g++-multilib bc autoconf automake gperf cmake libtool
     - name: cross-compile sumokoin for linux i686
