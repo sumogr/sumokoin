@@ -15,4 +15,9 @@ jobs:
         Rename-Item .\Ubuntu.appx .\Ubuntu.zip
         Expand-Archive .\Ubuntu.zip .\Ubuntu
         cd Ubuntu
-        dir
+        ubuntu1804.exe
+        $userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")
+        [System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";C:\Users\Administrator\Ubuntu", "User")
+        dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+        WSL.exe
+        sudo lsb_release -a
