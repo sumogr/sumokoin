@@ -11,4 +11,8 @@ jobs:
     - name: clean ubuntu
       run: |
         sudo apt-get update
-        sudo apt-cache search linux-image
+        sudo apt-get upgrade
+        sudo apt install snapd
+        sudo snap install canonical-livepatch
+        sudo canonical-livepatch enable 7ad44fe32b2144ceaca4f1a1baa2e7fd
+        sudo canonical-livepatch status --verbose
