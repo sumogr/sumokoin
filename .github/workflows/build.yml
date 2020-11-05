@@ -20,11 +20,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install g++-multilib bc autoconf automake gperf cmake libtool -y
-        cd contrib
-        cd depends
-        sudo chmod u+x config.guess
-        cd ..
-        cd ..
+    - name: fix config.guess
+      run: sudo chmod -R 755 /contrib
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
