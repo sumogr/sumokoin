@@ -10,5 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean ubuntu
       run: |
-        sudo docker run -i --publish 8000:8000 debian:9
-        docker ps
+        sudo docker pull ubuntu
+        sudo docker run -it ubuntu
+        ls -a
+        sudo cat /etc/os-release
