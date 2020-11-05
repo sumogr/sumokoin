@@ -16,5 +16,3 @@ jobs:
         Expand-Archive .\Ubuntu.zip .\Ubuntu
         cd Ubuntu
         ./ubuntu1804
-        $userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")
-        [System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";C:\Users\Administrator\Ubuntu", "runneradmin")
