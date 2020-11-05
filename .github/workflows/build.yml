@@ -20,6 +20,6 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++-multilib bc automake gperf libtool cmake
+        sudo apt-get install g++-multilib bc automake gperf libtool cmake curl git
     - name: cross compile sumokoin for linux 32bit 
       run: make depends target=i686-linux-gnu -j 3    
