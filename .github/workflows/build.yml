@@ -13,7 +13,7 @@ jobs:
     - name: use wsl
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: Ubuntu-20.04
+          distribution: Ubuntu-18.04
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update debian and install dependencies
@@ -30,6 +30,9 @@ jobs:
         sudo dos2unix config.sub
         cd ..
         cd ..
+        cd ..
+        sudo chmod -R 777 sumokoin
+        cd sumokoin
         export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
