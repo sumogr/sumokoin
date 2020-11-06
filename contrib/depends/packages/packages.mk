@@ -26,7 +26,7 @@ linux_packages += unwind
 endif
 
 ifneq ($(host_arch),i*86)
-linux_packages += unbound 
+linux_packages += expat ldns unbound 
 endif
 
 mingw32_packages = icu4c sodium $(hardware_packages)
