@@ -1,8 +1,8 @@
 package=boost                                                                                                                                                                                                                      
-$(package)_version=1_64_0
-$(package)_download_path=https://dl.bintray.com/boostorg/release/1.64.0/source/
+$(package)_version=1_71_0
+$(package)_download_path=https://dl.bintray.com/boostorg/release/1.71.0/source/
 $(package)_file_name=$(package)_$($(package)_version).tar.bz2
-$(package)_sha256_hash=7bcc5caace97baa948931d712ea5f37038dbb1c5d89b43ad4def4ed7cb683332
+$(package)_sha256_hash=d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee
 $(package)_dependencies=libiconv
 $(package)_patches=fix_aroptions.patch
 
@@ -22,7 +22,7 @@ $(package)_toolset_$(host_os)=gcc
 $(package)_archiver_$(host_os)=$($(package)_ar)
 $(package)_toolset_darwin=darwin
 $(package)_archiver_darwin=$($(package)_libtool)
-$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale
+$(package)_config_libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale,atomic
 $(package)_cxxflags=-std=c++11
 $(package)_cxxflags_linux=-fPIC
 $(package)_cxxflags_freebsd=-fPIC
