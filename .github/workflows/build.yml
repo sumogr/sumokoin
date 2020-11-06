@@ -18,12 +18,8 @@ jobs:
       uses: actions/checkout@v1
     - name : update debian and install dependencies
       run: |
-        sudo fallocate -l 6G /swapfile
-        sudo chmod 600 /swapfile
-        sudo mkswap /swapfile
-        sudo swapon /swapfile
         sudo apt-get update
-        sudo apt-get install g++-multilib gcc-multilib bc autoconf automake gperf cmake libtool dos2unix git curl bzip2 m4 pkg-config miniupnpc libunbound-dev -y
+        sudo apt-get install g++-multilib gcc-multilib bc autoconf automake gperf cmake libtool dos2unix git curl bzip2 m4 pkg-config -y
         cd contrib
         cd depends
         sudo chmod +x config.guess
@@ -37,7 +33,6 @@ jobs:
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
-        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     - name: cross-compile sumokoin for linux i686
       run: sudo make depends target=i686-linux-gnu -j 2
     - name: upload binaries      
