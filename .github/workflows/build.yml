@@ -16,6 +16,8 @@ jobs:
           distribution: Ubuntu-20.04
     - name: checkout branch
       uses: actions/checkout@v1
+    - name: remove boost
+      run: sudo apt-get remove --purge *boost* 
     - name : update debian and install dependencies
       run: |
         sudo apt-get update
