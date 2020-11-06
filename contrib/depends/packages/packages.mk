@@ -14,7 +14,7 @@ darwin_packages = sodium ncurses readline $(hardware_packages)
 freebsd_native_packages = freebsd_base
 freebsd_packages = ncurses readline sodium
 
-linux_packages = eudev ncurses readline sodium $(hardware_packages)
+linux_packages = unbound eudev ncurses readline sodium $(hardware_packages)
 linux_native_packages = $(hardware_native_packages)
 
 ifeq ($(build_tests),ON)
