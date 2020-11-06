@@ -435,18 +435,18 @@ namespace
           };
 
           field_table.add
-            (u8"algorithm", std::bind(parse_token{}, _1, _2, _3, std::bind(&auth_message::algorithm, _4)))
-            (u8"cnonce", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::cnonce, _4)))
-            (u8"domain", std::bind(parse_string{}, _1, _2, _3)) // ignore field
+            (u8"algorithm", boost::bind(parse_token{}, _1, _2, _3, boost::bind(&auth_message::algorithm, _4)))
+            (u8"cnonce", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::cnonce, _4)))
+            (u8"domain", boost::bind(parse_string{}, _1, _2, _3)) // ignore field
             (u8"nc", parse_nc{})
-            (u8"nonce", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::nonce, _4)))
-            (u8"opaque", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::opaque, _4)))
-            (u8"qop", std::bind(parse_token{}, _1, _2, _3, std::bind(&auth_message::qop, _4)))
-            (u8"realm", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::realm, _4)))
+            (u8"nonce", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::nonce, _4)))
+            (u8"opaque", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::opaque, _4)))
+            (u8"qop", boost::bind(parse_token{}, _1, _2, _3, boost::bind(&auth_message::qop, _4)))
+            (u8"realm", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::realm, _4)))
             (u8"response", parse_response{})
-            (u8"stale", std::bind(parse_token{}, _1, _2, _3, std::bind(&auth_message::stale, _4)))
-            (u8"uri", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::uri, _4)))
-            (u8"username", std::bind(parse_string{}, _1, _2, _3, std::bind(&auth_message::username, _4)));
+            (u8"stale", boost::bind(parse_token{}, _1, _2, _3, boost::bind(&auth_message::stale, _4)))
+            (u8"uri", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::uri, _4)))
+            (u8"username", boost::bind(parse_string{}, _1, _2, _3, boost::bind(&auth_message::username, _4)));
 
           skip_whitespace = *(&qi::ascii::char_ >> qi::ascii::space);
           header = skip_whitespace >> qi::ascii::no_case[u8"digest"] >> skip_whitespace;

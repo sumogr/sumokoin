@@ -31,6 +31,7 @@
 // IP blocking adapted from Boolberry
 
 #include <algorithm>
+#include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/optional/optional.hpp>
@@ -257,7 +258,7 @@ namespace nodetool
 
       peerlist_entry pe{};
       pe.adr = addr;
-      zone.second.m_peerlist.remove_from_peer_white(pe);	    
+      zone.second.m_peerlist.remove_from_peer_white(pe);
     }
     if (seconds >= 500 * P2P_IP_BLOCKTIME)
       MCLOG_CYAN(el::Level::Info, "global", "Host " << addr.host_str() << " blocked permanently.");
@@ -886,8 +887,8 @@ namespace nodetool
     })); // lambda
 
     network_zone& public_zone = m_network_zones.at(epee::net_utils::zone::public_);
-    public_zone.m_net_server.add_idle_handler(std::bind(&node_server<t_payload_net_handler>::idle_worker, this), 1000);
-    public_zone.m_net_server.add_idle_handler(std::bind(&t_payload_net_handler::on_idle, &m_payload_handler), 1000);
+    public_zone.m_net_server.add_idle_handler(boost::bind(&node_server<t_payload_net_handler>::idle_worker, this), 1000);
+    public_zone.m_net_server.add_idle_handler(boost::bind(&t_payload_net_handler::on_idle, &m_payload_handler), 1000);
 
     //here you can set worker threads count
     int thrds_count = 10;
@@ -1455,7 +1456,7 @@ namespace nodetool
             uint32_t actual_ip = na.as<const epee::net_utils::ipv4_network_address>().ip();
             skip = classB.find(actual_ip & 0x0000ffff) != classB.end();
           }
-		
+
           // consider each host once, to avoid giving undue inflence to hosts running several nodes
           if (!skip)
           {
@@ -1463,7 +1464,7 @@ namespace nodetool
             if (i != hosts_added.end())
               skip = true;
           }
-		
+
           if (skip)
             ++skipped;
           else if (next_needed_pruning_stripe == 0 || pe.pruning_seed == 0)
@@ -1471,7 +1472,7 @@ namespace nodetool
           else if (next_needed_pruning_stripe == tools::get_pruning_stripe(pe.pruning_seed))
             filtered.push_front(idx);
           ++idx;
-          hosts_added.insert(get_host_string(pe.adr));		
+          hosts_added.insert(get_host_string(pe.adr));
           return true;
         });
         if (skipped == 0 || !filtered.empty())
@@ -1813,11 +1814,11 @@ namespace nodetool
   template<class t_payload_net_handler>
   bool node_server<t_payload_net_handler>::idle_worker()
   {
-    m_peer_handshake_idle_maker_interval.do_call(std::bind(&node_server<t_payload_net_handler>::peer_sync_idle_maker, this));
-    m_connections_maker_interval.do_call(std::bind(&node_server<t_payload_net_handler>::connections_maker, this));
-    m_gray_peerlist_housekeeping_interval.do_call(std::bind(&node_server<t_payload_net_handler>::gray_peerlist_housekeeping, this));
-    m_peerlist_store_interval.do_call(std::bind(&node_server<t_payload_net_handler>::store_config, this));
-    m_incoming_connections_interval.do_call(std::bind(&node_server<t_payload_net_handler>::check_incoming_connections, this));
+    m_peer_handshake_idle_maker_interval.do_call(boost::bind(&node_server<t_payload_net_handler>::peer_sync_idle_maker, this));
+    m_connections_maker_interval.do_call(boost::bind(&node_server<t_payload_net_handler>::connections_maker, this));
+    m_gray_peerlist_housekeeping_interval.do_call(boost::bind(&node_server<t_payload_net_handler>::gray_peerlist_housekeeping, this));
+    m_peerlist_store_interval.do_call(boost::bind(&node_server<t_payload_net_handler>::store_config, this));
+    m_incoming_connections_interval.do_call(boost::bind(&node_server<t_payload_net_handler>::check_incoming_connections, this));
     return true;
   }
   //-----------------------------------------------------------------------------------

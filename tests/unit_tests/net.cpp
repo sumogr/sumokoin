@@ -994,7 +994,7 @@ TEST(socks_client, unsupported_command)
     stream_type::socket client{io_service};
 
     auto test_client = net::socks::make_connect_client(
-        std::move(client), net::socks::version::v4, std::bind( [] {} )
+        std::move(client), net::socks::version::v4, boost::bind( [] {} )
     );
     ASSERT_TRUE(bool(test_client));
     EXPECT_TRUE(test_client->buffer().empty());
@@ -1012,7 +1012,7 @@ TEST(socks_client, no_command)
     stream_type::socket client{io_service};
 
     auto test_client = net::socks::make_connect_client(
-        std::move(client), net::socks::version::v4a, std::bind( [] {} )
+        std::move(client), net::socks::version::v4a, boost::bind( [] {} )
     );
     ASSERT_TRUE(bool(test_client));
     EXPECT_FALSE(net::socks::client::send(std::move(test_client)));

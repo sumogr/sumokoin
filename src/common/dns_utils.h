@@ -27,10 +27,10 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
-#include <boost/optional/optional.hpp>
 #include <vector>
 #include <string>
 #include <functional>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace tools
 {
