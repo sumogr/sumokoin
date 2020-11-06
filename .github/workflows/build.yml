@@ -10,10 +10,8 @@ jobs:
      run:
       shell: wsl-bash {0} 
     steps:
-    - name: use wsl (Xenial)
+    - name: use wsl (Debian)
       uses: Vampire/setup-wsl@v1
-      with:
-          distribution: Ubuntu-16.04
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update debian and install dependencies
