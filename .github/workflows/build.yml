@@ -19,7 +19,7 @@ jobs:
     - name : update debian and install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++-9-multilib bc autoconf automake gperf cmake libtool dos2unix git curl bzip2 m4 pkg-config libunbound-dev -y
+        sudo apt-get install g++-multilib gcc-multilib bc autoconf automake gperf cmake libtool dos2unix git curl bzip2 m4 pkg-config libunbound-dev -y
         cd contrib
         cd depends
         sudo chmod +x config.guess
