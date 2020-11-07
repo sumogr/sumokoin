@@ -21,9 +21,8 @@ jobs:
         dpkg --add-architecture i386
         sudo apt-get update
         wget http://archive.ubuntu.com/ubuntu/pool/universe/b/boost-defaults/libboost-all-dev_1.71.0.0ubuntu2_i386.deb
-        wget http://security.ubuntu.com/ubuntu/pool/main//libu/libusb/libusb-dev_0.1.12-32_i386.deb
-        sudo apt-get install libboost-all-dev
-        sudo dpkg --install libboost-all-dev_1.71.0.0ubuntu2_i386.deb
+        wget http://archive.ubuntu.com/ubuntu/pool/universe/b/boost-defaults/libboost-all-dev_1.67.0.2_i386.deb
+        sudo dpkg --install libboost-all-dev_1.67.0.2_i386.deb
         sudo dpkg --install libusb-dev_0.1.12-32_i386.deb
         sudo apt-get install g++-multilib gcc-multilib bc cmake git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
