@@ -44,7 +44,7 @@ jobs:
         cd ..
     - name : apt-get the rest of the packages       
       run: |        
-        sudo apt-get install libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
