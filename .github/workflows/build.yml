@@ -13,7 +13,7 @@ jobs:
     - name: use wsl
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: Ubuntu-16.04
+          distribution: Ubuntu-20.04
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update debian and install dependencies
@@ -25,8 +25,8 @@ jobs:
         cd sumokoin
     - name: cross-compile sumokoin for linux i686
       run: | 
-         cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release
-         sudo make CC="gcc -m32" CXX="g++ -m32" LDFLAGS=-m32 -j 2
+         cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF
+         sudo make release CC="gcc -m32" CXX="g++ -m32" LDFLAGS=-m32 -j 2
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
