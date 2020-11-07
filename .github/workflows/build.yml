@@ -21,7 +21,7 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt-get update
         sudo apt-get install libssl-dev:i386 -y
-        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake -y
+        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build boost
       run: |        
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
