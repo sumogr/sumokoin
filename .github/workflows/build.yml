@@ -24,7 +24,7 @@ jobs:
         sudo chmod -R 777 sumokoin
         cd sumokoin
     - name: cross-compile sumokoin for linux i686
-      run:  sudo make static -j 2
+      run:  sudo make release-static -j 2
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
