@@ -20,7 +20,7 @@ jobs:
       run: |
         dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install g++-multilib gcc-multilib bc cmake git pkg-config libboost-all-dev:i386 libssl-dev:i386 libzmq3-dev:i386 libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev:i386 libreadline6-dev:i386 libldns-dev libexpat1-dev:i386 doxygen:i386 graphviz:i386 libpgm-dev:i386 libhidapi-dev:i386 libusb-dev:i386 -y
+        sudo apt-get install g++-multilib gcc-multilib bc cmake git pkg-config libboost-all-dev:i386 libssl-dev:i386 libzmq3-dev:i386 libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev:i386 libreadline6-dev:i386 libldns-dev libexpat1-dev:i386 doxygen:i386 graphviz:i386 libpgm-dev:i386 libhidapi-dev libusb-dev:i386 -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
