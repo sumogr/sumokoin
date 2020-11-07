@@ -20,7 +20,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libssl-dev:i386 -y
+        sudo apt-get install libssl-dev:i386 libsodium-dev:i386 libzmq3-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake -y
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
@@ -30,7 +30,7 @@ jobs:
         ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
         ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         cd ..
-        sudo apt-get install libusb-1.0-0-dev git pkg-config libzmq3-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
