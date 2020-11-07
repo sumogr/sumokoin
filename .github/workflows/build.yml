@@ -25,7 +25,7 @@ jobs:
         cd sumokoin
     - name: cross-compile sumokoin for linux i686
       run: | 
-         cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86"
+         cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release
          sudo make CC="gcc -m32" CXX="g++ -m32" LDFLAGS=-m32 -j 2
     - name: upload binaries      
       uses: actions/upload-artifact@v2
