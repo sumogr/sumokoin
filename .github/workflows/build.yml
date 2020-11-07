@@ -26,7 +26,7 @@ jobs:
         cd boost_1_68_0
         ./bootstrap.sh --without-icu --with-libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale --with-toolset=gcc
         ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
-        ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete --user-config=user-config.jam threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
+        ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         sudo dpkg --add-architecture i386
         sudo apt-get install libusb-dev:i386 git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
