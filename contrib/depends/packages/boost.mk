@@ -1,8 +1,8 @@
 package=boost
-$(package)_version=1_72_0
-$(package)_download_path=https://dl.bintray.com/boostorg/release/1.72.0/source/
+$(package)_version=1_58_0
+$(package)_download_path=https://sourceforge.net/projects/boost/files/boost/1.58.0/
 $(package)_file_name=boost_$($(package)_version).tar.bz2
-$(package)_sha256_hash=59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722
+$(package)_sha256_hash=fdfc204fc33ec79c99b9a74944c3e54bd78be4f7f15e260c0e2700a36dc7d3e5
 $(package)_dependencies=libiconv
 
 define $(package)_set_vars
@@ -22,7 +22,7 @@ $(package)_archiver_$(host_os)=$($(package)_ar)
 $(package)_toolset_darwin=darwin
 $(package)_archiver_darwin=$($(package)_libtool)
 $(package)_config_libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale
-$(package)_cxxflags=-std=c++17
+$(package)_cxxflags=-std=c++11
 $(package)_cxxflags_linux=-fPIC
 $(package)_cxxflags_freebsd=-fPIC
 endef
