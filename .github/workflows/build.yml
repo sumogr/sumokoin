@@ -20,9 +20,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        wget http://security.ubuntu.com/ubuntu/pool/main//libu/libusb/libusb-dev_0.1.12-32_i386.deb
-        sudo dpkg --install libusb-dev_0.1.12-32_i386.deb
-        sudo apt-get install libboost-all-dev:i386 g++-multilib gcc-multilib bc cmake git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libboost-all-dev:i386 libusb-dev:i386 g++-multilib gcc-multilib bc cmake git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
