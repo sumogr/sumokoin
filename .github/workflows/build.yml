@@ -20,7 +20,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libboost-all-dev:i386 libusb-dev:i386 g++-multilib gcc-multilib bc cmake git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libboost-graph-parallel-dev:i386 libboost-mpi-dev:i386 libboost-mpi-python-dev:i386 libboost-python-dev:i386 libboost-all-dev:i386 libusb-dev:i386 g++-9-multilib g++-multilib gcc-9-multilib gcc-multilib bc cmake git pkg-config libssl-dev:i386 libzmq3-dev libsodium-dev:i386 libunwind8-dev:i386 liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
