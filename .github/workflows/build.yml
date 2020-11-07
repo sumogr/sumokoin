@@ -18,7 +18,9 @@ jobs:
       uses: actions/checkout@v1
     - name : update debian and install dependencies
       run: |
+        sudo dpkg --add-architecture i386
         sudo apt-get update
+        sudoa pt-get install libssl-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake -y
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
@@ -28,16 +30,6 @@ jobs:
         ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
         ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         cd ..
-        wget https://www.openssl.org/source/openssl-1.0.2r.tar.gz
-        tar xf openssl-1.0.2r.tar.gz
-        cd openssl-1.0.2r
-        sudo sed -i.old "/define DATE/d" util/mkbuildinf.pl
-        sudo sed -i.old "s|engines apps test|engines|" Makefile.org
-        sudo sed -i -e "s/-mandroid //" Configure
-        ./Configure linux-generic32 no-capieng no-dso no-dtls1 no-ec_nistp_64_gcc_128 no-gost no-gmp no-heartbeats no-jpake no-krb5 no-libunbound no-md2 no-rc5 no-rdrand no-rfc3779 no-rsax no-sctp no-sha0 no-shared no-ssl-trace no-ssl2 no-ssl3 no-static_engine no-store no-unit-test no-weak-ssl-ciphers no-zlib no-zlib-dynamic -fPIC -Wa,--noexecstack
-        make -j1 build_libs libcrypto.pc libssl.pc openssl.pc
-        make -j1 install_sw
-        cd ..        
         sudo apt-get install libusb-1.0-0-dev git pkg-config libzmq3-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
