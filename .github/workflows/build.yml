@@ -19,7 +19,7 @@ jobs:
     - name : update debian and install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++-multilib gcc-multilib bc autoconf automake gperf cmake libtool dos2unix git curl bzip2 m4 pkg-config binutils -y
+        sudo apt-get install g++-multilib gcc-multilib bc cmake git pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler  -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
