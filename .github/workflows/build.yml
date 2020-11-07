@@ -16,12 +16,14 @@ jobs:
           distribution: Ubuntu-20.04
     - name: checkout branch
       uses: actions/checkout@v1
-    - name : update debian and install dependencies
+    - name : update and install essential and openssl
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
         sudo apt-get install libssl-dev:i386 libsodium-dev:i386 libzmq3-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake -y
+    - name : build boost
+      run: |        
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
         sudo chmod -R 777 boost_1_68_0
@@ -30,6 +32,18 @@ jobs:
         ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
         ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         cd ..
+    - name : build sodium
+      run: |
+        wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
+        tar xf libsodium-1.0.18.tar.gz
+        cd libsodium-1.0.18        
+        ./autogen.sh
+        ./configure --enable-static --disable-shared
+        make -j 2
+        make install
+        cd ..
+    - name : apt-get the rest of the packages       
+      run: |        
         sudo apt-get install libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
