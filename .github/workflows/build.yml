@@ -20,8 +20,8 @@ jobs:
     - name: login to container console
       run: |
         sudo lxc exec ubuntucross -- /bin/bash
-        sudo lxc exec containername -- apt-get update
-        sudo lxc exec containername -- apt-get install g++-multilib bc
+        sudo lxc exec ubuntucross -- apt-get update
+        sudo lxc exec ubuntucross -- apt-get install g++-multilib bc
      
 
 
