@@ -51,7 +51,7 @@ jobs:
     - name: cross-compile sumokoin for linux i686
       run:  |
         sudo cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release
-        sudo make release-static -j 2
+        sudo make -j 2
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
