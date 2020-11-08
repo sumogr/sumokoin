@@ -17,8 +17,8 @@ jobs:
         sudo lxc launch ubuntu:18.04 ubuntucross
         sudo lxc file pull -r ubuntucross/root/ /home/runner/work/sumokoin/sumokoin/
         sudo lxc exec ubuntucross -- /bin/bash
-        cd root
-        ls -a
+        sudo cd root
+        sudo ls -a
 
      
 
