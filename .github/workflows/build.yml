@@ -18,7 +18,7 @@ jobs:
     - name: push sumokoin folder to container
       run:  |
         cd ..
-        sudo lxc file push -r sumokoin ubuntucross/~
+        sudo lxc file push -r sumokoin/ ubuntucross/~
     - name: login to container console
       run: |
         sudo lxc exec ubuntucross -- /bin/bash
