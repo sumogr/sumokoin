@@ -3,21 +3,15 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: ubuntu-latest
+    container: debian:9      
     steps:
     - uses: actions/checkout@v1
-    - name : install lxd container
+    - name : install sumokoin dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install snap snapd
-        sudo snap install lxd --channel=4.0/stable
-        sudo lxd init
-        sudo lxc launch ubuntu:18.04 ubuntucross
-        sudo lxc exec ubuntucross -- /bin/bash
-        pwd
-        ls -a
+        sudo cat /etc/issue
+
 
 
      
