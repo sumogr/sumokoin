@@ -35,11 +35,7 @@
 # ...except for FreeBSD, because FreeBSD is a special case that doesn't play well with
 # others.
 
-find_package(PkgConfig REQUIRED)
-
-if(NOT STATIC)
-  pkg_check_modules(UNBOUND libunbound)
-endif()
+find_package(Miniupnpc REQUIRED)
 
 message(STATUS "Using in-tree miniupnpc")
 add_subdirectory(miniupnp/miniupnpc)
@@ -53,11 +49,11 @@ if(CMAKE_SYSTEM_NAME MATCHES "NetBSD")
   set_property(TARGET libminiupnpc-static APPEND_STRING PROPERTY COMPILE_FLAGS " -D_NETBSD_SOURCE")
 endif()
 
-set(MINIUPNPC_LIBRARIES "libminiupnpc-static" PARENT_SCOPE)
+set(UPNP_LIBRARIES "libminiupnpc-static" PARENT_SCOPE)
 set(CMAKE_C_FLAGS "-Wno-implicit-function-declaration")
 
 
-if(NOT UNBOUND_FOUND)
+if(NOT UNBOUND_INCLUDE_DIR)
   # NOTE: If STATIC is true, CMAKE_FIND_LIBRARY_SUFFIXES has been reordered.
   # unbound has config tests which used OpenSSL libraries, so -ldl may need to
   # be set in this case.
@@ -67,17 +63,17 @@ if(NOT UNBOUND_FOUND)
   add_subdirectory(unbound)
 
   set(UNBOUND_STATIC true PARENT_SCOPE)
-  set(UNBOUND_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/unbound/libunbound" PARENT_SCOPE)
-  set(UNBOUND_LIBRARIES "unbound" PARENT_SCOPE)
+  set(UNBOUND_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/unbound/libunbound" PARENT_SCOPE)
+  set(UNBOUND_LIBRARY "unbound" PARENT_SCOPE)
   set(UNBOUND_LIBRARY_DIRS "${LIBEVENT2_LIBDIR}" PARENT_SCOPE)
 else()
-  message(STATUS "Found libunbound include (unbound.h) in ${UNBOUND_INCLUDE_DIRS}")
+  message(STATUS "Found libunbound include (unbound.h) in ${UNBOUND_INCLUDE_DIR}")
   if(UNBOUND_LIBRARIES)
     message(STATUS "Found libunbound shared library")
     set(UNBOUND_STATIC false PARENT_SCOPE)
-    set(UNBOUND_INCLUDE_DIRS ${UNBOUND_INCLUDE_DIRS} PARENT_SCOPE)
-    set(UNBOUND_LIBRARIES ${UNBOUND_LIBRARIES} PARENT_SCOPE)
-    set(UNBOUND_LIBRARY_DIRS "${UNBOUND_LIBRARY_DIRS}" PARENT_SCOPE)
+    set(UNBOUND_INCLUDE ${UNBOUND_INCLUDE_DIR} PARENT_SCOPE)
+    set(UNBOUND_LIBRARY ${UNBOUND_LIBRARIES} PARENT_SCOPE)
+    set(UNBOUND_LIBRARY_DIRS "" PARENT_SCOPE)
   else()
     die("Found libunbound includes, but could not find libunbound library. Please make sure you have installed libunbound or libunbound-dev or the equivalent")
   endif()

@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     defaults:
      run:
-      shell: wsl-bash {0} 
+      shell: wsl-bash {0}
     steps:
     - name: use wsl
       uses: Vampire/setup-wsl@v1
@@ -20,10 +20,10 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libssl-dev:i386 libunbound-dev:i386 -y
+        sudo apt-get install libssl-dev:i386 libunbound-dev:i386 miniupnpc:i386 libevent-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build boost
-      run: |        
+      run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
         sudo chmod -R 777 boost_1_68_0
@@ -36,22 +36,22 @@ jobs:
       run: |
         wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
         tar xf libsodium-1.0.18.tar.gz
-        cd libsodium-1.0.18        
+        cd libsodium-1.0.18
         ./autogen.sh
         ./configure --enable-static --disable-shared
         make -j 2
         make install
         cd ..
-    - name : apt-get the rest of the packages       
-      run: |        
+    - name : apt-get the rest of the packages
+      run: |
         sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
     - name: cross-compile sumokoin for linux i686
       run:  sudo make release-static -j 2
-    - name: upload binaries      
+    - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
         name: Linux-i686-release-binaries
-        path: build/**/bin/      
+        path: build/**/bin/

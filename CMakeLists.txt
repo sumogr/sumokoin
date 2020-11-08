@@ -469,7 +469,7 @@ include_directories(${MONERO_GENERATED_HEADERS_DIR})
 add_subdirectory(thirdparty)
 
 # Final setup for libunbound
-include_directories(${UNBOUND_INCLUDE_DIRS})
+include_directories(${UNBOUND_INCLUDE})
 link_directories(${UNBOUND_LIBRARY_DIRS})
 
 # Final setup for easylogging++

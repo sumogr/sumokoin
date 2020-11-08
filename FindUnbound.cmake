@@ -1,5 +1,4 @@
 # Copyright (c) 2014-2020, The Monero Project
-#
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are
@@ -26,27 +25,16 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cmake_minimum_required (VERSION 2.6)
-project (monero CXX)
+MESSAGE(STATUS "Looking for libunbound")
 
-file(GLOB P2P *)
-source_group(p2p FILES ${P2P})
+FIND_PATH(UNBOUND_INCLUDE_DIR
+  NAMES unbound.h
+  PATH_SUFFIXES include/ include/unbound/
+  PATHS "${PROJECT_SOURCE_DIR}"
+  ${UNBOUND_ROOT}
+  $ENV{UNBOUND_ROOT}
+  /usr/local/
+  /usr/
+)
 
-#add_library(p2p ${P2P})
-
-#monero_private_headers(p2p ${P2P})
-monero_add_library(p2p ${P2P})
-target_link_libraries(p2p
-  PUBLIC
-    version
-    cryptonote_core
-    net
-    ${UPNP_LIBRARIES}
-    ${Boost_CHRONO_LIBRARY}
-    ${Boost_PROGRAM_OPTIONS_LIBRARY}
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
-    ${Boost_THREAD_LIBRARY}
-    ${Boost_SERIALIZATION_LIBRARY}
-  PRIVATE
-    ${EXTRA_LIBRARIES})
+find_library(UNBOUND_LIBRARIES unbound)
