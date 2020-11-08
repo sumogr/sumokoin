@@ -16,9 +16,7 @@ jobs:
         sudo lxc launch ubuntu:20.04 ubuntucross
     - uses: actions/checkout@v1
     - name: push sumokoin folder to container
-      run:  |
-        cd ..
-        sudo lxc file push -r sumokoin/ ubuntucross/~
+      run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
     - name: login to container console
       run: |
         sudo lxc exec ubuntucross -- /bin/bash
