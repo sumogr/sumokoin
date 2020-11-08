@@ -19,7 +19,8 @@ jobs:
       run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
     - name: login to container console
       run: |
-        sudo lxc list "ubuntucross" -c 4 | awk '!/IPV4/{ if ( $2 != "" ) sudo ssh -tt root@$2}'      
+        var=$(sudo lxc list "ubuntucross" -c 4 | awk '!/IPV4/{ if ( $2 != "" ) print $2}' | tee /dev/tty)
+        sudo ssh -tt root@$var
         cd
         ls -a
      
