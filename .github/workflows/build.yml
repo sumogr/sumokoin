@@ -19,7 +19,7 @@ jobs:
     - name : update and install essential and openssl
       run: |
         sudo apt-get update
-        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
+        sudo apt-get install libexpat1-dev g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build openssl
       run: |
         wget https://www.openssl.org/source/openssl-1.0.2r.tar.gz
@@ -32,15 +32,6 @@ jobs:
         make build_libs libcrypto.pc libssl.pc openssl.pc
         make install_sw
         cd ..    
-    - name : build expat
-      run: |
-        wget https://toolchains.bootlin.com/downloads/releases/sources/expat-2.2.4/expat-2.2.4.tar.bz2
-        tar xfj expat-2.2.4.tar.bz2
-        cd expat-2.2.4
-        ./configure --enable-static --disable-shared
-        make
-        make install
-        cd ..
     - name : build ldns
       run: |
         wget https://www.nlnetlabs.nl/downloads/ldns/ldns-1.6.17.tar.gz
