@@ -5,66 +5,19 @@ on: [push, pull_request]
 jobs:
 
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: windows-latest
-    defaults:
-     run:
-      shell: wsl-bash {0}
+    runs-on: ubuntu-latest
     steps:
-    - name: use wsl
-      uses: Vampire/setup-wsl@v1
-      with:
-          distribution: Ubuntu-18.04
     - name: checkout branch
       uses: actions/checkout@v1
-    - name : update and install essential and openssl
+    - name : install lxd container
       run: |
-        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool  pkg-config -y
-    - name : build openssl
-      run: |
-        wget https://www.openssl.org/source/openssl-1.0.2r.tar.gz
-        tar xf openssl-1.0.2r.tar.gz
-        cd openssl-1.0.2r
-        sudo  sed -i.old "/define DATE/d" util/mkbuildinf.pl
-        sudo sed -i.old "s|engines apps test|engines|" Makefile.org
-        sudo sed -i -e "s/-mandroid //" Configure
-        ./Configure linux-generic32 no-capieng no-dso no-dtls1 no-ec_nistp_64_gcc_128 no-gost no-gmp no-heartbeats no-jpake no-krb5 no-libunbound no-md2 no-rc5 no-rdrand no-rfc3779 no-rsax no-sctp no-sha0 no-shared no-ssl-trace no-ssl2 no-ssl3 no-static_engine no-store no-unit-test no-weak-ssl-ciphers no-zlib no-zlib-dynamic -fPIC -Wa,--noexecstack
-        make build_libs libcrypto.pc libssl.pc openssl.pc
-        make install_sw
-        cd ..                   
-    - name : build boost
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
-        tar xfj boost_1_68_0.tar.bz2
-        sudo chmod -R 777 boost_1_68_0
-        cd boost_1_68_0
-        ./bootstrap.sh --without-icu --with-libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale --with-toolset=gcc
-        ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
-        ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
-        cd ..
-    - name : build sodium
-      run: |
-        wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
-        tar xf libsodium-1.0.18.tar.gz
-        cd libsodium-1.0.18
-        ./autogen.sh
-        ./configure --enable-static --disable-shared
-        make -j 2
-        make install
-        cd ..
-    - name : apt-get the rest of the packages
-      run: |
-        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git libunwind8-dev liblzma-dev libreadline6-dev doxygen graphviz libpgm-dev libhidapi-dev -y
-        cd ..
-        sudo chmod -R 777 sumokoin
-        cd sumokoin
-    - name: cross-compile sumokoin for linux i686
-      run:  |
-        sudo cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release
-        sudo make -j 2
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: Linux-i686-release-binaries
-        path: build/**/bin/
+        sudo apt-get install snap
+        sudo snap install lxd --channel=4.0/stable
+        sudo lxd init
+        sudo lxc
+
+
+
+
+
