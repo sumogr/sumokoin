@@ -7,9 +7,14 @@ jobs:
     runs-on: ubuntu-18.04
     container: ubuntu:20.04     
     steps:
+    - uses: actions/checkout@v1
     - name : install sumokoin dependencies
       run: |
-        cat /etc/os-release
+        apt-get update -y
+        apt-get install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y -o APT::Immediate-Configure=0
+        wget https://mirrors.mediatemple.net/debian/pool/main/c/cmake/cmake_3.18.4-1_amd64.deb
+        apt install ./cmake_3.18.4-1_amd64.deb -y
+        make depends target=i686-linux-gnu -j 2
 
 
 
