@@ -24,7 +24,7 @@ jobs:
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libldns-dev libexpat1-dev libtool -y
     - name : build expat
       run: |
-        wget https://downloads.sourceforge.net/project/expat/expat/expat-2.2.4.tar.bz2
+        wget https://toolchains.bootlin.com/downloads/releases/sources/expat-2.2.4/expat-2.2.4.tar.bz2
         tar xfj expat-2.2.4.tar.bz2
         cd expat-2.2.4
         ./configure --enable-static --disable-shared
