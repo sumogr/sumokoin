@@ -20,7 +20,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libssl-dev:i386 libevent-dev:i386 libunbound-dev:i386 -y
+        sudo apt-get install libssl-dev:i386 libevent-dev:i386 libunbound-dev:i386  pkg-config:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build boost
       run: |
@@ -44,7 +44,7 @@ jobs:
         cd ..
     - name : apt-get the rest of the packages
       run: |
-        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git libunwind8-dev liblzma-dev libreadline6-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
