@@ -11,8 +11,8 @@ jobs:
     - name : install sumokoin dependencies and statically build sumokoin for i686
       run: |
         apt-get update -y
-        apt-get install software-properties-common
-        add-apt-repository ppa:ubuntu-toolchain-r/test
+        apt-get install software-properties-common -y
+        add-apt-repository ppa:ubuntu-toolchain-r/test -y
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
         apt-get install cmake g++-9 gcc-9 pkg-config libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
