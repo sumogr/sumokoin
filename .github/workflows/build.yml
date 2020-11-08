@@ -11,7 +11,7 @@ jobs:
     - name : install sumokoin dependencies
       run: |
         apt-get update
-        apt-get install autoconf automake libtool gperf git curl tar bzip2 pkg-config m4 -y
+        apt-get install autoconf automake libtool gperf git curl wget tar bzip2 pkg-config m4 -y
         wget http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-defaults/g++-multilib_10.2.0-1ubuntu1_amd64.deb
         apt install ./g++-multilib_10.2.0-1ubuntu1_amd64.deb
         wget https://github.com/Kitware/CMake/releases/download/v3.19.0-rc3/cmake-3.19.0-rc3-Linux-x86_64.sh
