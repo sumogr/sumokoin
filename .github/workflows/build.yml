@@ -11,7 +11,7 @@ jobs:
     - name : install sumokoin dependencies
       run: |
         apt-get update -y
-        apt-get install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y -o APT::Immediate-Configure=0
+        apt-get install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
         wget https://mirrors.mediatemple.net/debian/pool/main/c/cmake/cmake_3.18.4-1_amd64.deb
         apt install ./cmake_3.18.4-1_amd64.deb -y
         make depends target=i686-linux-gnu -j 2
