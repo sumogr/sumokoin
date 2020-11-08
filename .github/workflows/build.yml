@@ -12,7 +12,7 @@ jobs:
       run: |
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get cmake install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
+        apt-get install cmake autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
         make depends target=i686-linux-gnu -j 2
 
 
