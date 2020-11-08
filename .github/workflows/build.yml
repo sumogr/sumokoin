@@ -11,7 +11,7 @@ jobs:
     - name : install sumokoin dependencies
       run: |
         apt-get update
-        apt-get install g++-multilib bc
+        apt-get install g++-multilib bc autoconf automake libtools gperf cmake
         make depends target=i686-linux-gnu -j 2
 
 
