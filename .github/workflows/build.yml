@@ -15,10 +15,10 @@ jobs:
         sudo snap install lxd --channel=4.0/stable
         sudo lxd init
         sudo lxc launch ubuntu:18.04 ubuntucross
-        sudo lxc file pull -r ubuntucross/root/ /home/runner/work/sumokoin/sumokoin/
         sudo lxc exec ubuntucross -- /bin/bash
-        sudo cd root
-        sudo ls -a
+        pwd
+        ls -a
+
 
      
 
