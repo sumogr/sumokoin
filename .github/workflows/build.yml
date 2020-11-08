@@ -20,7 +20,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libssl-dev:i386 libunbound-dev:i386 miniupnpc:i386 libevent-dev:i386 -y
+        sudo apt-get install libssl-dev:i386 libunbound-dev:i386 libevent-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build boost
       run: |
