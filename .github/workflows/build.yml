@@ -19,7 +19,6 @@ jobs:
       run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
     - name: login to container console
       run: |
-        sudo lxc launch ubuntu:20.04 ubuntucross
         sudo lxc exec ubuntucross -- /bin/bash
         cd root
         ls -a
