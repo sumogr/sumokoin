@@ -15,7 +15,7 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test -y
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install cmake g++-9 gcc-9 pkg-config libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
+        apt-get install cmake wget g++-9 gcc-9 pkg-config tar bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
         cd boost_1_68_0
@@ -23,6 +23,13 @@ jobs:
         ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
         ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         cd ..
+        wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz
+        tar -xf cmake-3.18.4.tar.gz
+        cd cmake-3.18.4
+        ./bootstrap
+        make 
+        sudo make install
+        cd .. 
         make release-static -j 2
 
 
