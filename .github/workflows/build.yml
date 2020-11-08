@@ -8,12 +8,17 @@ jobs:
     container: ubuntu:20.04     
     steps:
     - uses: actions/checkout@v1
-    - name : install sumokoin dependencies
+    - name : install sumokoin dependencies and cross compile sumokoin for i686
       run: |
         apt-get update -y
         apt-get install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
-        wget http://archive.ubuntu.com/ubuntu/pool/main/c/cmake/cmake_3.16.3-3ubuntu2_amd64.deb
-        apt install ./cmake_3.16.3-3ubuntu2_amd64.deb -y
+        wget https://cmake.org/files/v3.19/cmake-3.19.0-rc3.tar.gz
+        tar -xf cmake-3.19.0-rc3.tar.gz
+        cd cmake-3.19.0-rc3
+        ./bootstrap
+        make -j2
+        make install
+        cd ..
         make depends target=i686-linux-gnu -j 2
 
 
