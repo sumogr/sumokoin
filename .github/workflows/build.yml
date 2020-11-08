@@ -20,8 +20,8 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libssl-dev:i386 libunbound-dev:i386 libevent-dev:i386 -y
-        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libtool -y
+        sudo apt-get install libssl-dev:i386 libevent-dev:i386 -y
+        sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libldns-dev libexpat1-dev libtool -y
     - name : build boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
@@ -42,9 +42,18 @@ jobs:
         make -j 2
         make install
         cd ..
+    - name : build unbound
+      run: |
+        wget https://www.unbound.net/downloads/unbound-1.6.8.tar.gz
+        tar xf unbound-1.6.8.tar.gz
+        cd unbound-1.6.8
+        ./configure --disable-shared --enable-static --without-pyunbound --prefix=$(host_prefix) --with-libexpat=$(host_prefix) --with-ssl=$(host_prefix) --with-libevent=no --without-pythonmodule --disable-flto --with-pthreads --with-pic
+        make
+        make install
+        cd ..     
     - name : apt-get the rest of the packages
       run: |
-        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev -y
+        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev doxygen graphviz libpgm-dev libhidapi-dev -y
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
