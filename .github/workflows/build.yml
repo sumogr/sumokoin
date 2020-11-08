@@ -11,6 +11,7 @@ jobs:
     - name : install sumokoin dependencies and cross compile sumokoin for i686
       run: |
         apt-get update -y
+        DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
         apt-get install autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
         wget https://cmake.org/files/v3.19/cmake-3.19.0-rc3.tar.gz
         tar -xf cmake-3.19.0-rc3.tar.gz
