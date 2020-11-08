@@ -20,8 +20,8 @@ jobs:
     - name: login to container console
       run: |
         sudo lxc exec ubuntucross -- /bin/bash
-        sudo lxc exec ubuntucross -- cd 
-        sudo lxc exec ubuntucross -- ls -a
+        sudo lxc exec ubuntucross -- /bin/bash cd 
+        sudo lxc exec ubuntucross -- /bin/bash ls -a
 
      
 
