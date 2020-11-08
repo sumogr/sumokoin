@@ -15,17 +15,7 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test -y
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install wget g++-9 gcc-9 libuv1 sudo libarchive13  librhash0 pkg-config tar dpkg libidn2-0 bzip2 libnghttp2-14 libssl1.1-dev libpsl5 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
-        wget https://ubuntu.ethz.ch/ubuntu/pool/main/c/cmake/cmake_3.10.2-1ubuntu2_i386.deb
-        wget https://ubuntu.ethz.ch/ubuntu/pool/main/c/cmake/cmake-data_3.10.2-1ubuntu2_all.deb
-        wget http://security.ubuntu.com/ubuntu/pool/main//libj/libjsoncpp/libjsoncpp1_1.7.4-3_i386.deb
-        wget https://ftp.sjtu.edu.cn/ubuntu/ubuntu/pool/main/c/curl/libcurl4_7.58.0-2ubuntu3.10_i386.deb
-        wget http://security.debian.org/debian-security/pool/updates/main/k/krb5/libgssapi-krb5-2_1.15-1+deb9u2_i386.deb
-        dpkg -i libgssapi-krb5-2_1.15-1+deb9u2_i386.deb        
-        dpkg -i libcurl4_7.58.0-2ubuntu3.10_i386.deb 
-        dpkg -i libjsoncpp1_1.7.4-3_i386.deb  
-        dpkg -i cmake-data_3.10.2-1ubuntu2_all.deb
-        dpkg -i cmake_3.10.2-1ubuntu2_i386.deb
+        apt-get install wget g++-9 gcc-9 sudo cmake pkg-config tar bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
         tar xfj boost_1_68_0.tar.bz2
         cd boost_1_68_0
