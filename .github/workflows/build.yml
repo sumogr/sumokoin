@@ -10,10 +10,9 @@ jobs:
     - uses: actions/checkout@v1
     - name : install sumokoin dependencies
       run: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update
-        apt-get install autoconf automake libtool gperf git curl wget tar bzip2 pkg-config m4 -y
-        wget http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-defaults/g++-multilib_10.2.0-1ubuntu1_amd64.deb
-        apt install ./g++-multilib_10.2.0-1ubuntu1_amd64.deb
+        apt-get install autoconf automake libtool g++-10-multilib gperf git curl wget tar bzip2 pkg-config m4 -y
         wget https://github.com/Kitware/CMake/releases/download/v3.19.0-rc3/cmake-3.19.0-rc3-Linux-x86_64.sh
         chmod u+x cmake-3.19.0-rc3-Linux-x86_64.sh
         ./cmake-3.19.0-rc3-Linux-x86_64.sh
