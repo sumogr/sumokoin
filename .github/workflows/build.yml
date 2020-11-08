@@ -20,7 +20,7 @@ jobs:
     - name: login to container console
       run: |
         sudo lxc list "ubuntucross" -c 4 | awk '!/IPV4/{ if ( $2 != "" ) print $2}'
-        sudo ssh root@$2
+        sudo ssh -tt root@$2
         cd
         ls -a
      
