@@ -20,7 +20,7 @@ jobs:
       run: |
        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libexpat1-dev:i386 g++-multilib gcc-multilib binutils bc cmake libtool -y
+        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake libtool -y
     - name : build openssl
       run: |
         wget https://www.openssl.org/source/openssl-1.0.2r.tar.gz
@@ -32,24 +32,6 @@ jobs:
         ./Configure linux-generic32 no-capieng no-dso no-dtls1 no-ec_nistp_64_gcc_128 no-gost no-gmp no-heartbeats no-jpake no-krb5 no-libunbound no-md2 no-rc5 no-rdrand no-rfc3779 no-rsax no-sctp no-sha0 no-shared no-ssl-trace no-ssl2 no-ssl3 no-static_engine no-store no-unit-test no-weak-ssl-ciphers no-zlib no-zlib-dynamic -fPIC -Wa,--noexecstack
         make build_libs libcrypto.pc libssl.pc openssl.pc
         make install_sw
-        cd ..    
-    - name : build ldns
-      run: |
-        wget https://www.nlnetlabs.nl/downloads/ldns/ldns-1.6.17.tar.gz
-        tar xf ldns-1.6.17.tar.gz
-        cd ldns-1.6.17
-        ./configure --disable-shared --enable-static --with-ssl --with-drill --with-pic
-        make
-        make install-h install-lib
-        cd ..
-    - name : build unbound
-      run: |
-        wget https://www.unbound.net/downloads/unbound-1.6.8.tar.gz
-        tar xf unbound-1.6.8.tar.gz
-        cd unbound-1.6.8
-        ./configure --disable-shared --enable-static --without-pyunbound --prefix=$(host_prefix) --with-libexpat=$(host_prefix) --with-ssl=$(host_prefix) --with-libevent=no --without-pythonmodule --disable-flto --with-pthreads --with-pic
-        make
-        make install
         cd ..                    
     - name : build boost
       run: |
