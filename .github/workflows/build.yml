@@ -4,18 +4,12 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-latest
-    container: debian:9      
+    runs-on: ubuntu-18.04
+    container: ubuntu:20.04     
     steps:
-    - uses: actions/checkout@v1
     - name : install sumokoin dependencies
       run: |
-        echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list
-        apt update -y
-        apt-get install autoconf automake libtool g++-10-multilib gperf git curl wget tar bzip2 pkg-config m4 -y -o APT::Immediate-Configure=0
-        wget https://mirrors.mediatemple.net/debian/pool/main/c/cmake/cmake_3.18.4-1_amd64.deb
-        apt install ./cmake_3.18.4-1_amd64.deb -y
-        make depends target=i686-linux-gnu -j 2
+        cat /etc/os-release
 
 
 
