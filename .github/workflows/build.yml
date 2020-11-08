@@ -22,6 +22,24 @@ jobs:
         sudo apt-get update
         sudo apt-get install libssl-dev:i386 libevent-dev:i386 -y
         sudo apt-get install g++-multilib gcc-multilib binutils bc cmake libldns-dev libexpat1-dev libtool -y
+    - name : build expat
+      run: |
+        wget https://downloads.sourceforge.net/project/expat/expat/expat-2.2.4.tar.bz2
+        tar xfj expat-2.2.4.tar.bz2
+        cd expat-2.2.4
+        ./configure --enable-static --disable-shared
+        make
+        make install
+        cd ..
+    - name : build ldns
+      run: |
+        wget https://www.nlnetlabs.nl/downloads/ldns/ldns-1.6.17.tar.gz
+        tar xf ldns-1.6.17.tar.gz
+        cd ldns-1.6.17
+        ./configure --disable-shared --enable-static --with-drill --with-ssl --with-pic
+        make
+        make install-h install-lib
+        cd ..       
     - name : build boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
