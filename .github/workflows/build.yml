@@ -10,8 +10,8 @@ jobs:
     - uses: actions/checkout@v1
     - name : install sumokoin dependencies
       run: |
-        add-apt-repository ppa:ubuntu-toolchain-r/test
-        apt-get update
+        echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list
+        apt update -y
         apt-get install autoconf automake libtool g++-10-multilib gperf git curl wget tar bzip2 pkg-config m4 -y
         wget https://github.com/Kitware/CMake/releases/download/v3.19.0-rc3/cmake-3.19.0-rc3-Linux-x86_64.sh
         chmod u+x cmake-3.19.0-rc3-Linux-x86_64.sh
