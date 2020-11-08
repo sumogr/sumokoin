@@ -19,7 +19,8 @@ jobs:
       run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
     - name: login to container console
       run: |
-        sudo ssh root@'lxc info ubuntucross | grep IP: | tr -d ' ' | cut -f2 -d:'
+        a=( $(lxc list -c4 --format csv u1) ) ip4=$a[1] echo $ip4
+        sudo ssh root@$ip4
         cd
         ls -a
      
