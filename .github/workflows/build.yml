@@ -5,15 +5,23 @@ on: [push, pull_request]
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: ubuntu-16.04
-    container: i386/ubuntu:20.04     
+    container: i386/ubuntu:16.04     
     steps:
     - uses: actions/checkout@v1
-    - name : install sumokoin dependencies and cross compile sumokoin for i686
+    - name : install sumokoin dependencies and statically build sumokoin for i686
       run: |
+        add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install cmake autoconf automake libtool g++-multilib bc gperf git curl wget tar bzip2 pkg-config m4 -y
-        make depends target=i686-linux-gnu -j 2
+        apt-get install cmake g++-9 gcc-9 pkg-config libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
+        wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
+        tar xfj boost_1_68_0.tar.bz2
+        cd boost_1_68_0
+        ./bootstrap.sh --without-icu --with-libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale --with-toolset=gcc
+        ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
+        ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
+        cd ..
+        make release-static -j 2
 
 
 
