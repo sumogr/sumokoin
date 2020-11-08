@@ -10,6 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - name : install sumokoin dependencies and statically build sumokoin for i686
       run: |
+        apt-get install software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
