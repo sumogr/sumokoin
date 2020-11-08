@@ -15,9 +15,11 @@ jobs:
         add-apt-repository ppa:ubuntu-toolchain-r/test -y
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install wget g++-9 gcc-9 libuv1 sudo libcurl4-gnutls-dev libjsoncpp1 librhash0 pkg-config tar dpkg bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
+        apt-get install wget g++-9 gcc-9 libuv1 sudo libcurl4-dev libarchive13  librhash0 pkg-config tar dpkg bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
         wget https://ubuntu.ethz.ch/ubuntu/pool/main/c/cmake/cmake_3.10.2-1ubuntu2_i386.deb
         wget https://ubuntu.ethz.ch/ubuntu/pool/main/c/cmake/cmake-data_3.10.2-1ubuntu2_all.deb
+        wget http://security.ubuntu.com/ubuntu/pool/main//libj/libjsoncpp/libjsoncpp1_1.7.4-3_i386.deb
+        dpkg -i libjsoncpp1_1.7.4-3_i386.deb  
         dpkg -i cmake-data_3.10.2-1ubuntu2_all.deb
         dpkg -i cmake_3.10.2-1ubuntu2_i386.deb
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
