@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     - name : install sumokoin dependencies
       run: |
-        cat /etc/issue
+        ls -a
 
 
 
