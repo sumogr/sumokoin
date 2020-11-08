@@ -7,10 +7,6 @@ jobs:
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: ubuntu-latest
     steps:
-    - name : cd
-      run: |
-        cd
-        ls -a
     - name : install lxd container
       run: |
         sudo apt-get update
@@ -23,7 +19,8 @@ jobs:
       run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
     - name: login to container console
       run: |
-        sudo lxc exec ubuntucross bash
+        sudo lxc exec instancename -- /bin/bash
+        sudo lxc exec instancename bash
         cd
         ls -a
      
