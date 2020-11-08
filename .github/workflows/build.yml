@@ -13,7 +13,7 @@ jobs:
         sudo apt-get install snap
         sudo snap install lxd --channel=4.0/stable
         sudo lxd init 
-        sudo lxc launch ubuntu:20.04 ubuntucross -F
+        sudo lxc launch ubuntu:20.04 ubuntucross
     - uses: actions/checkout@v1
     - name: push sumokoin folder to container
       run:  sudo lxc file push -r /home/runner/work/sumokoin/sumokoin/ ubuntucross/root/
