@@ -16,7 +16,7 @@ jobs:
           update: 'false'
     - name: linux container
       run: |
-        apt update -y
+        apt-get update -y
         apt-get install docker-ce docker-ce-cli containerd.io sudo -y
         sudo systemctl status docker 
 
