@@ -12,7 +12,7 @@ jobs:
       run: |
         apt-get update -y
         DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install wget g++-multilib gcc-multilib sudo cmake git curl pkg-config tar binutils bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
+        apt-get install wget g++-multilib automake libtool autoconf gperf gcc-multilib sudo cmake git curl pkg-config tar binutils bzip2 libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev -y
         make depends target=i686-linux-gnu -j 4
 
 
