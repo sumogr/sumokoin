@@ -24,7 +24,8 @@ jobs:
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
         sudo apt update -y
         sudo apt install docker-ce -y
-        sudo service docker start
+        sudo systemctl start docker
+        sudo dockerd
         sudo docker run -i ubuntu /bin/bash
         cat /etc/os-release 
 
