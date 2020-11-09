@@ -20,19 +20,7 @@ jobs:
       run: |
        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake libtool -y
-    - name : build openssl
-      run: |
-        wget https://www.openssl.org/source/openssl-1.0.2r.tar.gz
-        tar xf openssl-1.0.2r.tar.gz
-        cd openssl-1.0.2r
-        sudo  sed -i.old "/define DATE/d" util/mkbuildinf.pl
-        sudo sed -i.old "s|engines apps test|engines|" Makefile.org
-        sudo sed -i -e "s/-mandroid //" Configure
-        ./Configure linux-generic32 no-capieng no-dso no-dtls1 no-ec_nistp_64_gcc_128 no-gost no-gmp no-heartbeats no-jpake no-krb5 no-libunbound no-md2 no-rc5 no-rdrand no-rfc3779 no-rsax no-sctp no-sha0 no-shared no-ssl-trace no-ssl2 no-ssl3 no-static_engine no-store no-unit-test no-weak-ssl-ciphers no-zlib no-zlib-dynamic -fPIC -Wa,--noexecstack
-        make build_libs libcrypto.pc libssl.pc openssl.pc
-        make install_sw
-        cd ..                    
+        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake libtool libssl-dev:i386 -y        
     - name : build boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
@@ -60,7 +48,7 @@ jobs:
         sudo chmod -R 777 sumokoin
         cd sumokoin
     - name: cross-compile sumokoin for linux i686
-      run:  sudo make release-static -j 2
+      run:  sudo make release-static-linux-i686 -j 3
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
