@@ -26,7 +26,7 @@ jobs:
         sudo service dbus start
         sudo apt-get -y install docker-ce
         sudo /etc/init.d/docker start
-        sudo /etc/init.d/docker enable
+        sudo docker enable
         sudo docker run hello-world
 
 
