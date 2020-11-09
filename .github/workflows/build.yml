@@ -20,7 +20,8 @@ jobs:
         ./b2 address-model=32 architecture=x86 -d2 -j6 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
         ./b2 address-model=32 architecture=x86 -d0 -j6 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
         cd ..
-        make release-static-linux-i686 -j 3
+        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86"
+        make -j 3
 
 
      
