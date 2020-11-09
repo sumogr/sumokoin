@@ -15,49 +15,14 @@ jobs:
       with:
           distribution: Ubuntu-16.04
           update: 'true'
+    - name: get a xenial container
+      container: ubuntu:20.04   
     - name: checkout branch
       uses: actions/checkout@v1
-    - name : update and install essential and openssl
+    - name : install sumokoin dependencies and statically build sumokoin for i686
       run: |
-       sudo dpkg --add-architecture i386
-        sudo apt-get update
-        sudo apt-get install libunbound-dev:i386 g++-multilib wget gcc-multilib binutils bc cmake autoconf automake gperf libtool libssl-dev libssl-dev:i386 -y
-        sudo apt remove cmake
-        wget https://github.com/Kitware/CMake/releases/download/v3.19.0-rc3/cmake-3.19.0-rc3-Linux-x86_64.sh
-        sudo chmod +x cmake-3.19.0-rc3-Linux-x86_64.sh
-        sudo bash cmake-3.19.0-rc3-Linux-x86_64.sh 
-        sudo ln -s /cmake-3.19.0-rc3-Linux-x86_64/bin/* /usr/local/bin 
-    - name : build boost
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
-        tar xfj boost_1_68_0.tar.bz2
-        sudo chmod -R 777 boost_1_68_0
-        cd boost_1_68_0
-        ./bootstrap.sh --without-icu --with-libraries=chrono,filesystem,program_options,system,thread,test,date_time,regex,serialization,locale --with-toolset=gcc
-        ./b2 address-model=32 architecture=x86 -d2 -j2 -d1 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc stage
-        ./b2 address-model=32 architecture=x86 -d0 -j2 --layout=tagged --build-type=complete threading=multi link=static threadapi=pthread runtime-link=shared -sNO_BZIP2=1 -sNO_ZLIB=1 toolset=gcc install
-        cd ..
-    - name : build sodium
-      run: |
-        wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz
-        tar xf libsodium-1.0.18.tar.gz
-        cd libsodium-1.0.18
-        ./autogen.sh
-        ./configure --enable-static --disable-shared
-        make -j 2
-        make install
-        cd ..
-    - name : apt-get the rest of the packages
-      run: |
-        sudo apt-get install libzmq3-dev libusb-1.0-0-dev git pkg-config libunwind8-dev liblzma-dev libreadline6-dev doxygen graphviz libpgm-dev libhidapi-dev -y
-        cd ..
-        sudo chmod -R 777 sumokoin
-        cd sumokoin
-        export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib
-    - name: cross-compile sumokoin for linux i686
-      run:  sudo make release-static-linux-i686 -j 3
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: Linux-i686-release-binaries
-        path: build/**/bin/
+        apt-get update -y
+        DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
+        apt-get install wget g++-multilib gcc-multilib sudo cmake git curl pkg-config tar binutils -y
+        make depends target=i686-linux-gnu -j 4
+        
