@@ -12,35 +12,20 @@ jobs:
     - name: use wsl
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: Ubuntu-20.04
-          update: 'true'
-          container: ubuntu:20.04  
-    - name: checkout branch
-      uses: actions/checkout@v1
-    - name : install sumokoin dependencies and statically build sumokoin for i686
+          distribution: Debian
+          update: 'false'
+    - name: linux container
       run: |
-        apt-get update -y
-        DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-        apt-get install wget g++-multilib gcc-multilib sudo cmake git curl pkg-config tar binutils -y
-        cd contrib
-        cd depends
-        sudo chmod +x config.guess
-        sudo chmod +x config.site.in
-        sudo chmod +x config.sub
-        sudo dos2unix config.guess
-        sudo dos2unix config.site.in
-        sudo dos2unix config.sub
-        cd ..
-        cd ..
-        cd ..
-        sudo chmod -R 777 sumokoin
-        cd sumokoin
-        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin        
-        make depends target=i686-linux-gnu -j 4
-    - name: upload binaries      
-      uses: actions/upload-artifact@v2
-      with:
-        name: Linux-i686-release-binaries
-        path: build/**/bin/   
-              
-        
+        apt update -y
+        apt install apt-transport-https ca-certificates curl software-properties-common sudo
+        sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+        sudo apt update -y
+        sudo apt install docker-ce
+        sudo docker run -it ubuntu /bin/bash
+        cat /etc/os-release 
+
+
+
+      
+ 
