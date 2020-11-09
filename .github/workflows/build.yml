@@ -21,7 +21,12 @@ jobs:
       run: |
        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake autoconf automake gperf libtool libssl-dev libssl-dev:i386 -y        
+        sudo apt-get install libunbound-dev:i386 g++-multilib wget gcc-multilib binutils bc cmake autoconf automake gperf libtool libssl-dev libssl-dev:i386 -y
+        sudo apt remove cmake
+        wget https://github.com/Kitware/CMake/releases/download/v3.19.0-rc3/cmake-3.19.0-rc3-Linux-x86_64.sh
+        sudo chmod +x cmake-3.19.0-rc3-Linux-x86_64.sh
+        sudo bash cmake-3.19.0-rc3-Linux-x86_64.sh 
+        sudo ln -s /cmake-3.19.0-rc3-Linux-x86_64/bin/* /usr/local/bin 
     - name : build boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
