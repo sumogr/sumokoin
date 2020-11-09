@@ -11,7 +11,7 @@ jobs:
     - name : install sumokoin dependencies and statically build sumokoin for i686
       run: |
         export PKG_PATH=ftp://ftp.openbsd.org/pub/OpenBSD/4.0/packages/amd64/
-        pkg_add cmake gmake zeromq libiconv boost
+        pkg cmake gmake zeromq libiconv boost
 
      
 
