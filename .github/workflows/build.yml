@@ -25,8 +25,8 @@ jobs:
         sudo apt-cache policy docker-ce
         sudo service dbus start
         sudo apt-get -y install docker-ce
-        sudo systemctl start docker
-        sudo systemctl enable docker
+        sudo /etc/init.d/docker start
+        sudo /etc/init.d/docker enable
         sudo docker run hello-world
 
 
