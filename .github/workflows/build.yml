@@ -14,13 +14,14 @@ jobs:
       uses: Vampire/setup-wsl@v1
       with:
           distribution: Ubuntu-16.04
+          update: 'true'
     - name: checkout branch
       uses: actions/checkout@v1
     - name : update and install essential and openssl
       run: |
        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake libtool libssl-dev:i386 -y        
+        sudo apt-get install libunbound-dev:i386 g++-multilib gcc-multilib binutils bc cmake autoconf automake gperf libtool libssl-dev:i386 -y        
     - name : build boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
