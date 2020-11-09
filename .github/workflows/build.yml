@@ -48,6 +48,7 @@ jobs:
         cd ..
         sudo chmod -R 777 sumokoin
         cd sumokoin
+        export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib
     - name: cross-compile sumokoin for linux i686
       run:  sudo make release-static-linux-i686 -j 3
     - name: upload binaries
