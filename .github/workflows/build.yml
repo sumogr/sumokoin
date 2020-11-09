@@ -12,7 +12,7 @@ jobs:
     - name: use wsl
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: Debian
+          distribution: Ubuntu-16.04
           update: 'false'
     - name: linux container
       run: |
