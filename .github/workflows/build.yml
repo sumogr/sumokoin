@@ -17,18 +17,8 @@ jobs:
     - name: linux container
       run: |
         apt-get update -y
-        apt-get install -y apt-transport-https software-properties-common ca-certificates wget sudo wget dbus
-        wget https://download.docker.com/linux/ubuntu/gpg 
-        sudo apt-key add gpg
-        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
-        sudo apt-get update -y
-        sudo apt-cache policy docker-ce
-        sudo service dbus start
-        sudo apt-get -y install docker-ce
-        sudo rm -rf /var/snap/docker/179/run/docker.pid
-        sudo dockerd
-        sudo systemctl enable containerd
-        sudo systemctl start containerd
+        apt install snapd sudo -y
+        sudo snap install docker
         sudo /etc/init.d/docker start
         sudo systemctl enable docker
         sudo docker run hello-world
