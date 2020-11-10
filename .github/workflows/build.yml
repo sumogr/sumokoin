@@ -19,8 +19,8 @@ jobs:
           eval "$(docker-machine env default)"
           docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
           docker start --attach ubuntu 
-          docker run -d --name=ubuntu -p 8000:8000 ubuntu/ubuntu -v /sumokoin:/sumokoin
-          docker run ubuntu /bin/bash -c "ls -a"         
+          docker run -d ubuntu -p 8000:8000 ubuntu/ubuntu -v /Users/runner/work/sumokoin/sumokoin:/root/sumokoin
+          docker run ubuntu /bin/bash -c "cd root && ls -a"         
                     
           
 
