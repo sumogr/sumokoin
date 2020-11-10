@@ -11,7 +11,6 @@ jobs:
       - name: tar sumokoin 
         run: |
           cd ..
-          tar -czf sumokoin.tgz sumokoin
           mkdir -p ~/.docker/machine/cache
           curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso
           brew install docker docker-machine
@@ -20,7 +19,7 @@ jobs:
           eval "$(docker-machine env default)"
           docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
           docker start --attach ubuntu 
-          docker run ubuntu /bin/bash -c "mkdir fuckoff"
+          docker run -d --name=ubuntu -p 8000:8000 ubuntu/ubuntu -v /sumokoin:/sumokoin
           docker run ubuntu /bin/bash -c "ls -a"         
                     
           
