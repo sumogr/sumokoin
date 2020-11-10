@@ -19,7 +19,7 @@ jobs:
          eval "$(docker-machine env default)"
          docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
          docker start --attach ubuntu
-         docker run ubuntu /bin/bash -c "apt-get update -y && apt-get install git && gi clone https://github.com/sumoprojects/sumokoin -b master && cd sumokoin && ls -a"
+         docker run ubuntu /bin/bash -c "apt-get update -y && apt-get install git -y && git clone https://github.com/sumoprojects/sumokoin -b master && cd sumokoin && ls -a"
 
          
 
