@@ -16,9 +16,10 @@ jobs:
          docker-machine env default
       - name: Run ubuntu container
         run: |
-         eval "$(docker-machine env default)" 
-         docker run --name ubuntu -d ubuntu
-         sudo docker exec –it ubuntu /bin/bash
+         eval "$(docker-machine env default)"
+         docker pull ubuntu 
+         docker run -i ubuntu /bin/bash
+         sudo docker attach ubuntu
          sudo apt-get update -y
          sudo apt install lsb-core -y
          lsb_release -a
