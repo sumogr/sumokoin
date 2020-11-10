@@ -22,7 +22,7 @@ jobs:
          docker start --attach ubuntu
          cd ..
          docker cp ubuntu:/root sumokoin
-         docker run ubuntu /bin/bash -c "pwd && ls -a && sumokoin && ls -a"
+         docker run ubuntu /bin/bash -c "pwd && ls -a && cd sumokoin && ls -a"
         
 
          
