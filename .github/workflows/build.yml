@@ -17,10 +17,9 @@ jobs:
           docker-machine create --driver virtualbox default
           docker-machine env default
           eval "$(docker-machine env default)"
-          docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
-          docker start --attach ubuntu
-          docker run ubuntu -v /Users/runner/work/sumokoin/sumokoin:/home/sumokoin
-          docker run ubuntu /bin/bash -c "cd home && ls -a"         
+          docker run -dit -P --name ubuntu-docker -v /Users/runner/work/sumokoin/sumokoin:/home i386/ubuntu:16.04
+          docker attach ubuntu
+        
                     
           
 
