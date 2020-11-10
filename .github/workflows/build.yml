@@ -9,23 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: zip sumokoin folder
-        run: |
-          cd ..
-          zip sumokoin.zip sumokoin  
-      - name: install docker
-        run: |
-         mkdir -p ~/.docker/machine/cache
-         curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso
-         brew install docker docker-machine
-         docker-machine create --driver virtualbox default
-         docker-machine env default
-      - name: run ubuntu container
-        run: |
-         eval "$(docker-machine env default)"
-         docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
-         docker start --attach ubuntu
-         docker run ubuntu cp /Users/runner/work/sumokoin/sumokoin.zip ubuntu:/root
-         docker run ubuntu /bin/bash -c "cd root && ls -a" 
+        run: ls -a
+
          
         
 
