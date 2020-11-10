@@ -18,7 +18,7 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
-         docker run -d --name focal ubuntu /usr/bin/foc -b
+         docker container attach ubuntu
          
 
 
