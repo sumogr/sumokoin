@@ -17,9 +17,8 @@ jobs:
       - name: ubuntu container
         run: |
          eval "$(docker-machine env default)"
-         docker pull ubuntu
-         docker run ubuntu
-         docker attach ubuntu
+         docker run i386/ubuntu
+         docker run -it i386/ubuntu
 
          
 
