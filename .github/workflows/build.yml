@@ -24,7 +24,7 @@ jobs:
         apt update
     - name: install sumokoin dependencies
       run: |
-        apt -y install sudo dpkg-dev libc6-dev make g++-7 gcc libssl-dev wget cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
+        apt -y install sudo dpkg-dev libc6-dev-i386 make g++-7 g++-7-multilib gcc libssl-dev wget cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
