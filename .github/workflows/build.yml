@@ -8,9 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: zip sumokoin folder
+      - name: tar sumokoin folder
         run: |
           cd ..
+          tar -czf sumokoin.tgz sumokoin
           ls -a
 
          
