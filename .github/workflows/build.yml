@@ -17,6 +17,7 @@ jobs:
       - name: Run ubuntu container
         run: |
          eval "$(docker-machine env default)"
+         service docker start
          docker pull ubuntu
          docker ps -l
 
