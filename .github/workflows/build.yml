@@ -5,20 +5,50 @@ on: [push, pull_request]
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: 'macos-latest'
-
+    container: i386/ubuntu-16.04
     steps:
       - uses: actions/checkout@v1
-      - name: tar sumo
+      - name: remove bundled boost
+        run: sudo rm -rf /usr/local/share/boost
+      - name: set apt conf
         run: |
+          echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+          echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+          echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+      - name: update apt
+        run: |
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt update
+      - name: install sumokoin dependencies
+        run: |
+          sudo apt -y install dpkg-dev libc6-dev make g++-7 gcc libssl-dev cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                          --slave /usr/bin/g++ g++ /usr/bin/g++-7
+          sudo update-alternatives --config gcc
+      - name: build boost 1_74
+        run: |
+          wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
+          tar -xvf boost_1_74_0.tar.bz2
+          rm -f /usr/boost_1_74_0.tar.bz2
+          cd boost_1_74_0
+          sudo ./bootstrap.sh
+          sudo ./b2 install -j3
           cd ..
-          mkdir -p ~/.docker/machine/cache
-          curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso
-          brew install docker docker-machine
-          docker-machine create --driver virtualbox default
-          docker-machine env default
-          eval "$(docker-machine env default)"
-          docker run --name ubuntu --rm -tv $(pwd):/sumokoin -w /sumokoin i386/ubuntu:16.04 /bin/bash
-          ls -a
+      - name: manually install default xenial openssl workaround
+        run: |
+          sudo wget https://github.com/openssl/openssl/archive/OpenSSL_1_0_2g.tar.gz
+          sudo tar -xf OpenSSL_1_0_2g.tar.gz
+          cd openssl-OpenSSL_1_0_2g
+          sudo ./config
+          sudo make
+          sudo make install
+          sudo ldconfig
+          cd /home/runner/work/sumokoin/sumokoin
+      - name: build sumokoin
+        run: |
+          cmake -DOPENSSL_ROOT_DIR="/usr/local/ssl/"
+          make release-static -j3
 
 
         
