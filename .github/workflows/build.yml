@@ -6,9 +6,6 @@ jobs:
   cross-build-linux-32bit-binaries-on-xenial:
     runs-on: macos-latest
     steps:
-      - run: |
-          echo This job does not specify a container.
-          echo It runs directly on the virtual machine.
       - name: Run on VM 
   container: 
     runs-on: ubuntu-latest
