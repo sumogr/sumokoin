@@ -20,8 +20,9 @@ jobs:
          eval "$(docker-machine env default)"
          docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
          docker start --attach ubuntu
-         cd ..
-         ls -a
+         docker cp /sumokoin ubuntu:/root
+         docker run ubuntu /bin/bash -c "pwd && ls -a && cd sumokoin && ls -a" 
+         
         
 
          
