@@ -17,7 +17,7 @@ jobs:
       - name: Run container
         run: |
          eval "$(docker-machine env default)" 
-         docker run -t -i ubuntu /bin/bash
+         docker run -i ubuntu /bin/bash
          cat /etc/os-release
 
 
