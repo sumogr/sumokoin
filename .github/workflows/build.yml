@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: tar sumokoin folder
+      - name: tar sumokoin 
         run: |
           cd ..
           tar -czf sumokoin.tgz sumokoin
