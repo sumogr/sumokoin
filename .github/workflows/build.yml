@@ -17,7 +17,6 @@ jobs:
       - name: run ubuntu container
         run: |
          eval "$(docker-machine env default)"
-         service docker start
          docker pull ubuntu
          docker run -i -t ubuntu /bin/bash
          
