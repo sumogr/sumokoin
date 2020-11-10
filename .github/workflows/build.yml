@@ -7,6 +7,7 @@ jobs:
     runs-on: 'macos-latest'
 
     steps:
+      - uses: actions/checkout@v1
       - name: install docker
         run: |
          mkdir -p ~/.docker/machine/cache
@@ -19,7 +20,10 @@ jobs:
          eval "$(docker-machine env default)"
          docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
          docker start --attach ubuntu
-         docker run ubuntu /bin/bash -c "apt-get update -y && apt-get install git -y && git clone https://github.com/sumoprojects/sumokoin -b master && cd sumokoin && ls -a"
+         cd ..
+         docker cp ubuntu:sumokoin ~
+         docker run ubuntu /bin/bash -c "pwd && ls -a && sumokoin && ls -a"
+        
 
          
 
