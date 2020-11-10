@@ -21,7 +21,7 @@ jobs:
          docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
          docker start --attach ubuntu
          cd ..
-         docker cp ubuntu:~ sumokoin
+         docker cp ubuntu:/root sumokoin
          docker run ubuntu /bin/bash -c "pwd && ls -a && sumokoin && ls -a"
         
 
