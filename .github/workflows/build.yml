@@ -19,7 +19,8 @@ jobs:
          eval "$(docker-machine env default)"
          docker pull ubuntu
          docker run -i ubuntu /bin/bash
-         docker attach ubuntu 
+         apt-get update -y
+         lsb_release -a
          
 
 
