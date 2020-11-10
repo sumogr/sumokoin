@@ -18,7 +18,8 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
-         docker container attach ubuntu
+         docker images
+
          
 
 
