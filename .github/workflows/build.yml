@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
+      run:  rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
