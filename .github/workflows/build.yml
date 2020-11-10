@@ -18,11 +18,7 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
-         docker run -i ubuntu /bin/bash
-         docker run -i ubuntu apt-get update -y
-         docker run -i ubuntu apt-get install git curl g++-multilib binutils autoconf automake gperf libtool bc cmake -y      
-         docker run -i ubuntu https://github.com/sumoprojects/sumokoin -b master
-         docker run -i ubuntu ls -a
+         docker run -d --name focal ubuntu /usr/bin/foc -b
          
 
 
