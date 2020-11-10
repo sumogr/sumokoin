@@ -19,6 +19,7 @@ jobs:
          eval "$(docker-machine env default)"
          docker pull i386/ubuntu
          docker run --name ubuntu i386/ubuntu 
+         docker start ubuntu
          docker attach ubuntu
          apt-get update -y
 
