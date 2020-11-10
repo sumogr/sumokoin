@@ -14,7 +14,7 @@ jobs:
          brew install docker docker-machine
          docker-machine create --driver virtualbox default
          docker-machine env default
-      - name: run ubuntu container
+      - name: Run ubuntu container
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
