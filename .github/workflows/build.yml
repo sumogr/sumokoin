@@ -18,7 +18,7 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
-         docker run -i -t ubuntu /bin/bash
+         docker run -i -t -T ubuntu /bin/bash
          
 
 
