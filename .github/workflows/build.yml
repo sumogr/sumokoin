@@ -27,6 +27,8 @@ jobs:
         sudo apt-get -y install docker-ce
         sudo rm -rf /var/snap/docker/179/run/docker.pid
         sudo dockerd
+        sudo systemctl enable containerd
+        sudo systemctl start containerd
         sudo /etc/init.d/docker start
         sudo systemctl enable docker
         sudo docker run hello-world
