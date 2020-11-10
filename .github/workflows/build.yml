@@ -19,7 +19,7 @@ jobs:
          eval "$(docker-machine env default)"
          docker pull ubuntu
          docker run -i ubuntu /bin/bash
-         ls -a
+         lsb_release -a
          
 
 
