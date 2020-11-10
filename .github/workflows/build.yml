@@ -17,8 +17,8 @@ jobs:
       - name: Run container
         run: |
          eval "$(docker-machine env default)" 
-         docker pull minio/minio
-         docker container run --rm minio/minio minio --help
+         docker run -t -i ubuntu /bin/bash
+         cat /etc/os-release
 
 
 
