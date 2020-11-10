@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: tar
+      - name: tar su
         run: |
           cd ..
           mkdir -p ~/.docker/machine/cache
