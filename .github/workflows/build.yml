@@ -17,9 +17,7 @@ jobs:
       - name: ubuntu container
         run: |
          eval "$(docker-machine env default)"
-         docker pull i386/ubuntu
-         docker run --name ubuntu i386/ubuntu 
-         docker container ls
+         docker run --publish 8000:8080 --name ubuntu i386/ubuntu:16.04
 
          
 
