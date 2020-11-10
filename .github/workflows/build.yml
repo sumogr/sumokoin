@@ -18,8 +18,8 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker pull ubuntu
-         docker container run ubuntu 
-         docker attach ubuntu
+         docker container run
+         docker attach
          sudo apt-get update -y
          sudo apt install lsb-core -y
          lsb_release -a
