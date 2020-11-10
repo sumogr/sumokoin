@@ -3,9 +3,10 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  container:
-    runs-on: ubuntu-latest
-    container: i386/ubuntu-16.04
+  build-ubuntu-xenial:
+    runs-on: ubuntu-16.04
+    container: 
+       image: i386/ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
