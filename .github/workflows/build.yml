@@ -18,7 +18,7 @@ jobs:
         run: |
          eval "$(docker-machine env default)"
          docker run i386/ubuntu
-         docker run -it i386/ubuntu
+         docker run -i i386/ubuntu
 
          
 
