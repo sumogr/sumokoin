@@ -20,7 +20,7 @@ jobs:
          docker pull ubuntu
          docker run -i ubuntu /bin/bash
          docker run -i ubuntu apt-get update -y
-         docker run -i ubuntu apt-get install -y lsb-release
+         docker run -i ubuntu cat /etc/os-release
          
 
 
