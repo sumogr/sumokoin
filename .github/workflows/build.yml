@@ -19,8 +19,9 @@ jobs:
          eval "$(docker-machine env default)"
          docker pull ubuntu
          docker run -i ubuntu /bin/bash
-         docker run -i ubuntu apt-get update -y
-         docker run -i ubuntu cat /etc/os-release
+         docker run -i ubuntu apt-get update -y      
+      - uses: actions/checkout@v1
+         docker run -i ubuntu ls -a
          
 
 
