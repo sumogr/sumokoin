@@ -344,7 +344,7 @@ endif()
 # elseif(CMAKE_SYSTEM_NAME MATCHES ".*BSDI.*")
 #   set(BSDI TRUE)
 
-if(ARCH_WIDTH "32")
+if(NOT BUILD_64)
 include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty include)
 else()
 include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty thirdparty/supercop/include include)
