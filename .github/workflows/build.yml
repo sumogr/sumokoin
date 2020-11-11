@@ -30,4 +30,5 @@ jobs:
         sudo ./bootstrap.sh
         sudo ./b2 install -j3
         cd ..        
-        make release-static -j3
+        pwd
+        ls -a
