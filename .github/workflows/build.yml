@@ -29,4 +29,15 @@ jobs:
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
+                sudo chmod +x config.guess
+        sudo chmod +x config.site.in
+        sudo chmod +x config.sub
+        sudo dos2unix config.guess
+        sudo dos2unix config.site.in
+        sudo dos2unix config.sub
+        cd ..
+        cd ..
+        cd ..
+        sudo chmod -R 777 sumokoin
+        cd sumokoin
         make depends target=i686-linux-gnu -j 3
