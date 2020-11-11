@@ -344,7 +344,7 @@ endif()
 # elseif(CMAKE_SYSTEM_NAME MATCHES ".*BSDI.*")
 #   set(BSDI TRUE)
 
-include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty/miniupnp/miniupnpc thirdparty/unbound include)
+include_directories(thirdparty/rapidjson/include thirdparty thirdparty/easylogging++ src contrib/epee/include thirdparty/miniupnp/miniupnpc thirdparty/unbound include)
 
 if(APPLE)
   include_directories(SYSTEM /usr/include/malloc)
