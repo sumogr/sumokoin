@@ -29,6 +29,8 @@ jobs:
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
+        cd contrib
+        cd depends        
         sudo chmod +x config.guess
         sudo chmod +x config.site.in
         sudo chmod +x config.sub
