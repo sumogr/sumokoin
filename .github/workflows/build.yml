@@ -12,7 +12,7 @@ jobs:
     - name: use wsl 
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: i386/Ubuntu-16.04
+          distribution: Ubuntu-16.04
     - name: checkout branch             
       uses: actions/checkout@v1
     - name: remove bundled boost
@@ -25,22 +25,8 @@ jobs:
         apt-get install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt update
-        apt -y install sudo git dpkg-dev libc6-dev make g++-7 g++-7-multilib gcc libssl-dev wget miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
+        apt -y install sudo git dpkg-dev bc libc6-dev make g++-7 g++-7-multilib gcc curl libssl-dev autoconf automake libtool gperf wget miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
-        wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz
-        tar -xf cmake-3.18.4.tar.gz
-        cd cmake-3.18.4
-        ./bootstrap
-        make -j 4
-        sudo make install -j 4
-        cd ..
-        wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
-        tar -xf boost_1_68_0.tar.bz2
-        rm -f /usr/boost_1_68_0.tar.bz2
-        cd boost_1_68_0
-        ./bootstrap.sh
-        sudo ./b2 install -j4
-        cd ..
-        make release-static
+        make depends target=i686-linux-gnu -j 3
