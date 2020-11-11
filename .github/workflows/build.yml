@@ -30,5 +30,4 @@ jobs:
         sudo ./bootstrap.sh
         sudo ./b2 install -j3
         cd ..        
-        pwd
-        ls -a
+        make static -j 3
