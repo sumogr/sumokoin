@@ -67,15 +67,29 @@ monero_add_library(device
   ${device_headers}
   ${device_private_headers})
 
+if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 target_link_libraries(device
   PUBLIC
     ${HIDAPI_LIBRARIES}
     cncrypto
     ringct_basic
-    wallet-crypto    
+    wallet-crypto
     ${OPENSSL_CRYPTO_LIBRARIES}
     ${Boost_SERIALIZATION_LIBRARY}
   PRIVATE
     version
     ${Blocks}
     ${EXTRA_LIBRARIES})
+else()
+target_link_libraries(device
+  PUBLIC
+    ${HIDAPI_LIBRARIES}
+    cncrypto
+    ringct_basic
+    ${OPENSSL_CRYPTO_LIBRARIES}
+    ${Boost_SERIALIZATION_LIBRARY}
+  PRIVATE
+    version
+    ${Blocks}
+    ${EXTRA_LIBRARIES})
+endif()

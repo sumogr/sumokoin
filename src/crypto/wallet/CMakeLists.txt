@@ -26,6 +26,7 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 #
 # Possibly user defined values.
 #
@@ -58,3 +59,4 @@ else ()
   add_library(wallet-crypto $<TARGET_OBJECTS:${CRYPTO_TARGET}>)
   target_link_libraries(wallet-crypto cncrypto)
 endif ()
+endif()

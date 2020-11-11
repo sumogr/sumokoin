@@ -146,5 +146,7 @@ endif()
 # cheat because cmake and ccache hate each other
 set_property(SOURCE CryptonightR_template.S PROPERTY LANGUAGE C)
 
+if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 # Must be done last, because it references libraries in this directory
 add_subdirectory(wallet)
+endif()

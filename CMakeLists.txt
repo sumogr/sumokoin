@@ -344,7 +344,11 @@ endif()
 # elseif(CMAKE_SYSTEM_NAME MATCHES ".*BSDI.*")
 #   set(BSDI TRUE)
 
+if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty thirdparty/supercop/include include)
+else()
+include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty include)
+endif()
 
 if(APPLE)
   include_directories(SYSTEM /usr/include/malloc)
@@ -1060,7 +1064,10 @@ if(SODIUM_LIBRARY)
   set(ZMQ_LIB "${ZMQ_LIB};${SODIUM_LIBRARY}")
 endif()
 
+if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 include(thirdparty/supercop/functions.cmake) # place after setting flags and before src directory inclusion
+endif()
+
 add_subdirectory(contrib)
 add_subdirectory(src)
 

@@ -29,7 +29,9 @@
 #pragma once
 
 #include <cstddef>
+#if !defined __i386
 #include "crypto/wallet/ops.h"
+#endif
 
 namespace crypto {
   namespace wallet {
