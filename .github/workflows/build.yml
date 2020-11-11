@@ -25,7 +25,7 @@ jobs:
         apt-get install -y software-properties-common
         add-apt-repository ppa:ubuntu-toolchain-r/test
         apt update
-        apt -y install sudo git dpkg-dev bc libc6-dev make g++-7 g++-7-multilib gcc curl libssl-dev autoconf automake libtool gperf wget miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
+        apt -y install sudo git dpkg-dev dos2unix bc libc6-dev make g++-7 g++-7-multilib gcc curl libssl-dev autoconf automake libtool gperf wget miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
