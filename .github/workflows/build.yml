@@ -24,9 +24,9 @@ jobs:
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
         wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
-        tar -xvf boost_1_74_0.tar.bz2
-        rm -f /usr/boost_1_74_0.tar.bz2
-        cd boost_1_74_0
+        tar -xvf boost_1_68_0.tar.bz2
+        rm -f /usr/boost_1_68_0.tar.bz2
+        cd boost_1_68_0
         sudo ./bootstrap.sh
         sudo ./b2 install -j3
         cd ..        
