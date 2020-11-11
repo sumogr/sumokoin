@@ -29,6 +29,13 @@ jobs:
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         update-alternatives --config gcc
+        wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz
+        tar -xf cmake-3.18.4.tar.gz
+        cd cmake-3.18.4
+        ./bootstrap
+        make -j 6
+        sudo make install -j 6
+        cd ..        
         cd contrib
         cd depends        
         sudo chmod +x config.guess
