@@ -31,7 +31,7 @@
 #else
 #define ELPP_FEATURE_CRASH_LOG 1
 #endif
-#include "thirdparty/easylogging++/easylogging++.h"
+#include "easylogging++/easylogging++.h"
 
 #include <stdexcept>
 #ifdef USE_UNWIND
