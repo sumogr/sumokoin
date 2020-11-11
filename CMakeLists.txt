@@ -345,7 +345,7 @@ endif()
 #   set(BSDI TRUE)
 
 if(NOT BUILD_64)
-include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty include)
+include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty/miniupnp/miniupnpc thirdparty/unbound include)
 else()
 include_directories(thirdparty/rapidjson/include thirdparty/easylogging++ src contrib/epee/include thirdparty thirdparty/supercop/include include)
 endif()
