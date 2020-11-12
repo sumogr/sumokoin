@@ -4,47 +4,24 @@ on: [push, pull_request]
        
 jobs:
   build-ubuntu-xenial:
-    runs-on: windows-latest
-    defaults:
-     run:
-      shell: wsl-bash {0} 
+    runs-on: ubuntu-16.04
     steps:
-    - name: use wsl 
-      uses: Vampire/setup-wsl@v1
-      with:
-          distribution: kali-linux
-    - name: checkout branch             
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v1
     - name: remove bundled boost
-      run:  |
-        rm -rf /usr/local/share/boost
-        echo "Acquire::Retries \"3\";" | tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | tee -a /etc/apt/apt.conf.d/80-custom
-        apt update -y
-        apt-get install -y software-properties-common
-        apt update
-        apt -y install sudo git dpkg-dev dos2unix bc libc6-dev make g++-multilib curl libssl-dev autoconf automake libtool gperf wget miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libzmq3-dev libsodium-dev libhidapi-dev libusb-1.0-0-dev libpgm-dev ccache
-        wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz
-        tar -xf cmake-3.18.4.tar.gz
-        cd cmake-3.18.4
-        ./bootstrap
-        make -j 6
-        sudo make install -j 6
-        cd ..
-        sudo chmod -R 777 contrib        
-        cd contrib
-        sudo chmod -R 777 depends
-        cd depends        
-        sudo chmod +x config.guess
-        sudo chmod +x config.site.in
-        sudo chmod +x config.sub
-        sudo dos2unix config.guess
-        sudo dos2unix config.site.in
-        sudo dos2unix config.sub
-        cd ..
-        cd ..
-        cd ..
-        sudo chmod -R 777 sumokoin
-        cd sumokoin
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: |
+        sudo apt-get install g++-multilib bc automake gperf autoconf libtool     
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
         make depends target=i686-linux-gnu -j 3
