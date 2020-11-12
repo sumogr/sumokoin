@@ -12,7 +12,7 @@ jobs:
     - name: use wsl 
       uses: Vampire/setup-wsl@v1
       with:
-          distribution: Ubuntu-16.04
+          distribution: kali-linux
     - name: checkout branch             
       uses: actions/checkout@v1
     - name: remove bundled boost
