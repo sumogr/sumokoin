@@ -25,10 +25,6 @@ ifneq ($(host_arch),riscv64)
 linux_packages += unwind
 endif
 
-ifneq ($(full_build_os),i686-linux-gnu)
-linux_packages += unwind
-endif
-
 mingw32_packages = icu4c sodium $(hardware_packages)
 mingw32_native_packages = $(hardware_native_packages)
 
