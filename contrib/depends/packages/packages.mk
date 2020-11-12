@@ -21,7 +21,11 @@ ifeq ($(build_tests),ON)
 packages += gtest
 endif
 
-ifneq ($(host_arch),riscv64,i686)
+ifneq ($(host_arch),riscv64)
+linux_packages += unwind
+endif
+
+ifneq ($(host_arch),i*86)
 linux_packages += unwind
 endif
 
