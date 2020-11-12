@@ -25,7 +25,7 @@ ifneq ($(host_arch),riscv64)
 linux_packages += unwind
 endif
 
-ifneq ($(host_arch),i*86)
+ifneq ($(full_build_os),i686-linux-gnu)
 linux_packages += unwind
 endif
 
