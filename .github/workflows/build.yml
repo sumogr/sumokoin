@@ -26,9 +26,9 @@ jobs:
         sudo apt-get install make:i386 cpp:i386 g++:i386 gcc:i386 gcc-multilib:i386 help2man g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386
         git clone https://github.com/autotools-mirror/libtool
         cd libtool
-        ./bootstrap
-        ./configure 
-        make -j 3
-        make install -j 3
+        sudo ./bootstrap
+        sudo ./configure 
+        sudo make -j 3
+        sudo make install -j 3
         cd ..     
         make depends target=i686-linux-gnu -j 3
