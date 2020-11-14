@@ -23,5 +23,11 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install make:i386 cpp:i386 g++:i386 gcc:i386 gcc-multilib:i386 g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386     
+        sudo apt-get install make:i386 cpp:i386 g++:i386 gcc:i386 gcc-multilib:i386 g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386
+        git clone https://github.com/autotools-mirror/libtool
+        cd libtool
+        ./bootstrap
+        make -j 3
+        make install -j 3
+        cd ..     
         make depends target=i686-linux-gnu -j 3
