@@ -23,5 +23,5 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install make:i386 cpp:i386 cpp:i386 g++:i386 gcc:i386 build-essential:i386 gcc-multilib:i386 g++-multilib:i386 bc automake gperf autoconf libtool:i386 binutils:i386 libc6-dev:i386     
+        sudo apt-get install make:i386 cpp:i386 g++:i386 gcc:i386 build-essential:i386 gcc-multilib:i386 g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 libtool:i386 binutils:i386 libc6-dev:i386     
         make depends target=i686-linux-gnu -j 3
