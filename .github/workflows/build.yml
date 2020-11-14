@@ -33,8 +33,9 @@ jobs:
         cd ..
         git clone https://github.com/pkgconf/pkgconf
         cd pkgconf
-        ./configure
-        make -j 3
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
         sudo make install -j 3
         cd ..     
         make depends target=i686-linux-gnu -j 3
