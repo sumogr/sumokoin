@@ -20,7 +20,8 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo dpkg --add-architecture i386
         sudo apt update
+        sudo apt-get purge binutils
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install g++-multilib bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
+        sudo apt-get install gcc-multilib g++-7-multilib g++-multilib bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
         make depends target=i686-linux-gnu -j 3
