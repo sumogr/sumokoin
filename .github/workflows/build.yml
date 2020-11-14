@@ -23,5 +23,5 @@ jobs:
         sudo apt-get purge binutils
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install gcc-multilib gcc-7-multilib g++-7 gcc-7 g++ gcc g++-7-multilib binutils g++-multilib bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
+        sudo apt-get install gcc-multilib gcc-7-multilib g++-7:i386 gcc-7:i386 g++:i386 gcc:i386 g++-7-multilib g++-multilib bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
         make depends target=i686-linux-gnu -j 3
