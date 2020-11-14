@@ -18,9 +18,10 @@ jobs:
       run: |
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt-get remove binutils
         sudo dpkg --add-architecture i386
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install dpkg-dev:i386 build-essential:i386 gcc-multilib g++-multilib bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
+        sudo apt-get install dpkg-dev:i386 build-essential:i386 gcc-multilib:i386 g++-multilib:i386 bc automake gperf autoconf libtool binutils:i386 libc6-dev:i386     
         make depends target=i686-linux-gnu -j 3
