@@ -27,6 +27,7 @@ jobs:
         git clone https://github.com/autotools-mirror/libtool
         cd libtool
         ./bootstrap
+        ./configure 
         make -j 3
         make install -j 3
         cd ..     
