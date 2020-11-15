@@ -19,12 +19,11 @@ jobs:
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get remove binutils
-        sudo apt-get autoremove glibc-source
         sudo apt update   
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install build-essential g++-multilib bc autoconf automake gperf libtool
-        git clone https://github.com/gittup/binutils
+        sudo apt-get install g++-multilib bc autoconf automake gperf libtool
+        git clone https://github.com/hermitcore/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
         ./configure --prefix=/usr       \
