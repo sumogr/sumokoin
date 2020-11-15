@@ -26,8 +26,7 @@ jobs:
         git clone https://github.com/hermitcore/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
-        ./configure --prefix=/usr       \
-                    --enable-gold=default \
+        ./configure --enable-gold=default \
                     --enable-ld \
                     --enable-plugins    \
                     --enable-shared     \
