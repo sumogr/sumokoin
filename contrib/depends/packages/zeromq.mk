@@ -15,7 +15,7 @@ endef
 define $(package)_preprocess_cmds
   patch -p1 < $($(package)_patch_dir)/0001-fix-build-with-older-mingw64.patch && \
   patch -p1 < $($(package)_patch_dir)/ffe62d3398d5e0191f554f61049aa7ec9fc892ae.patch && \
-  autoreconf -i && \
+  autoreconf --install --force && \
   ./autogen.sh
 endef
 
