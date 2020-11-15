@@ -22,7 +22,7 @@ jobs:
         sudo apt update   
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install gcc-multilib g++-multilib bc autoconf automake gperf libtool pkg-config
+        sudo apt-get install gcc-7-multilib g++-7-multilib bc autoconf automake gperf libtool pkg-config
         git clone https://github.com/hermitcore/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
