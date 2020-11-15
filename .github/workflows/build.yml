@@ -19,16 +19,21 @@ jobs:
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get remove binutils
-        sudo dpkg --add-architecture i386
-        sudo apt update
+        sudo apt update       
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install pkgconf:i386 binutils:i386 gcc:i386 g++:i386 cpp libtool:i386 gcc-multilib:i386 help2man g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386
-        git clone https://github.com/autotools-mirror/libtool
-        cd libtool
-        sudo ./bootstrap
-        sudo ./configure 
-        sudo make -j 3
-        sudo make install -j 3
-        cd ..
+        sudo apt-get install g++-multilib bc autoconf automake gperf libtool
+        git clone https://github.com/gittup/binutils
+        cd binutils
+        sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
+        ./configure --prefix=/usr       \
+             --enable-gold       \
+             --enable-ld=default \
+             --enable-plugins    \
+             --enable-shared     \
+             --disable-werror    \
+             --enable-64-bit-bfd \
+             --with-system-zlib
+        make -j 4
+        make install     
         make depends target=i686-linux-gnu -j 3
