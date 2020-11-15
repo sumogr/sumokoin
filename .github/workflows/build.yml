@@ -26,15 +26,16 @@ jobs:
         git clone https://github.com/hermitcore/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
-        ./configure --enable-gold \
-                    --enable-ld=default \
+        ./configure --prefix=/usr/bin \
+                    --enable-gold=default \
+                    --enable-ld \
                     --enable-plugins    \
                     --enable-shared     \
                     --disable-werror    \
                     --enable-64-bit-bfd \
                     --with-system-zlib
-        sudo make MAKEINFO=true -j 4
-        sudo make MAKEINFO=true install -j 4
+        sudo make MAKEINFO=true tooldir=/usr/bin -j 4
+        sudo make MAKEINFO=true tooldir=/usr/bin install -j 4
         cd ..    
         cmake -DLLVM_USE_LINKER=gold
         sudo make depends target=i686-linux-gnu -j 3
