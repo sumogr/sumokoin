@@ -22,16 +22,18 @@ jobs:
         sudo apt update       
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install g++-multilib bc autoconf automake gperf libtool
+        sudo apt-get install g++-multilib bc autoconf automake makeinfo gperf libtool
         git clone https://github.com/gittup/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
-        ./configure --enable-gold=default \
-             --enable-plugins    \
-             --enable-shared     \
-             --disable-werror    \
-             --enable-64-bit-bfd \
-             --with-system-zlib
+        ./configure --prefix=/usr       \
+                    --enable-gold=default \
+                    --enable-ld \
+                    --enable-plugins    \
+                    --enable-shared     \
+                    --disable-werror    \
+                    --enable-64-bit-bfd \
+                    --with-system-zlib
         make -j 4
         make install     
         make depends target=i686-linux-gnu -j 3
