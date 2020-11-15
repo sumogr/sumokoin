@@ -26,9 +26,7 @@ jobs:
         git clone https://github.com/gittup/binutils
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
-        ./configure --prefix=/usr       \
-             --enable-gold       \
-             --enable-ld=default \
+        ./configure --enable-gold=default \
              --enable-plugins    \
              --enable-shared     \
              --disable-werror    \
