@@ -35,5 +35,6 @@ jobs:
                     --enable-64-bit-bfd \
                     --with-system-zlib
         make MAKEINFO=true -j 4
-        make MAKEINFO=true install -j 4    
+        make MAKEINFO=true install -j 4
+        cd ..    
         make depends target=i686-linux-gnu -j 3
