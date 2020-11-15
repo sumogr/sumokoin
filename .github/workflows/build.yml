@@ -40,6 +40,6 @@ jobs:
         sudo ./configure
         sudo make -j 3
         sudo make install -j 3
-        sudo export PKG_CONFIG=/usr/bin/pkgconf
+        export PKG_CONFIG=/usr/bin/pkgconf
         cd ..        
         make depends target=i686-linux-gnu -j 3
