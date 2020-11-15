@@ -23,7 +23,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get install dpkg-dev make gcc:i386 cpp:i386 g++:i386 gcc-multilib:i386 help2man g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386
+        sudo apt-get install dpkg-dev:i386 binutils:i386 make gcc:i386 cpp:i386 g++:i386 gcc-multilib:i386 help2man g++-multilib:i386 bc automake:i386 gperf:i386 autoconf:i386 binutils:i386 libc6-dev:i386
         git clone https://github.com/pkgconf/pkgconf
         cd pkgconf 
         sudo ./configure
