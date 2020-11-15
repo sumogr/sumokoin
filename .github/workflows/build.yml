@@ -37,5 +37,4 @@ jobs:
         sudo make MAKEINFO=true tooldir=/usr/bin -j 4
         sudo make MAKEINFO=true tooldir=/usr/bin install -j 4
         cd ..    
-        cmake -DLLVM_USE_LINKER=gold
         sudo make depends target=i686-linux-gnu -j 3
