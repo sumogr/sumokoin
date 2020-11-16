@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt-get remove binutils
+        sudo apt-get purge binutils
         sudo apt-get purge python3
         sudo apt update   
     - name: install sumokoin dependencies
@@ -28,8 +28,7 @@ jobs:
         cd binutils
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
         ./configure --prefix=/usr/bin \
-                    --enable-gold=default \
-                    --enable-ld \
+                    --enable-gold \
                     --enable-plugins    \
                     --enable-shared     \
                     --disable-werror    \
