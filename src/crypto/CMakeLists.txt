@@ -85,6 +85,9 @@ if(ARCH_ID STREQUAL "i386" OR ARCH_ID STREQUAL "x86_64" OR ARCH_ID STREQUAL "x86
 list(APPEND crypto_sources CryptonightR_template.S)
 endif()
 
+# cheat because cmake and ccache hate each other
+set_property(SOURCE CryptonightR_template.S PROPERTY LANGUAGE C)
+
 set(crypto_headers)
 
 set(crypto_private_headers
@@ -142,9 +145,6 @@ if (ANDROID OR IOS)
     add_definitions(-DFORCE_USE_HEAP=1)
   endif()
 endif()
-
-# cheat because cmake and ccache hate each other
-set_property(SOURCE CryptonightR_template.S PROPERTY LANGUAGE C)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL "8")
 # Must be done last, because it references libraries in this directory
