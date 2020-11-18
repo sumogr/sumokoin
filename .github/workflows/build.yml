@@ -20,6 +20,7 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get purge binutils
         sudo apt-get purge python3
+        sudo apt-get purge linux-azure
         sudo apt update   
     - name: install sumokoin dependencies
       run: |
@@ -29,6 +30,7 @@ jobs:
         sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
         ./configure --prefix=/usr/bin \
                     --enable-gold \
+                    --enable-ld=default \
                     --enable-plugins    \
                     --enable-shared     \
                     --disable-werror    \
