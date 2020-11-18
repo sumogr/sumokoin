@@ -26,6 +26,9 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# cheat because cmake and ccache hate each other
+set_property(SOURCE CryptonightR_template.S PROPERTY LANGUAGE C)
+
 if (NOT ARM)
 set(crypto_sources
   aesb.c
@@ -81,12 +84,9 @@ set(crypto_sources
   cn_heavy_hash_hard_arm.cpp)
 endif()
 
-if(ARCH_ID STREQUAL "i386" OR ARCH_ID STREQUAL "x86_64" OR ARCH_ID STREQUAL "x86-64" OR ARCH_ID STREQUAL "amd64")
+if(NOT ARM AND ARCH_ID STREQUAL "i386" OR ARCH_ID STREQUAL "x86_64" OR ARCH_ID STREQUAL "x86-64" OR ARCH_ID STREQUAL "amd64")
 list(APPEND crypto_sources CryptonightR_template.S)
 endif()
-
-# cheat because cmake and ccache hate each other
-set_property(SOURCE CryptonightR_template.S PROPERTY LANGUAGE C)
 
 set(crypto_headers)
 
