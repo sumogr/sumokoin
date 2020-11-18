@@ -18,9 +18,10 @@ jobs:
       run: |
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt-get purge *azure*
+        sudo apt-get purge *google*        
         sudo apt-get purge binutils
         sudo apt-get purge python3
-        sudo apt-get purge linux-azure
         sudo apt update   
     - name: install sumokoin dependencies
       run: |
