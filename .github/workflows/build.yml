@@ -8,6 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
-      run: brew install FiloSottile/musl-cross/musl-cross --with-i486
+      run: brew install FiloSottile/musl-cross/musl-cross --without-x86_64  --with-i486
     - name: build
       run:  sudo make depends target=i686-linux-gnu -j 3
