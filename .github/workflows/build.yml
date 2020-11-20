@@ -4,40 +4,10 @@ on: [push, pull_request]
        
 jobs:
   build-ubuntu-xenial:
-    runs-on: ubuntu-20.04
+     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt-get purge *azure*
-        sudo apt-get purge *google*        
-        sudo apt-get purge binutils
-        sudo apt-get purge python3
-        sudo apt update   
-    - name: install sumokoin dependencies
-      run: |
-        sudo apt-get install gcc-multilib g++-multilib bc autoconf automake gperf libtool pkg-config python2.7
-        git clone https://github.com/hermitcore/binutils
-        cd binutils
-        sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
-        ./configure --prefix=/usr/bin \
-                    --enable-gold \
-                    --enable-ld=default \
-                    --enable-plugins    \
-                    --enable-shared     \
-                    --disable-werror    \
-                    --enable-64-bit-bfd \
-                    --with-system-zlib
-        sudo make MAKEINFO=true tooldir=/usr/bin -j 4
-        sudo make MAKEINFO=true tooldir=/usr/bin install -j 4
-        cd ..    
-        sudo make depends target=i686-linux-gnu -j 3
+    - name: install dependencies
+      run: brew install FiloSottile/musl-cross/musl-cross --with-i486
+    - name: build
+      run:  sudo make depends target=i686-linux-gnu -j 3
