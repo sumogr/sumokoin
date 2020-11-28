@@ -630,6 +630,7 @@ namespace levin
           {
             channel.active = nullptr;
             channel.connection = boost::uuids::nil_uuid();
+            auto height = core_->get_target_blockchain_height();            
 
             auto connections = get_out_connections(*zone_->p2p, core_->get_target_blockchain_height());
             if (connections.empty())
