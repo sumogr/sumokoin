@@ -798,7 +798,7 @@ namespace cryptonote
       drop_connection(context, false, false);
       return 1;
     }
-    
+
     std::vector<std::pair<cryptonote::blobdata, block>> local_blocks;
     std::vector<cryptonote::blobdata> local_txs;
 
@@ -890,7 +890,7 @@ namespace cryptonote
   {
     MLOG_P2P_MESSAGE("Received NOTIFY_GET_TXPOOL_COMPLEMENT (" << arg.hashes.size() << " txes)");
     if(context.m_state != cryptonote_connection_context::state_normal)
-      return 1;    
+      return 1;
 
     std::vector<std::pair<cryptonote::blobdata, block>> local_blocks;
     std::vector<cryptonote::blobdata> local_txs;
@@ -977,7 +977,7 @@ namespace cryptonote
           fluff_txs.push_back(std::move(tx));
           break;
         default:
-        case relay_method::forward: // not supposed to happen here        
+        case relay_method::forward: // not supposed to happen here
         case relay_method::none:
           break;
       }
@@ -1008,7 +1008,7 @@ namespace cryptonote
       LOG_ERROR_CCONTEXT("Requested objects before handshake, dropping connection");
       drop_connection(context, false, false);
       return 1;
-    }    
+    }
     MLOG_P2P_MESSAGE("Received NOTIFY_REQUEST_GET_OBJECTS (" << arg.blocks.size() << " blocks)");
     if (arg.blocks.size() > CURRENCY_PROTOCOL_MAX_OBJECT_REQUEST_COUNT)
       {
@@ -1705,7 +1705,7 @@ skip:
       LOG_ERROR_CCONTEXT("Requested chain before handshake, dropping connection");
       drop_connection(context, false, false);
       return 1;
-    }    
+    }
     NOTIFY_RESPONSE_CHAIN_ENTRY::request r;
     if(!m_core.find_blockchain_supplement(arg.block_ids, !arg.prune, r))
     {
@@ -1896,9 +1896,9 @@ skip:
     if (local_stripe == 0)
       return false;
     // don't request pre-bulletprooof pruned blocks, we can't reconstruct their weight (yet)
-    static const uint64_t bp_fork_height = m_core.get_earliest_ideal_height_for_version(7);
-    if (first_block_height + nblocks - 1 < bp_fork_height)
-      return false;    
+    static const uint64_t bp_fork_height = m_core.get_earliest_ideal_height_for_version(HF_VERSION_SMALLER_BP + 1);
+    if (first_block_height < bp_fork_height)
+      return false;
     // assumes the span size is less or equal to the stripe size
     bool full_data_needed = tools::get_pruning_stripe(first_block_height, context.m_remote_blockchain_height, CRYPTONOTE_PRUNING_LOG_STRIPES) == local_stripe
         || tools::get_pruning_stripe(first_block_height + nblocks - 1, context.m_remote_blockchain_height, CRYPTONOTE_PRUNING_LOG_STRIPES) == local_stripe;
@@ -2591,6 +2591,32 @@ skip:
   }
   //------------------------------------------------------------------------------------------------------------------------
   template<class t_core>
+<<<<<<< HEAD
+=======
+  void t_cryptonote_protocol_handler<t_core>::drop_connections(const epee::net_utils::network_address address)
+  {
+    MWARNING("dropping connections to " << address.str());
+
+    m_p2p->add_host_fail(address, 5);
+
+    std::vector<boost::uuids::uuid> drop;
+    m_p2p->for_each_connection([&](const connection_context& cntxt, nodetool::peerid_type peer_id, uint32_t support_flags) {
+      if (address.is_same_host(cntxt.m_remote_address))
+        drop.push_back(cntxt.m_connection_id);
+      return true;
+    });
+    for (const boost::uuids::uuid &id: drop)
+    {
+      m_block_queue.flush_spans(id, true);
+      m_p2p->for_connection(id, [&](cryptonote_connection_context& context, nodetool::peerid_type peer_id, uint32_t f)->bool{
+        drop_connection(context, true, false);
+        return true;
+      });
+    }
+  }
+  //------------------------------------------------------------------------------------------------------------------------
+  template<class t_core>
+>>>>>>> 89325548... [cryptonote_protocol] fix asking for pruned blocks
   void t_cryptonote_protocol_handler<t_core>::on_connection_close(cryptonote_connection_context &context)
   {
     uint64_t target = 0;
