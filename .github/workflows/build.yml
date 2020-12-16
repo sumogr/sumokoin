@@ -29,5 +29,5 @@ jobs:
         sudo update-alternatives --config gcc 
     - name: cross compile sumokoin bins for linux x64
       run: |   
-        cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -DCMAKE_TOOLCHAIN_FILE=contrib/depends/toolchain.cmake.in
+        cmake -m32 -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" 
         ninja -j 3
