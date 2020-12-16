@@ -23,7 +23,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libboost-all-dev dpkg-dev cmake gcc-7-multilib bc g++-7-multilib g++ gcc pkg-config libssl-dev libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev ninja-build
+        sudo apt -y install libboost-all-dev dpkg-dev cmake gcc-7-multilib bc g++-7-multilib pkg-config libssl-dev libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev ninja-build
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc 
@@ -31,6 +31,6 @@ jobs:
       run: |  
         mkdir build 
         cd build
-        cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_C_FLAGS=m32 -D CMAKE_CXX_FLAGS=m32 ..  
+        cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_CXX_COMPILER=g++-7 -D CMAKE_C_COMPILER=gcc-7 -D CMAKE_C_FLAGS=m32 -D CMAKE_CXX_FLAGS=m32  
         cd ..
         ninja -j 3
