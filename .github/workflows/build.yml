@@ -31,6 +31,6 @@ jobs:
       run: |  
         mkdir build 
         cd build
-        cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_CXX_COMPILER=g++ -D CMAKE_C_COMPILER=gcc -D CMAKE_C_FLAGS=m32 -D CMAKE_CXX_FLAGS=m32 ..  
+        cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_C_FLAGS=m32 -D CMAKE_CXX_FLAGS=m32 ..  
         cd ..
         ninja -j 3
