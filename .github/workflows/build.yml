@@ -23,4 +23,4 @@ jobs:
     - name: build
       run: |
         cmake -G Ninja
-        make -j2
+        ninja -j2
