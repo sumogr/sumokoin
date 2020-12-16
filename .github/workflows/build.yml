@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-x64-binaries-on-xenial:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: update submodules
@@ -35,7 +35,26 @@ jobs:
         cd boost_1_74_0
         sudo ./bootstrap.sh
         sudo ./b2 install -j 3
-        cd ..            
+        cd ..
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        sudo ldconfig
+        cd ..
+    - name: build libunwind
+      run: |
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        cd ..                    
     - name: cross compile sumokoin bins for linux x64
       run: |  
         mkdir build 
