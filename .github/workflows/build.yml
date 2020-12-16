@@ -28,7 +28,6 @@ jobs:
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
     - name: cross compile sumokoin bins for linux x64
-      run: |
-        make depends -j 3
+      run: |        
         cmake -G Ninja
-        ninja target=i686-linux-gnu -j 3
+        ninja release-static-linux-i686 -j 3
