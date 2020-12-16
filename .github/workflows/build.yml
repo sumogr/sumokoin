@@ -37,9 +37,6 @@ jobs:
         sudo ./b2 install -j 3
         cd ..   
     - name: cross compile sumokoin bins for linux x64
-      run: |
-        mkdir release
-        cd release        
+      run: |   
         cmake -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86"
-        cd .. 
         ninja -j 3
