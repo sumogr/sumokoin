@@ -29,5 +29,5 @@ jobs:
         sudo update-alternatives --config gcc 
     - name: cross compile sumokoin bins for linux x64
       run: |   
-        cmake -m32 -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_CXX_COMPILER=g++ -m32 -D CMAKE_C_COMPILER=gcc -m32
+        cmake -m32 -G Ninja -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_CXX_COMPILER=g++ -D CMAKE_C_COMPILER=gcc CMAKE_C_FLAGS=-m32 CMAKE_CXX_FLAGS=-m32 CMAKE_LD_FLAGS=-m32 CFLAGS=-m32 LDFLAGS=-m32 CXXFLAGS=-m32  
         ninja -j 3
