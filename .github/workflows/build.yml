@@ -3,24 +3,29 @@ name: continuous-integration/gh-actions/cli
 on: [push, pull_request]
 
 jobs:
-  build-ubuntu:
-    runs-on: ubuntu-latest
+  cross-build-linux-x64-binaries-on-xenial:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
-    - name: update submodules
-      run: git submodule update --init --force
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom      
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: sudo apt update
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev ninja-build miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev
-    - name: build
+      run: |
+        sudo apt -y install dpkg-dev cmake gcc-7-multilib bc g++-7-multilib bc pkg-config libtool autoconf automake gperf
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc
+    - name: cross compile sumokoin bins for linux x64
       run: |
         cmake -G Ninja
-        ninja -j2
+        ninja depends target=i686-linux-gnu -j 3
