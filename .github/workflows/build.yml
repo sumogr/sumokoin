@@ -57,5 +57,5 @@ jobs:
         cd ..                    
     - name: cross compile sumokoin bins for linux x64
       run: |  
-        cmake -G Ninja -D BUILD_SHARED_LIBS=OFF -D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32 -D LDFLAGS=-m32
-        ninja -j 3
+        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32 -D LDFLAGS=-m32
+        make -j 3
