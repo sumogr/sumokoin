@@ -57,8 +57,5 @@ jobs:
         cd ..                    
     - name: cross compile sumokoin bins for linux x64
       run: |
-        mkdir build
-        cd build  
-        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" -D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32
-        cd ..
-        make -j 3
+        cmake -D ARCH="i686" -D BUILD_64=OFF  -D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32
+        make release-static -j 3
