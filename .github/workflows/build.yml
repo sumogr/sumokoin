@@ -56,6 +56,4 @@ jobs:
         sudo make install
         cd ..                    
     - name: cross compile sumokoin bins for linux x64
-      run: |
-        cmake -D ARCH="i686" -D STATIC=ON -D BUILD_64=OFF  -D CMAKE_C_FLAGS=-m32 -D CMAKE_CXX_FLAGS=-m32
-        make -j 3
+      run:  make release-static-linux-i686 -j 3
