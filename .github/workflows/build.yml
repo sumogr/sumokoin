@@ -29,7 +29,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install cmake gcc-7-multilib bc g++-7-multilib pkg-config libssl-dev libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev ninja-build
+        sudo apt -y install cmake gcc-7-multilib bc g++-7-multilib pkg-config libssl-dev libtool gperf autoconf automake libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev ninja-build
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
@@ -40,7 +40,7 @@ jobs:
         rm -f /usr/boost_1_74_0.tar.bz2
         cd boost_1_74_0
         sudo ./bootstrap.sh
-        sudo ./b2 install -j 3
+        sudo ./b2 install -j 2
         cd ..
     - name: build zmq
       run: |
@@ -58,7 +58,7 @@ jobs:
         cd libunwind
         sudo ./autogen.sh
         sudo ./configure
-        sudo make -j 3
+        sudo make -j 2
         sudo make install
         cd ..                    
     - name: compile static sumokoin bins for i686
