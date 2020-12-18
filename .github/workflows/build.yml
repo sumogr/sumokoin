@@ -4,15 +4,12 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
     steps:
     - name: checkout branch
       uses: actions/checkout@v1
     - name: remove bundled boost
-      run: |
-        sudo rm -rf /usr/local/share/boost
-        sudo apt-get remove build-essential
-        sudo apt-get remove g++*
+      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -21,15 +18,14 @@ jobs:
     - name: update apt
       run: |
         sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        wget http://ftp.cc.uoc.gr/mirrors/gnu/binutils/binutils-2.28.tar.gz
-        tar -xf binutils-2.28.tar.gz
-        cd binutils-2.28
-        ./configure --target=i686-linux-gnu --disable-multilib
-        cd ..
-        sudo apt -y install cmake bc g++-multilib pkg-config libtool gperf autoconf automake doxygen graphviz         
+        sudo apt -y install dpkg-dev g++-7 gcc-7 libc6-dev make g++-7-multilib build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache gperf cmake python3-zmq
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc                  
     - name: compile static sumokoin bins for i686
       run:  make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
