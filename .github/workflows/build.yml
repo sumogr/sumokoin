@@ -13,7 +13,6 @@ jobs:
         sudo rm -rf /usr/local/share/boost
         sudo apt-get remove build-essential
         sudo apt-get remove g++*
-        sudo apt-get remove gcc* 
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
