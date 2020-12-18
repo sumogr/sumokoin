@@ -17,20 +17,14 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install cmake bc g++-7-multilib bc pkg-config libtool gperf autoconf automake doxygen graphviz
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc
+        sudo apt -y install cmake bc g++-multilib bc pkg-config libtool gperf autoconf automake doxygen graphviz
     - name: install binutils
       run: |
         sudo apt-get remove binutils
-        wget http://security.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-i686-gnu_2.30-15ubuntu1_amd64.deb
-        sudo dpkg -i binutils-i686-gnu_2.30-15ubuntu1_amd64.deb                       
+        sudo apt -y install binutils-i686-linux-gnu                     
     - name: compile static sumokoin bins for i686
       run:  make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
