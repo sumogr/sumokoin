@@ -22,15 +22,15 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install cmake bc g++-7-multilib bc pkg-config libtool gperf autoconf automake doxygen graphviz
+        sudo apt -y install cmake bc g++-7-multilib binutils-common bc pkg-config libtool gperf autoconf automake doxygen graphviz
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
     - name: install binutils
       run: |
         sudo apt-get remove binutils
-        wget http://security.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-i686-linux-gnu_2.30-15ubuntu1_amd64.deb
-        sudo dpkg -i binutils-i686-linux-gnu_2.30-15ubuntu1_amd64.deb                       
+        wget http://security.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-i686-gnu-dbg_2.30-15ubuntu1_amd64.deb
+        sudo dpkg -i binutils-i686-gnu-dbg_2.30-15ubuntu1_amd64.deb                       
     - name: compile static sumokoin bins for i686
       run:  make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
