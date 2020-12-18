@@ -22,7 +22,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install cmake bc g++-7-multilib binutils-common bc pkg-config libtool gperf autoconf automake doxygen graphviz
+        sudo apt -y install cmake bc g++-7-multilib bc pkg-config libtool gperf autoconf automake doxygen graphviz
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
