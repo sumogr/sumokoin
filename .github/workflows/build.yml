@@ -22,7 +22,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev g++-7 gcc-7 libc6-dev make g++-7-multilib build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache gperf cmake python3-zmq
+        sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache gperf cmake g++-7-multilib python3-zmq
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc                  
