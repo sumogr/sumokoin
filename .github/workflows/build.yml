@@ -9,7 +9,9 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v1
     - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
+      run: |
+        sudo rm -rf /usr/local/share/boost
+        sudo apt-get purge binutils
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
