@@ -788,7 +788,7 @@ else()
   # silence warning in link cases dead_strip cannot be used
     set(WARNINGS "${WARNINGS} -Wno-unused-command-line-argument")
   endif()
-  if (DEPENDS OR MINGW AND NOT FREEBSD AND NOT APPLE)
+  if (DEPENDS OR MINGW AND NOT FREEBSD AND NOT APPLE AND NOT BUILD_64)
     set(CMAKE_EXE_LINKER_OPTIONS_FLAGS "${CMAKE_EXE_LINKER_OPTIONS_FLAGS} -Wl,-s")
   endif()
 
