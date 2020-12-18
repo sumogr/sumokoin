@@ -28,7 +28,7 @@ jobs:
         sudo update-alternatives --config gcc
     - name: install binutils
       run: |
-        apt-get remove binutils
+        sudo apt-get remove binutils
         wget http://security.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-i686-linux-gnu_2.30-21ubuntu1~18.04.4_amd64.deb
         sudo dpkg -i binutils-i686-linux-gnu_2.30-21ubuntu1~18.04.4_amd64.deb                       
     - name: compile static sumokoin bins for i686
