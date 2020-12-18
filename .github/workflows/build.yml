@@ -25,7 +25,11 @@ jobs:
         sudo apt -y install cmake binutils-i686-linux-gnu bc g++-7-multilib bc pkg-config libtool gperf autoconf automake doxygen graphviz
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc                  
+        sudo update-alternatives --config gcc
+    - name: install binutils
+      run: |
+        wget http://security.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-i686-linux-gnu_2.30-21ubuntu1~18.04.4_amd64.deb
+        sudo dpkg -i binutils-i686-linux-gnu_2.30-21ubuntu1~18.04.4_amd64.deb                       
     - name: compile static sumokoin bins for i686
       run:  make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
