@@ -22,12 +22,15 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache gperf cmake g++-7-multilib python3-zmq
+        sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config curl git ca-certificates ccache gperf cmake g++-7-multilib python3-zmq
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc                  
     - name: compile static sumokoin bins for i686
-      run:  make depends target=i686-linux-gnu -j 3
+      run:  |
+          export LDFLAGS=-m32
+          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 .
+          make depends target=i686-linux-gnu -j 3 gcc -m32
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
