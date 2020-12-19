@@ -29,7 +29,7 @@ jobs:
     - name: compile static sumokoin bins for i686
       run:  |
           export LDFLAGS=-m32
-          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -D DEPENDS -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" .
+          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -D DEPENDS=TRUE -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" .
           make -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
