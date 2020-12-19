@@ -22,7 +22,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt -y install libtool gcc-multilib g++-multilib cmake pkg-config libssl-dev libunbound-dev libevent-dev libsodium-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev
-- name: build boost 1_74
+    - name: build boost 1_74
       run: |
         wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
         tar -xvf boost_1_74_0.tar.bz2
