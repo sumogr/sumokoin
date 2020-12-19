@@ -21,43 +21,11 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool cmake autotools-dev automake curl git ca-certificates ccache gperf g++-multilib python3-zmq libssl-dev libunbound-dev libsodium-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev                        
-    - name: build boost 1_74
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
-        tar -xvf boost_1_74_0.tar.bz2
-        rm -f /usr/boost_1_74_0.tar.bz2
-        cd boost_1_74_0
-        sudo ./bootstrap.sh
-        sudo ./b2 install -j 3
-        cd ..
-    - name: build zmq
-      run: |
-        git clone https://github.com/zeromq/libzmq.git
-        cd libzmq
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        sudo ldconfig
-        cd ..
-    - name: build libunwind
-      run: |
-        git clone https://github.com/libunwind/libunwind
-        cd libunwind
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        cd ..    
+        sudo apt -y install libtool gcc-multilib g++-multilib gperf autoconf automake cmake                       
     - name: compile static sumokoin bins for i686
       run:  |
           export LDFLAGS=-m32
-          mkdir build
-          cd build
-          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" ..
-          cd ..
-          make -j 3
+          make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
