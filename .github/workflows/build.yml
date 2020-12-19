@@ -21,13 +21,13 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool gcc-multilib g++-multilib gperf autoconf automake cmake                       
+        sudo apt -y install libtool gcc-multilib g++-multilib cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev                      
     - name: compile static sumokoin bins for i686
       run:  |
         export LDFLAGS="-m32"
         export CFLAGS="-m32"
         export CXXFLAGS="-m32"
-        make depends target=i686-linux-gnu -j 3
+        make release-static -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
