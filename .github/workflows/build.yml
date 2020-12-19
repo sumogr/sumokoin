@@ -22,14 +22,39 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config curl git ca-certificates ccache gperf cmake g++-7-multilib python3-zmq
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc                  
+        sudo apt -y install build-essential libtool cmake autotools-dev automake curl git ca-certificates ccache gperf g++-7-multilib python3-zmq pkg-config libssl-dev libunbound-dev libsodium-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libprotobuf-dev libudev-dev
+    - name: build boost 1_74
+      run: |
+        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
+        tar -xvf boost_1_74_0.tar.bz2
+        rm -f /usr/boost_1_74_0.tar.bz2
+        cd boost_1_74_0
+        sudo ./bootstrap.sh
+        sudo ./b2 install -j 3
+        cd ..
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        sudo ldconfig
+        cd ..
+    - name: build libunwind
+      run: |
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        cd ..                          
     - name: compile static sumokoin bins for i686
       run:  |
           export LDFLAGS=-m32
-          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -D DEPENDS=TRUE -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" .
+          cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" .
           make -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
