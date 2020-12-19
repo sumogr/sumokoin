@@ -24,10 +24,10 @@ jobs:
         sudo apt -y install libtool gcc-multilib g++-multilib gperf autoconf automake cmake                       
     - name: compile static sumokoin bins for i686
       run:  |
-          sudo export LDFLAGS="-m32"
-          sudo export CFLAGS="-m32"
-          sudo export CXXFLAGS="-m32"
-          make depends target=i686-linux-gnu -j 3
+        export LDFLAGS="-m32"
+        export CFLAGS="-m32"
+        export CXXFLAGS="-m32"
+        make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
