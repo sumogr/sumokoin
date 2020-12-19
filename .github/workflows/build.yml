@@ -21,7 +21,35 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool gcc-multilib g++-multilib cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libevent-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev                      
+        sudo apt -y install libtool gcc-multilib g++-multilib cmake pkg-config libssl-dev libunbound-dev libevent-dev libsodium-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev
+- name: build boost 1_74
+      run: |
+        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
+        tar -xvf boost_1_74_0.tar.bz2
+        rm -f /usr/boost_1_74_0.tar.bz2
+        cd boost_1_74_0
+        sudo ./bootstrap.sh
+        sudo ./b2 install -j 3
+        cd ..
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        sudo ldconfig
+        cd ..
+    - name: build libunwind
+      run: |
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        cd ..                              
     - name: compile static sumokoin bins for i686
       run:  |
         export LDFLAGS="-m32"
