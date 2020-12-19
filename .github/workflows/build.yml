@@ -21,7 +21,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool cmake autotools-dev automake curl git ca-certificates ccache gperf g++-multilib python3-zmq libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev                        
+        sudo apt -y install libtool cmake autotools-dev automake curl git ca-certificates ccache gperf g++-multilib python3-zmq libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-1.0-0-dev libprotobuf-dev protobuf-compiler libudev-dev                        
     - name: compile static sumokoin bins for i686
       run:  |
           export LDFLAGS=-m32
