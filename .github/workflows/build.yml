@@ -25,7 +25,7 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt-get remove build-essential
         sudo apt -y install curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
-        wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.15.0-20.21_i386.deb
+        wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.4.0-197.229_i386.deb
         sudo dpkg -i linux-libc-dev_4.15.0-20.21_i386.deb               
     - name: compile static sumokoin bins for i686
       run:  |
