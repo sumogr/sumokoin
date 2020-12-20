@@ -48,7 +48,26 @@ jobs:
         sudo make -j 3 
         sudo make check 
         sudo make install
-        cd ..                                      
+        cd .. 
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install -j3
+        sudo ldconfig
+        cd ..
+    - name: build libunwind
+      run: |
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j3
+        sudo make install -j3
+        cd ..                                                     
     - name: compile static sumokoin bins for i686
       run:  |
         mkdir -p build/release
