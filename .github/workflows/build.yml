@@ -23,7 +23,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt-get remove build-essential
-        sudo apt -y install linux-libc-dev:i386 curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache              
+        sudo apt -y install linux-libc-dev-i386 curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache              
     - name: compile static sumokoin bins for i686
       run:  |
         export HOST_CFLAGS="-O2 -g"
