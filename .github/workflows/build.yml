@@ -22,7 +22,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        dpkg --add-architecture i386
+        sudo dpkg --add-architecture i386
         sudo apt-get remove build-essential
         sudo apt -y install linux-libc-dev:i386 curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache              
     - name: compile static sumokoin bins for i686
