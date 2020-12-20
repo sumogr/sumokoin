@@ -9,7 +9,9 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v1
     - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
+      run: |
+        sudo rm -rf /usr/local/share/boost
+        sudo rm -rf /usr/include/x86_64-linux-gnu/asm
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -31,7 +33,6 @@ jobs:
         sudo update-alternatives --config gcc                        
     - name: link asm
       run: |
-        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm
         sudo ln -s /usr/include/asm-generic /usr/include/asm        
     - name: compile static sumokoin bins for i686
       run:  |
