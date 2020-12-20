@@ -24,12 +24,10 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get remove build-essential
-        sudo apt -y install curl bc gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
+        sudo apt -y install linux-libc-dev:i386 curl bc gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc
-        wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.4.0-197.229_i386.deb
-        sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb                          
+        sudo update-alternatives --config gcc                        
     - name: link asm
       run: |
         sudo rm -rf /usr/include/x86_64-linux-gnu/asm
