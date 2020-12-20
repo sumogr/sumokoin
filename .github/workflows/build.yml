@@ -27,9 +27,7 @@ jobs:
         sudo apt -y install curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
         wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.4.0-197.229_i386.deb
         sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb
-        mkdir -p $EXTRA_INCLUDES_BASE/i686-linux-gnu
-        rm -f $WRAP_DIR/extra_includes/i686-linux-gnu/asm
-        ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm
+        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc                   
