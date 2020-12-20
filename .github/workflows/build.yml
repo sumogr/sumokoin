@@ -25,6 +25,7 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
+        sudo apt -y install mono-runtime
         sudo apt-get remove build-essential linux-libc-dev binutils
         sudo apt -y install linux-libc-dev:i386 binutils:i386 multiarch-support libc6:i386 libstdc++6:i386 linux-headers-generic curl bc gperf g++-multilib gcc-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache                          
     - name: compile static sumokoin bins for i686
