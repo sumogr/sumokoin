@@ -53,8 +53,6 @@ jobs:
     - name: compile static sumokoin bins for i686
       run:  |
         export LDFLAGS="-m32"
-        export CFLAGS="-m32"
-        export CXXFLAGS="-m32"
         make release-static-linux-i686 -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
