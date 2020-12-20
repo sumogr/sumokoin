@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get purge binutils linux-headers*
         sudo apt-get remove build-essential linux-libc-dev linux-headers*
-        sudo apt -y install linux-libc-dev:i386 binutils multiarch-support libc6:i386 libstdc++6:i386 linux-headers-generic curl bc gperf g++ gcc g++-multilib gcc-multilib gcc-7 gcc-7-multilib g++-7 g++-7-multilib autoconf libtool automake cmake ccache                          
+        sudo apt -y install linux-libc-dev:i386 binutils multiarch-support pkg-config libc6:i386 libstdc++6:i386 linux-headers-generic curl bc gperf g++ gcc g++-multilib gcc-multilib gcc-7 gcc-7-multilib g++-7 g++-7-multilib autoconf libtool automake cmake ccache                          
     - name: compile static sumokoin bins for i686
       run:  |
         export HOST_CFLAGS="-O2 -g"
