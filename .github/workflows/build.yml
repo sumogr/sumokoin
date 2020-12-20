@@ -23,6 +23,7 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo dpkg --add-architecture i386
+        sudo apt-get update
         sudo apt-get remove build-essential
         sudo apt -y install linux-libc-dev:i386 curl bc gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
