@@ -23,14 +23,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install ca-certificates cmake g++ make pkg-config graphviz g++-multilib doxygen git libtool-bin autoconf automake bzip2 xsltproc gperf  
-        curl -s -O https://www.openssl.org/source/openssl-1.1.1i.tar.gz
-        tar xf openssl-1.1.1i.tar.gz 
-        cd openssl-1.1.1i 
-        ./Configure --prefix=/usr linux-x86_64 no-shared --static 
-        make -j3
-        sudo make install_sw -j3
-        cd ..
+        sudo apt -y install ca-certificates cmake g++ make pkg-config graphviz g++-multilib doxygen git libssl-dev libtool-bin autoconf automake bzip2 xsltproc gperf  
         curl -s -L -o  boost_1_72_0.tar.bz2 https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2 \
         tar xf boost_1_72_0.tar.bz2 
         cd boost_1_72_0 
