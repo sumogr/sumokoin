@@ -29,7 +29,7 @@ jobs:
         cd openssl-1.1.1g 
         ./Configure --prefix=/usr linux-x86_64 no-shared --static 
         make -j3
-        make install_sw -j3 
+        sudo make install_sw -j3 
         cd ..
         curl -s -L -o  boost_1_72_0.tar.bz2 https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2 \
         tar xf boost_1_72_0.tar.bz2 
@@ -43,7 +43,7 @@ jobs:
         ./configure --enable-static --disable-shared --prefix=/usr 
         make -j 3 
         make check 
-        make install
+        sudo make install
         cd ..                                      
     - name: compile static sumokoin bins for i686
       run:  |
