@@ -18,42 +18,18 @@ jobs:
     - name: update apt
       run: |
         sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install libtool gcc-multilib g++-multilib cmake pkg-config libssl-dev libunbound-dev libevent-dev libsodium-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev libhidapi-dev libusb-1.0-0-dev libudev-dev
-    - name: build boost 1_74
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
-        tar -xvf boost_1_74_0.tar.bz2
-        rm -f /usr/boost_1_74_0.tar.bz2
-        cd boost_1_74_0
-        sudo ./bootstrap.sh
-        sudo ./b2 install -j 3
-        cd ..
-    - name: build zmq
-      run: |
-        git clone https://github.com/zeromq/libzmq.git
-        cd libzmq
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        sudo ldconfig
-        cd ..
-    - name: build libunwind
-      run: |
-        git clone https://github.com/libunwind/libunwind
-        cd libunwind
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        cd ..                              
+        sudo apt-get remove build-essential g++* gcc*
+        sudo apt -y install linux-libc-dev:i386 curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake faketime cmake ccache              
     - name: compile static sumokoin bins for i686
       run:  |
-        export LDFLAGS="-m32"
-        make release-static-linux-i686 -j 3
+        export HOST_CFLAGS="-O2 -g"
+        export HOST_CXXFLAGS="-O2 -g"
+        export HOST_LDFLAGS=-static-libstdc++
+        make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
