@@ -11,7 +11,6 @@ jobs:
     - name: remove bundled boost
       run: |
         sudo rm -rf /usr/local/share/boost
-        sudo rm -rf /usr/include/x86_64-linux-gnu/asm
     - name: set apt conf
       run: |
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
@@ -30,6 +29,8 @@ jobs:
         sudo apt -y install linux-libc-dev:i386 linux-headers-generic curl bc gperf g++-multilib gcc-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache                    
     - name: link asm
       run: |
+        sudo rm -rf /usr/include/x86_64-linux-gnu/asm
+        sudo mkdir /usr/include/x86_64-linux-gnu/asm
         sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm
         sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm
         sudo ln -s /usr/include/asm-generic /usr/include/asm        
