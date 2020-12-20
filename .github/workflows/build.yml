@@ -26,7 +26,10 @@ jobs:
         sudo apt-get remove build-essential
         sudo apt -y install curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
         wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.4.0-197.229_i386.deb
-        sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb               
+        sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc                   
     - name: compile static sumokoin bins for i686
       run:  |
         export HOST_CFLAGS="-O2 -g"
