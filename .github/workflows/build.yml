@@ -19,13 +19,11 @@ jobs:
     - name: update apt
       run: |
         sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo dpkg --add-architecture i386
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install mono-runtime monodoc-browser
-        sudo apt-get remove build-essential linux-libc-dev binutils
+        sudo apt-get remove build-essential linux-libc-dev binutils -f
         sudo apt -y install linux-libc-dev:i386 binutils:i386 multiarch-support libc6:i386 libstdc++6:i386 linux-headers-generic curl bc gperf g++-multilib gcc-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache                          
     - name: compile static sumokoin bins for i686
       run:  |
