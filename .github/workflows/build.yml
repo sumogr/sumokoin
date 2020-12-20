@@ -23,15 +23,37 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt-get purge binutils linux-headers* 
-        sudo apt-get purge build-essential linux-libc-dev
-        sudo apt -y install linux-libc-dev:i386 binutils multiarch-support pkg-config libc6:i386 libstdc++6:i386 linux-generic linux-headers-generic curl bc gperf g++ gcc g++-multilib gcc-multilib gcc-7 gcc-7-multilib g++-7 g++-7-multilib autoconf libtool automake cmake ccache                          
+        sudo apt -y install ca-certificates cmake g++ make pkg-config graphviz g++-multilib doxygen git libtool-bin autoconf automake bzip2 xsltproc gperf  
+        curl -s -O https://www.openssl.org/source/openssl-1.1.1g.tar.gz
+        tar xf openssl-1.1.1g.tar.gz 
+        cd openssl-1.1.1g 
+        ./Configure --prefix=/usr linux-x86_64 no-shared --static 
+        make -j3
+        make install_sw -j3 
+        cd ..
+        curl -s -L -o  boost_1_72_0.tar.bz2 https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2 \
+        tar xf boost_1_72_0.tar.bz2 
+        cd boost_1_72_0 
+        ./bootstrap.sh 
+        ./b2 --prefix=/usr --build-type=minimal link=static runtime-link=static --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread --with-locale threading=multi threadapi=pthread cxxflags=-fPIC -j3 install
+        cd ..
+        git clone https://github.com/jedisct1/libsodium.git -b 1.0.18-RELEASE --depth=1 
+        cd libsodium
+        ./autogen.sh 
+        ./configure --enable-static --disable-shared --prefix=/usr 
+        make -j 3 
+        make check 
+        make install
+        cd ..                                      
     - name: compile static sumokoin bins for i686
       run:  |
-        export HOST_CFLAGS="-O2 -g"
-        export HOST_CXXFLAGS="-O2 -g"
-        export HOST_LDFLAGS="-static-libstdc++ -nostdlib"
-        make depends target=i686-linux-gnu -j 3
+        mkdir -p build/release
+        cd build/release
+        export HOST_CFLAGS="-O2 -g -m32"
+        export HOST_CXXFLAGS="-O2 -g -m32"
+        export HOST_LDFLAGS="-static-libstdc++ -nostdlib -m32"
+        cmake -DSTATIC=ON -DARCH=i686 -D BUILD_64=OFF -DCMAKE_BUILD_TYPE=Release ../..
+        make -j3 VERBOSE=1
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
