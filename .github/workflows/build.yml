@@ -72,7 +72,7 @@ jobs:
       run:  |
         mkdir -p build/release
         cd build/release
-        cmake -DSTATIC=ON -DARCH=i686 -D BUILD_64=OFF -DCMAKE_BUILD_TYPE=Release ../..
+        cmake -DSTATIC=ON -DARCH="i686" -D BUILD_64=OFF -D BUILD_TAG="linux-x86" -DCMAKE_BUILD_TYPE=release ../..
         make -j3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
