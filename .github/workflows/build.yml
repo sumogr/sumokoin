@@ -32,7 +32,7 @@ jobs:
         sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb                          
     - name: link asm
       run: |
-        sudo ln -s /usr/include/i386-linux-gnu/asm /usr/include/x86_64-linux-gnu/asm 
+        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm  
     - name: compile static sumokoin bins for i686
       run:  |
         export HOST_CFLAGS="-O2 -g"
