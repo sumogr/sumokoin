@@ -24,10 +24,11 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get remove build-essential
-        sudo apt -y install curl gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
+        sudo apt -y install curl bc gperf g++-7-multilib gcc-7-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache
         wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.4.0-197.229_i386.deb
         sudo dpkg -i linux-libc-dev_4.4.0-197.229_i386.deb
+        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm
         [ -d "/usr/include/x86_64-linux-gnu/asm" ] && echo "Directory /usr/include/x86_64-linux-gnu/asm exists." || echo "Error: Directory /usr/include/x86_64-linux-gnu/asm does not exist."
         [ -d "/usr/include/i386-linux-gnu/asm" ] && echo "Directory /usr/include/i386-linux-gnu/asm exists." || echo "Error: Directory /usr/include/i386-linux-gnu/asm does not exist."        
-
-
+        [ -d "/usr/include/x86_64-linux-gnu/asm" && ! -h "/usr/include/x86_64-linux-gnu/asm" ] && echo "Directory /usr/include/x86_64-linux-gnu/asm exists." || echo "Error: Directory /usr/include/x86_64-linux-gnu/asm exists but point to $(readlink -f /usr/include/x86_64-linux-gnu/asm)."
+        [ -d "/usr/include/i386-linux-gnu/asm" && ! -h "/usr/include/i386-linux-gnu/asm" ] && echo "Directory /usr/include/i386-linux-gnu/asm exists." || echo "Error: Directory /usr/include/i386-linux-gnu/asm exists but point to $(readlink -f /usr/include/i386-linux-gnu/asm)."
