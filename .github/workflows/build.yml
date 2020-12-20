@@ -26,19 +26,12 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt-get update
         sudo apt-get remove build-essential linux-libc-dev
-        sudo apt -y install linux-libc-dev:i386 linux-headers-generic curl bc gperf g++-multilib gcc-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache                    
-    - name: link asm
-      run: |
-        sudo rm -rf /usr/include/x86_64-linux-gnu/asm
-        sudo mkdir /usr/include/x86_64-linux-gnu/asm
-        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/i386-linux-gnu/asm
-        sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm
-        sudo ln -s /usr/include/asm-generic /usr/include/asm        
+        sudo apt -y install linux-libc-dev:i386 multiarch-support libc6:i386 libstdc++6:i386 linux-headers-generic curl bc gperf g++-multilib gcc-multilib binutils-gold pkg-config autoconf libtool automake cmake ccache                          
     - name: compile static sumokoin bins for i686
       run:  |
         export HOST_CFLAGS="-O2 -g"
         export HOST_CXXFLAGS="-O2 -g"
-        export HOST_LDFLAGS=-static-libstdc++
+        export HOST_LDFLAGS="-static-libstdc++ -nostdlib"
         make depends target=i686-linux-gnu -j 3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
