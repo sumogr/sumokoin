@@ -18,10 +18,11 @@ jobs:
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
       run: |
+        sudo dpkg --add-architecture i386        
         sudo apt-get install -y software-properties-common
         sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install ca-certificates cmake pkg-config graphviz g++-7-multilib doxygen git libtool-bin autoconf automake bzip2 xsltproc gperf
+      run: sudo apt -y install ca-certificates cmake pkg-config graphviz g++-7-multilib doxygen git libtool-bin:i386 autoconf automake bzip2 xsltproc gperf
     - name: install openssl
       run: |        
         curl -s -O https://www.openssl.org/source/openssl-1.1.1g.tar.gz
