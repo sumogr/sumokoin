@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cross-build-linux-32bit-binaries-on-xenial:
-    runs-on: ubuntu-16.04:i386
+    runs-on: ubuntu-16.04
     steps:
     - name: checkout branch
       uses: actions/checkout@v1
@@ -73,8 +73,7 @@ jobs:
         export HOST_CFLAGS="-O2 -g -m32"
         export HOST_CXXFLAGS="-O2 -g -m32"
         export HOST_LDFLAGS="-static-libstdc++ -nostdlib -m32"        
-        cmake -DSTATIC=ON -DARCH="i686" -D LDFLAGS="-m32 -static-libstdc++" -D CFLAGS="-m32 -O2 -g" -D CXXFLAGS="-m32 -O2 -g"   -D BUILD_64=OFF -D BUILD_TAG="linux-x86" -DCMAKE_BUILD_TYPE=release     
-        make -j3
+        make release-static-linux-i686 -j3
     - name: upload binaries      
       uses: actions/upload-artifact@v2
       with:
