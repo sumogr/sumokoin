@@ -38,7 +38,7 @@
 #include "cryptonote_basic/cryptonote_basic_impl.h"
 #include "tx_pool.h"
 #include "blockchain.h"
-// #include "blockchain_db/blockchain_db.h" // already #included in cryptonote_core/blockchain.h 
+// #include "blockchain_db/blockchain_db.h" // already #included in cryptonote_core/blockchain.h
 #include "cryptonote_basic/cryptonote_boost_serialization.h"
 #include "cryptonote_config.h"
 #include "cryptonote_basic/miner.h"
@@ -3806,7 +3806,7 @@ leave:
     }
   }
 #endif
-  if (!fast_check)  
+  if (!fast_check)
   {
     auto it = m_blocks_longhash_table.find(id);
     if (it != m_blocks_longhash_table.end())
@@ -5076,7 +5076,7 @@ void Blockchain::cancel()
 }
 
 #if defined(PER_BLOCK_CHECKPOINT)
-static const char expected_block_hashes_hash[] = "97f3d5f3c1b5a2183234ae83852380cee1443074f7b840c4134bfc948948444f";
+static const char expected_block_hashes_hash[] = "8da80ca560793f252d1d4ed449c85d75c74867f3f86b8832c8e3f88b1cbb6ae3";
 void Blockchain::load_compiled_in_block_hashes(const GetCheckpointsCallback& get_checkpoints)
 {
   if (get_checkpoints == nullptr || !m_fast_sync)

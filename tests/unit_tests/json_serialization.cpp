@@ -145,8 +145,6 @@ TEST(JsonSerialization, MinerTransaction)
     EXPECT_EQ(tx_bytes, tx_copy_bytes);
 }
 
-<<<<<<< HEAD
-=======
 // Sumo doesnot have any non-encrypted transactions
 /*
 TEST(JsonSerialization, RegularTransaction)
@@ -181,7 +179,6 @@ TEST(JsonSerialization, RegularTransaction)
 }
 */
 
->>>>>>> 4cf46ac5... fix unit tests for sumo
 TEST(JsonSerialization, RingctTransaction)
 {
     cryptonote::account_base acct1;

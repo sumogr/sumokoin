@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-# Copyright (c) 2014-2019, The Monero Project
-# 
-=======
 # Copyright (c) 2014-2020, The Monero Project
 #
->>>>>>> b3b9c761... [cmake] pkgconfig for querying miniupnpc and unbound
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are

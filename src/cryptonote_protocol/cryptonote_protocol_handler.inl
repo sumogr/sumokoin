@@ -2591,8 +2591,6 @@ skip:
   }
   //------------------------------------------------------------------------------------------------------------------------
   template<class t_core>
-<<<<<<< HEAD
-=======
   void t_cryptonote_protocol_handler<t_core>::drop_connections(const epee::net_utils::network_address address)
   {
     MWARNING("dropping connections to " << address.str());
@@ -2616,7 +2614,6 @@ skip:
   }
   //------------------------------------------------------------------------------------------------------------------------
   template<class t_core>
->>>>>>> 89325548... [cryptonote_protocol] fix asking for pruned blocks
   void t_cryptonote_protocol_handler<t_core>::on_connection_close(cryptonote_connection_context &context)
   {
     uint64_t target = 0;
