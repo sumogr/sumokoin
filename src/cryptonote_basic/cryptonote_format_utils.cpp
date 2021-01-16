@@ -127,8 +127,6 @@ namespace cryptonote
 namespace cryptonote
 {
   //---------------------------------------------------------------
-<<<<<<< HEAD
-=======
   void get_transaction_prefix_hash(const transaction_prefix& tx, crypto::hash& h, hw::device &hwdev)
   {
     hwdev.get_transaction_prefix_hash(tx,h);
@@ -143,7 +141,6 @@ namespace cryptonote
   }
 
   //---------------------------------------------------------------
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
   void get_transaction_prefix_hash(const transaction_prefix& tx, crypto::hash& h)
   {
     std::ostringstream s;
@@ -835,14 +832,6 @@ namespace cryptonote
         << out.target.type().name() << ", expected " << typeid(txout_to_key).name()
         << ", in transaction id=" << get_transaction_hash(tx));
 
-<<<<<<< HEAD
-      if (tx.version == 1)
-      {
-        CHECK_AND_NO_ASSERT_MES(0 < out.amount, false, "zero amount output in transaction id=" << get_transaction_hash(tx));
-      }
-
-=======
->>>>>>> d1e67842... [ringct] Replace MLSAG with more efficient CLSAG
       if(!check_key(boost::get<txout_to_key>(out.target).key))
         return false;
     }

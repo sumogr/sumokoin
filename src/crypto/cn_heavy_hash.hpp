@@ -78,28 +78,6 @@
 
 #if defined(_MSC_VER)
 #define cpuid(info,x)    __cpuidex(info,x,0)
-#else
-inline void cpuid(int CPUInfo[4], int InfoType)
-{
-    ASM __volatile__
-    (
-    "cpuid":
-        "=a" (CPUInfo[0]),
-        "=b" (CPUInfo[1]),
-        "=c" (CPUInfo[2]),
-        "=d" (CPUInfo[3]) :
-            "a" (InfoType), "c" (0)
-        );
-}
-#endif
-
-#ifdef HAS_INTEL_HW
-inline bool hw_check_aes()
-{
-    int32_t cpu_info[4];
-    cpuid(cpu_info, 1);
-    return (cpu_info[2] & (1 << 25)) != 0;
-}
 #endif
 
 #ifdef HAS_ARM_HW
@@ -136,7 +114,7 @@ public:
 	inline uint8_t& as_byte(size_t i) { return *(reinterpret_cast<uint8_t*>(base_ptr)+i); }
 	inline uint8_t* as_byte() { return reinterpret_cast<uint8_t*>(base_ptr); }
 	inline uint64_t& as_uqword(size_t i) { return *(reinterpret_cast<uint64_t*>(base_ptr)+i); }
-	inline const uint64_t& as_uqword(size_t i) const { return *(reinterpret_cast<uint64_t*>(base_ptr)+i); } 
+	inline const uint64_t& as_uqword(size_t i) const { return *(reinterpret_cast<uint64_t*>(base_ptr)+i); }
 	inline uint64_t* as_uqword() { return reinterpret_cast<uint64_t*>(base_ptr); }
 	inline const uint64_t* as_uqword() const { return reinterpret_cast<uint64_t*>(base_ptr); }
 	inline int64_t& as_qword(size_t i) { return *(reinterpret_cast<int64_t*>(base_ptr)+i); }
@@ -200,14 +178,11 @@ public:
 
 	void hash(const void* in, size_t len, void* out, bool prehashed=false)
 	{
-		if(hw_check_aes() && !check_override())
-			hardware_hash(in, len, out, prehashed);
-		else
-			software_hash(in, len, out, prehashed);
+
 	}
 
 	void software_hash(const void* in, size_t len, void* out, bool prehashed);
-	
+
 #if !defined(HAS_INTEL_HW) && !defined(HAS_ARM_HW)
 	inline void hardware_hash(const void* in, size_t len, void* out, bool prehashed) { assert(false); }
 #else

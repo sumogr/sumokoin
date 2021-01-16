@@ -621,16 +621,14 @@ namespace nodetool
     }
     else
     {
-      full_addrs.insert("144.217.164.165:19733"); // Canada
-      full_addrs.insert("217.182.76.94:19733"); // Poland
-      full_addrs.insert("46.105.92.108:19733"); // France
-      full_addrs.insert("139.99.193.21:19733"); // Sydney
-      full_addrs.insert("139.99.40.69:19733"); // Singapore
-      full_addrs.insert("133.18.53.223:19733"); // Japan
-      full_addrs.insert("157.230.187.169:19733"); // NY - explorer
-      full_addrs.insert("157.245.14.220:19733"); // NY
-      full_addrs.insert("134.209.109.190:19733"); // SINGAPORE
-      full_addrs.insert("167.172.44.84:19733"); // Amsterdam
+      full_addrs.insert("144.217.164.165:19733");
+      full_addrs.insert("217.182.76.94:19733");
+      full_addrs.insert("46.105.92.108:19733");
+      full_addrs.insert("139.99.193.21:19733");
+      full_addrs.insert("139.99.40.69:19733");
+      full_addrs.insert("133.18.53.223:19733");
+      full_addrs.insert("168.119.105.217:19733");
+      full_addrs.insert("135.181.96.238:19733");
     }
     return full_addrs;
   }

@@ -7819,7 +7819,7 @@ bool simple_wallet::set_tx_key(const std::vector<std::string> &args_)
     return true;
   }
 
-  std::optional<cryptonote::account_public_address> single_destination_subaddress;
+  boost::optional<cryptonote::account_public_address> single_destination_subaddress;
   if (local_args.size() > 1)
   {
     cryptonote::address_parse_info info;
