@@ -17,7 +17,7 @@ jobs:
         curl -s -O https://cmake.org/files/v3.12/cmake-3.12.1.tar.gz
         tar -xzf cmake-3.12.1.tar.gz
         sudo apt-get update
-        sudo apt-get install -y cmake automake build-essential curl file pkg-config git python libtool
+        sudo apt-get install -y automake build-essential curl file pkg-config git python libtool
         cd cmake-3.12.1
         ./configure
         make -j 4
@@ -95,7 +95,7 @@ jobs:
         sudo mv sumokoin monero
         cd monero
         sudo apt update
-        sudo apt install build-essential cmake pkg-config libunbound-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
+        sudo apt install pkg-config libunbound-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev qttools5-dev-tools libhidapi-dev libusb-dev libprotobuf-dev protobuf-compiler
         sudo chmod u+x build-all-archs.sh
         ./build-all-archs.sh
         cd ..
