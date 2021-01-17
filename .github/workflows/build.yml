@@ -14,15 +14,8 @@ jobs:
         cd opt
         sudo mkdir android
         cd android
-        curl -s -O https://cmake.org/files/v3.12/cmake-3.12.1.tar.gz
-        tar -xzf cmake-3.12.1.tar.gz
         sudo apt-get update
-        sudo apt-get install -y automake build-essential curl file pkg-config git python libtool
-        cd cmake-3.12.1
-        ./configure
-        make -j 4
-        sudo make install -j 4
-        cd ..
+        sudo apt-get install -y cmake build-essential automake build-essential curl file pkg-config git python libtool
         git clone https://github.com/sumogr/android-ndk-r17b
         sudo chmod -R 777 android-ndk-r17b
         cd android-ndk-r17b
