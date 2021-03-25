@@ -203,6 +203,9 @@ set_property(TARGET blockchain_import
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-import")
 install(TARGETS blockchain_import DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_import POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-import ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-import)
@@ -234,6 +237,9 @@ set_property(TARGET blockchain_export
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-export")
 install(TARGETS blockchain_export DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_export POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-export ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-export)
@@ -266,6 +272,9 @@ set_property(TARGET blockchain_blackball
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-mark-spent-outputs")
 install(TARGETS blockchain_blackball DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_blackball POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-mark-spent-outputs ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-mark-spent-outputs)
@@ -297,6 +306,9 @@ set_property(TARGET blockchain_usage
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-usage")
 install(TARGETS blockchain_usage DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_usage POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-usage ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-usage)
@@ -328,6 +340,9 @@ set_property(TARGET blockchain_ancestry
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-ancestry")
 install(TARGETS blockchain_ancestry DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_ancestry POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-ancestry ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-ancestry)
@@ -359,6 +374,9 @@ set_property(TARGET blockchain_depth
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-depth")
 install(TARGETS blockchain_depth DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_depth POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-depth ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-depth)
@@ -390,6 +408,9 @@ set_property(TARGET blockchain_stats
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-stats")
 install(TARGETS blockchain_stats DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_stats POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-stats ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-stats)
@@ -422,6 +443,9 @@ set_property(TARGET blockchain_prune_known_spent_data
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-prune-known-spent-data")
 install(TARGETS blockchain_prune_known_spent_data DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_prune_known_spent_data POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-prune-known-spent-data ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-prune-known-spent-data)
@@ -440,6 +464,9 @@ set_property(TARGET blockchain_prune
 	PROPERTY
 	OUTPUT_NAME "sumo-blockchain-prune")
 install(TARGETS blockchain_prune DESTINATION bin)
+if (UNIX AND DEFAULT_BUILD_64 OFF)
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc  -static-libstdc++ -Wl,-Bstatic -lstdc++ -lssp -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+endif()
 if (UNIX)
 add_custom_command(TARGET blockchain_prune POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/bin/sumo-blockchain-prune ${CMAKE_BINARY_DIR}/bin/blockchain_utilities/sumo-blockchain-prune)
