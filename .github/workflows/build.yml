@@ -287,6 +287,36 @@ jobs:
         name: FreeBSD-release-binaries
         path: build/**/bin/
 
+  cross-build-linux-i686-binaries-on-xenial:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: |
+        sudo apt -y install make automake cmake curl g++-7-multilib bc libtool binutils-gold bsdmainutils pkg-config python3 patch bison gperf
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc
+    - name: cross compile sumokoin bins for linux i686
+      run: make depends target=i686-linux-gnu -j 4
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linuxi686-release-binaries
+        path: build/**/bin/
+  
   cross-build-linux-x64-binaries-on-xenial:
     runs-on: ubuntu-16.04
     steps:
