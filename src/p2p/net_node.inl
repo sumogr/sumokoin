@@ -2850,6 +2850,10 @@ namespace nodetool
     MDEBUG("Attempting to delete IGD port mapping " << ipversion << ".");
     int result;
     const int ipv6_arg = ipv6 ? 1 : 0;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d9bcbefaaf6d3c4323298b2d4149ad05545d34e3
     // default according to miniupnpc.h
     unsigned char ttl = 2;
     UPNPDev* deviceList = upnpDiscover(1000, NULL, NULL, 0, ipv6_arg, ttl, &result);
