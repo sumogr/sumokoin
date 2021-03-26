@@ -3,8 +3,8 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  cross-build-linux-i686-binaries-on-bionic:
-    runs-on: ubuntu-18.04
+  cross-build-linux-i686-binaries-on-focal-fossa:
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
@@ -21,12 +21,12 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install make automake cmake curl clang-10 bc g++-multilib libtool binutils-i686-linux-gnu bsdmainutils pkg-config python3 patch bison gperf nasm
+        sudo apt -y install make automake cmake curl clang-10 bc g++-9-multilib libtool binutils-i686-linux-gnu bsdmainutils pkg-config python3 patch bison gperf nasm
     - name: cross compile sumokoin bins for linux i686
       run: |
-        export CC=/usr/bin/clang
-        export CXX=/usr/bin/clang++ 
-        make depends target=i686-linux-gnu -j 6
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-9
+        sudo update-alternatives --config gcc
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
