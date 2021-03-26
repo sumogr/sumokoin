@@ -22,10 +22,11 @@ jobs:
     - name: install sumokoin dependencies
       run: |
         sudo apt -y install make automake cmake curl clang-10 bc libtool binutils-i686-linux-gnu bsdmainutils pkg-config python3 patch bison gperf nasm
-        export CC=/usr/bin/clang
-        export CXX=/usr/bin/clang++  
     - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 6
+      run: |
+        export CC=/usr/bin/clang
+        export CXX=/usr/bin/clang++ 
+        make depends target=i686-linux-gnu -j 6
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
