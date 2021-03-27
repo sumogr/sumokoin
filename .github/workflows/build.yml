@@ -63,7 +63,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" ..
+        cmake -D STATIC=ON -D ARCH="i386" -D LINK_FLAGS="i386" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" ..
         cd ..
         ccache --max-size=150M
         make release-static -j 6
