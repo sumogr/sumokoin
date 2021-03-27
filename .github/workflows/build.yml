@@ -9,6 +9,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run box version	    
       uses: docker://i386/ubuntu
+      with:
+        entrypoint: /github/workspace     
     - name: Run box version1	          
       run: |
         ls -a
