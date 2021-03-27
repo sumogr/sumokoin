@@ -10,5 +10,5 @@ jobs:
     - name: Run box version	    
       uses: docker://i386/ubuntu
       with:
-        entrypoint: /opt/box/box    
+        entrypoint: /   
         run: ls -a
