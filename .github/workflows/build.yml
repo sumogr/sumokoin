@@ -9,8 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run box version	    
       uses: docker://i386/ubuntu
-      with:
-        entrypoint: /home/
-        run: |
-          ls -a
-          uname -a
+    - name: Run box version1	          
+      run: |
+        ls -a
+        uname -a
