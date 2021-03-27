@@ -7,8 +7,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
         Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
