@@ -5,11 +5,11 @@ on: [push, pull_request]
 jobs:
   Windows32-cross-on-focal-fossa:
     runs-on: windows-latest
-    steps:
+    container:
+      image: 32bit/ubuntu
+    steps:  
     - uses: actions/checkout@v1
-    - name: set apt conf
-      run: |
-        Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
-        Install-Package -Name docker -ProviderName DockerMsftProvider
-        winpty docker run 32bit/ubuntu
-        apt update
+    - name: What OS is running
+      run: uname -a
+    - name: What java version do we have
+      run: java -version
