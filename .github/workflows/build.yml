@@ -3,15 +3,67 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  Windows32-cross-on-focal-fossa:
-    runs-on: windows-latest
+
+  build-ubuntu-bionic-static-native:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/cache@v2
+      with:
+        path: ~/.ccache
+        key: ccache-ubuntu-bionic-static-build-${{ github.sha }}
+        restore-keys: ccache-ubuntu-bionic-static-build-
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
-        Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
-        Install-Package -Name docker -ProviderName DockerMsftProvider
-        Start-Service Docker
-        docker pull i386/ubuntu
-        docker run -it i386/ubuntu
-        
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
+    - name: install sumokoin dependencies
+      run: |
+       sudo apt -y install build-essential cmake miniupnpc g++-7-multilib libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc
+    - name: build boost 1_74
+      run: |
+        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
+        tar -xvf boost_1_74_0.tar.bz2
+        rm -f /usr/boost_1_74_0.tar.bz2
+        cd boost_1_74_0
+        sudo ./bootstrap.sh
+        sudo ./b2 install -j 6
+        cd ..
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 6
+        sudo make install
+        sudo ldconfig
+        cd ..
+    - name: build libunwind
+      run: |
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 6
+        sudo make install
+        cd ..
+    - name: build sumokoin
+      run: |
+        mkdir build
+        cd build
+        cmake -D STATIC=ON -D ARCH="i686" -D BUILD_64=OFF -D CMAKE_BUILD_TYPE=release -D BUILD_TAG="linux-x86" ..
+        cd ..
+        ccache --max-size=150M
+        make release-static -j 6
