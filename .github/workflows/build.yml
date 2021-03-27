@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v1
+    - uses: paulproteus/ubuntu-18.04-x86@0.1    
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -21,11 +22,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install bc libtool autoconf automake gperf
-    - name: Set up GCC
-      uses: egor-tensin/setup-gcc@v1
-      with:
-        platform: x32        
+        sudo apt -y install bc libtool autoconf automake gperf g++-multilib     
     - name: cross compile sumokoin bins for linux x32
       run: make depends target=i686-linux-gnu -j 4
     - name: upload binaries
