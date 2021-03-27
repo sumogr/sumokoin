@@ -6,11 +6,8 @@ jobs:
   Windows32-cross-on-focal-fossa:
     runs-on: ubuntu-20.04
     container:
-      image: i386/ubuntu
-    steps:
-    - name: Log the step container node version
-      uses: docker://i386/ubuntu
-    - name: test 
-      run: |
-        ls -a  
-        uname -a
+      image: 32bit/ubuntu:16.04 
+    steps:  
+    - uses: actions/checkout@v2
+    - name: What OS is running
+      run: uname -a
