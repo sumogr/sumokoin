@@ -5,11 +5,10 @@ on: [push, pull_request]
 jobs:
   Windows32-cross-on-focal-fossa:
     runs-on: ubuntu-20.04
-    container:
-      image: i386/ubuntu
-    steps:  
-    - uses: actions/checkout@v1
-    - name: What OS is running
-      run: uname -a
-    - name: What java version do we have
-      run: java -version
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run box version	    
+      uses: docker://i386/ubuntu
+      with:
+        entrypoint: /opt/box/box    
+        run: ls -a
