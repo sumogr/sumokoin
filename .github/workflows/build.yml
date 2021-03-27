@@ -11,4 +11,5 @@ jobs:
       run: |
         Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
         Install-Package -Name docker -ProviderName DockerMsftProvider
-        docker run hello-world
+        docker run -it 32bit/ubuntu
+        apt update
