@@ -11,5 +11,5 @@ jobs:
       run: |
         Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
         Install-Package -Name docker -ProviderName DockerMsftProvider
-        docker run -it 32bit/ubuntu
+        winpty docker run 32bit/ubuntu
         apt update
