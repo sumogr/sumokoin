@@ -67,3 +67,8 @@ jobs:
         cd ..
         ccache --max-size=150M
         make release-static -j 6
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linuxx86-release-binaries
+        path: build/**/bin/        
