@@ -4,10 +4,18 @@ on: [push, pull_request]
 
 jobs:
   Windows32-cross-on-focal-fossa:
-    runs-on: ubuntu-20.04
-    container:
-      image: 32bit/ubuntu:16.04 
-    steps:  
-    - uses: actions/checkout@v2
-    - name: What OS is running
-      run: uname -a
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        sudo apt-get update
+        apt-cache policy docker-ce
+        sudo apt-get install -y docker-ce
+        sudo systemctl status docker
+
+        
