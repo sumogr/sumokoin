@@ -6,7 +6,7 @@ jobs:
   Windows32-cross-on-focal-fossa:
     runs-on: ubuntu-20.04
     container:
-      image: node:14.15.0-alpine3.12
+      image: node:10.24.0-alpine3.11:i386
     steps:
     - name: Log the node version
       run: |
