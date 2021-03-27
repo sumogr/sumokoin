@@ -3,30 +3,11 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  cross-build-linux-x32-binaries-on-focal-fossa:
-    runs-on: ubuntu-20.04
+  Windows32-cross-on-focal-fossa:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: paulproteus/ubuntu-18.04-x86@0.1    
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt update
-    - name: install sumokoin dependencies
-      run: |
-        sudo apt -y install bc libtool autoconf automake gperf g++-multilib     
-    - name: cross compile sumokoin bins for linux x32
-      run: make depends target=i686-linux-gnu -j 4
-    - name: upload binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: linu32bit-release-binaries
-        path: build/**/bin/
+        Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+        Install-Package -Name docker -ProviderName DockerMsftProvider
