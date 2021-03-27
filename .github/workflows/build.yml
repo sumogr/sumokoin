@@ -6,7 +6,7 @@ jobs:
   Windows32-cross-on-focal-fossa:
     runs-on: ubuntu-20.04
     container:
-      image: 32bit/ubuntu
+      image: i386/ubuntu
     steps:  
     - uses: actions/checkout@v1
     - name: What OS is running
