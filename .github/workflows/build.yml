@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   Windows32-cross-on-focal-fossa:
-    runs-on: windows-latest
+    runs-on: ubuntu-20.04
     container:
       image: 32bit/ubuntu
     steps:  
