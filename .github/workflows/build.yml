@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Log the step container node version
       uses: docker://i386/ubuntu
-      with:
-        args: |
-          ls -a  
-          uname -a
+    - name: test 
+      run: |
+        ls -a  
+        uname -a
