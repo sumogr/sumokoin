@@ -16,8 +16,7 @@ jobs:
         sudo apt-get update
         apt-cache policy docker-ce
         sudo apt-get install -y docker-ce
-        sudo usermod -aG docker ${USER}
-        su - ${USER}
-        id -nG
-
+        sudo docker pull i386/ubuntu
+        sudo docker run i386/ubuntu
+        sudo docker run -it i386/ubuntu
         
