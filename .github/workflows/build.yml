@@ -4,19 +4,16 @@ on: [push, pull_request]
 
 jobs:
   Windows32-cross-on-focal-fossa:
-    runs-on: ubuntu-16.04
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
       run: |
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-        sudo apt-get update
-        apt-cache policy docker-ce
-        sudo apt-get install -y docker-ce
-        sudo docker pull i386/ubuntu
-        sudo docker run i386/ubuntu
-        sudo docker run -it i386/ubuntu
+        Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+        Install-Package -Name docker -ProviderName DockerMsftProvider
+        Start-Service Docker
+        docker pull i386/ubuntu
+        docker run -it i386/ubuntu
         
