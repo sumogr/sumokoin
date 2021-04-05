@@ -231,14 +231,14 @@ TEST(test_epee_connection, test_lifetime)
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto M = 1;
-    tags_t tag(M);
-    for(auto &r: tag)
+    tags_t tags(M);
+    for(auto &r: tags)
       r = create_connection();
     ASSERT_TRUE(shared_state->get_connections_count() == M);
     size_t ind = 0;
-    success = shared_state->foreach_connection([&ind, shared_state, &tag, &create_connection](context_t& context){
+    success = shared_state->foreach_connection([&ind, shared_state, &tags, &create_connection](context_t& context){
       if (!ind)
-        for (const auto &r: tag)
+        for (const auto &r: tags)
           shared_state->close(r);
 
       shared_state->close(context.m_connection_id);
