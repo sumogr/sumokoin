@@ -41,8 +41,8 @@
 
 namespace
 {
-  const uint32_t test_server_port = 5626;
-  const std::string test_server_host("127.0.0.1");
+  const uint32_t test_server_port = 5630;
+  const std::string test_server_host("127.0.0.3");
 
   struct test_connection_context : public epee::net_utils::connection_context_base
   {
@@ -132,4 +132,348 @@ TEST(boosted_tcp_server, worker_threads_are_exception_resistant)
   srv.send_stop_signal();
   ASSERT_TRUE(srv.timed_wait_server_stop(5 * 1000));
   ASSERT_TRUE(srv.deinit_server());
+}
+
+
+TEST(test_epee_connection, test_lifetime)
+{
+  struct context_t: epee::net_utils::connection_context_base {
+    static constexpr size_t get_max_bytes(int) noexcept { return -1; }
+    static constexpr int handshake_command() noexcept { return 1001; }
+    static constexpr bool handshake_complete() noexcept { return true; }
+  };
+
+  using functional_obj_t = std::function<void ()>;
+  struct command_handler_t: epee::levin::levin_commands_handler<context_t> {
+    size_t delay;
+    functional_obj_t on_connection_close_f;
+    command_handler_t(size_t delay = 0,
+      functional_obj_t on_connection_close_f = nullptr
+    ):
+      delay(delay),
+      on_connection_close_f(on_connection_close_f)
+    {}
+    virtual int invoke(int, const epee::span<const uint8_t>, epee::byte_slice&, context_t&) override { epee::misc_utils::sleep_no_w(delay); return {}; }
+    virtual int notify(int, const epee::span<const uint8_t>, context_t&) override { return {}; }
+    virtual void callback(context_t&) override {}
+    virtual void on_connection_new(context_t&) override {}
+    virtual void on_connection_close(context_t&) override {
+      if (on_connection_close_f)
+        on_connection_close_f();
+    }
+    virtual ~command_handler_t() override {}
+    static void destroy(epee::levin::levin_commands_handler<context_t>* ptr) { delete ptr; }
+  };
+
+  using handler_t = epee::levin::async_protocol_handler<context_t>;
+  using connection_t = epee::net_utils::connection<handler_t>;
+  using connection_ptr = boost::shared_ptr<connection_t>;
+  using shared_state_t = typename connection_t::shared_state;
+  using shared_state_ptr = std::shared_ptr<shared_state_t>;
+  using shared_states_t = std::vector<shared_state_ptr>;
+  using tag_t = boost::uuids::uuid;
+  using tags_t = std::vector<tag_t>;
+  using io_context_t = boost::asio::io_service;
+  using endpoint_t = boost::asio::ip::tcp::endpoint;
+  using work_t = boost::asio::io_service::work;
+  using work_ptr = std::shared_ptr<work_t>;
+  using workers_t = std::vector<std::thread>;
+  using server_t = epee::net_utils::boosted_tcp_server<handler_t>;
+  using lock_t = std::mutex;
+  using lock_guard_t = std::lock_guard<lock_t>;
+  using connection_weak_ptr = boost::weak_ptr<connection_t>;
+  struct shared_conn_t {
+    lock_t lock;
+    connection_weak_ptr conn;
+  };
+  using shared_conn_ptr = std::shared_ptr<shared_conn_t>;
+
+  io_context_t io_context;
+  work_ptr work(std::make_shared<work_t>(io_context));
+
+  workers_t workers;
+  while (workers.size() < 4) {
+    workers.emplace_back([&io_context]{
+      io_context.run();
+    });
+  }
+
+  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.4"), 5162);
+  server_t server(epee::net_utils::e_connection_type_P2P);
+  server.init_server(endpoint.port(),
+    endpoint.address().to_string(),
+    0,
+    "",
+    false,
+    true,
+    epee::net_utils::ssl_support_t::e_ssl_support_disabled
+  );
+  server.run_server(2, false);
+  server.get_config_shared()->set_handler(new command_handler_t, &command_handler_t::destroy);
+
+  io_context.post([&io_context, &work, &endpoint, &server]{
+    auto scope_exit_handler = epee::misc_utils::create_scope_leave_handler([&work]{
+      work.reset();
+    });
+
+    shared_state_ptr shared_state(std::make_shared<shared_state_t>());
+    shared_state->set_handler(new command_handler_t, &command_handler_t::destroy);
+
+    auto create_connection = [&io_context, &endpoint, &shared_state] {
+        connection_ptr conn(new connection_t(io_context, shared_state, {}, {}));
+        conn->socket().connect(endpoint);
+        conn->start({}, {});
+        context_t context;
+        conn->get_context(context);
+        auto tag = context.m_connection_id;
+        return tag;
+    };
+
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    constexpr auto M = 1;
+    tags_t tag(M);
+    for(auto &r: tag)
+      r = create_connection();
+    ASSERT_TRUE(shared_state->get_connections_count() == M);
+    size_t ind = 0;
+    success = shared_state->foreach_connection([&ind, shared_state, &tag, &create_connection](context_t& context){
+      if (!ind)
+        for (const auto &r: tag)
+          shared_state->close(r);
+
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++ind;
+
+      for(auto k = 0; i < M; ++k)
+        create_connection();
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(ind == M);
+    ASSERT_TRUE(shared_state->get_connections_count() == M * M);
+
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    constexpr auto N = 8;
+    tags_t tags(N);
+    for(auto &t: tags)
+      t = create_connection();
+    ASSERT_TRUE(shared_state->get_connections_count() == N);
+    size_t index = 0;
+    success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
+      if (!index)
+        for (const auto &t: tags)
+          shared_state->close(t);
+
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++index;
+
+      for(auto i = 0; i < N; ++i)
+        create_connection();
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(index == N);
+    ASSERT_TRUE(shared_state->get_connections_count() == N * N);
+
+    index = 0;
+    success = shared_state->foreach_connection([&index, shared_state](context_t& context){
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++index;
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(index == N * N);
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+
+    while (shared_state->sock_count);
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    constexpr auto DELAY = 30;
+    constexpr auto TIMEOUT = 1;
+    server.get_config_shared()->set_handler(new command_handler_t(DELAY), &command_handler_t::destroy);
+    for (auto i = 0; i < N; ++i) {
+      tag = create_connection();
+      ASSERT_TRUE(shared_state->get_connections_count() == 1);
+      success = shared_state->invoke_async(1, {}, tag, [](int, const epee::span<const uint8_t>, context_t&){}, TIMEOUT);
+      ASSERT_TRUE(success);
+      while (shared_state->sock_count == 1) {
+        success = shared_state->foreach_connection([&shared_state, &tag](context_t&){
+          return shared_state->request_callback(tag);
+        });
+        ASSERT_TRUE(success);
+      }
+      shared_state->close(tag);
+      ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    }
+
+    while (shared_state->sock_count);
+    constexpr auto ZERO_DELAY = 0;
+    size_t counter = 0;
+    shared_state->set_handler(new command_handler_t(ZERO_DELAY,
+        [&counter]{
+          ASSERT_TRUE(counter++ == 0);
+        }
+      ),
+      &command_handler_t::destroy
+    );
+    connection_ptr conn(new connection_t(io_context, shared_state, {}, {}));
+    conn->socket().connect(endpoint);
+    conn->start({}, {});
+    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+    shared_state->del_out_connections(1);
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    conn.reset();
+
+    while (shared_state->sock_count);
+    shared_conn_ptr shared_conn(std::make_shared<shared_conn_t>());
+    shared_state->set_handler(new command_handler_t(ZERO_DELAY,
+        [shared_state, shared_conn]{
+          {
+            connection_ptr conn;
+            {
+              lock_guard_t guard(shared_conn->lock);
+              conn = std::move(shared_conn->conn.lock());
+            }
+            if (conn)
+              conn->cancel();
+          }
+          const auto success = shared_state->foreach_connection([](context_t&){
+            return true;
+          });
+          ASSERT_TRUE(success);
+        }
+      ),
+      &command_handler_t::destroy
+    );
+    for (auto i = 0; i < N; ++i) {
+      {
+        connection_ptr conn(new connection_t(io_context, shared_state, {}, {}));
+        conn->socket().connect(endpoint);
+        conn->start({}, {});
+        lock_guard_t guard(shared_conn->lock);
+        shared_conn->conn = conn;
+      }
+      ASSERT_TRUE(shared_state->get_connections_count() == 1);
+      shared_state->del_out_connections(1);
+      ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    }
+
+    shared_states_t shared_states;
+    while (shared_states.size() < 2) {
+      shared_states.emplace_back(std::make_shared<shared_state_t>());
+      shared_states.back()->set_handler(new command_handler_t(ZERO_DELAY,
+          [&shared_states]{
+            for (auto &s: shared_states) {
+              auto success = s->foreach_connection([](context_t&){
+                return true;
+              });
+              ASSERT_TRUE(success);
+            }
+          }
+        ),
+        &command_handler_t::destroy
+      );
+    }
+    workers_t workers;
+
+    for (auto &s: shared_states) {
+      workers.emplace_back([&io_context, &s, &endpoint]{
+        for (auto i = 0; i < N * N; ++i) {
+          connection_ptr conn(new connection_t(io_context, s, {}, {}));
+          conn->socket().connect(endpoint);
+          conn->start({}, {});
+          io_context.post([conn]{
+            conn->cancel();
+          });
+          conn.reset();
+          s->del_out_connections(1);
+          while (s->sock_count);
+        }
+      });
+    }
+    for (;workers.size(); workers.pop_back())
+      workers.back().join();
+
+    for (auto &s: shared_states) {
+      workers.emplace_back([&io_context, &s, &endpoint]{
+        for (auto i = 0; i < N * N; ++i) {
+          connection_ptr conn(new connection_t(io_context, s, {}, {}));
+          conn->socket().connect(endpoint);
+          conn->start({}, {});
+          conn->cancel();
+          while (conn.use_count() > 1);
+          s->foreach_connection([&io_context, &s, &endpoint, &conn](context_t& context){
+            conn.reset(new connection_t(io_context, s, {}, {}));
+            conn->socket().connect(endpoint);
+            conn->start({}, {});
+            conn->cancel();
+            while (conn.use_count() > 1);
+            conn.reset();
+            return true;
+          });
+          while (s->sock_count);
+        }
+      });
+    }
+    for (;workers.size(); workers.pop_back())
+      workers.back().join();
+
+    for (auto &s: shared_states) {
+      workers.emplace_back([&io_context, &s, &endpoint]{
+        for (auto i = 0; i < N; ++i) {
+          connection_ptr conn(new connection_t(io_context, s, {}, {}));
+          conn->socket().connect(endpoint);
+          conn->start({}, {});
+          context_t context;
+          conn->get_context(context);
+          auto tag = context.m_connection_id;
+          conn->cancel();
+          while (conn.use_count() > 1);
+          s->for_connection(tag, [&io_context, &s, &endpoint, &conn](context_t& context){
+            conn.reset(new connection_t(io_context, s, {}, {}));
+            conn->socket().connect(endpoint);
+            conn->start({}, {});
+            conn->cancel();
+            while (conn.use_count() > 1);
+            conn.reset();
+            return true;
+          });
+          while (s->sock_count);
+        }
+      });
+    }
+    for (;workers.size(); workers.pop_back())
+      workers.back().join();
+
+    for (auto &s: shared_states) {
+      workers.emplace_back([&io_context, &s, &endpoint]{
+        for (auto i = 0; i < N; ++i) {
+          connection_ptr conn(new connection_t(io_context, s, {}, {}));
+          conn->socket().connect(endpoint);
+          conn->start({}, {});
+          context_t context;
+          conn->get_context(context);
+          auto tag = context.m_connection_id;
+          io_context.post([conn]{
+            conn->cancel();
+          });
+          conn.reset();
+          s->close(tag);
+          while (s->sock_count);
+        }
+      });
+    }
+    for (;workers.size(); workers.pop_back())
+      workers.back().join();
+
+  });
+
+  for (auto& w: workers) {
+    w.join();
+  }
+  server.send_stop_signal();
+  server.timed_wait_server_stop(5 * 1000);
+  server.deinit_server();
 }

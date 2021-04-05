@@ -294,6 +294,7 @@ TEST(node_server, bind_same_p2p_port)
     boost::program_options::variables_map vm;
     boost::program_options::store(boost::program_options::parse_command_line(1, argv, desc_options), vm);
 
+    vm.find(nodetool::arg_p2p_bind_ip.name)->second   = boost::program_options::variable_value(std::string("127.0.0.2"), false);
     vm.find(nodetool::arg_p2p_bind_port.name)->second = boost::program_options::variable_value(std::string(port), false);
 
     boost::program_options::notify(vm);
