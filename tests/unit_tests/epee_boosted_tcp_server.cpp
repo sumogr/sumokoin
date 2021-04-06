@@ -198,7 +198,7 @@ TEST(test_epee_connection, test_lifetime)
     });
   }
 
-  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.3"), 5261);
+  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.3"), 5211);
   server_t server(epee::net_utils::e_connection_type_P2P);
   server.init_server(endpoint.port(),
     endpoint.address().to_string(),
@@ -228,30 +228,6 @@ TEST(test_epee_connection, test_lifetime)
         auto tag = context.m_connection_id;
         return tag;
     };
-
-    ASSERT_TRUE(shared_state->get_connections_count() == 0);
-    constexpr auto M = 1;
-    tags_t tags(M);
-    for(auto &t: tags)
-      t = create_connection();
-    ASSERT_TRUE(shared_state->get_connections_count() == M);
-    size_t index = 0;
-    success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
-      if (!index)
-        for (const auto &t: tags)
-          shared_state->close(t);
-
-      shared_state->close(context.m_connection_id);
-      context.m_remote_address.get_zone();
-      ++index;
-
-      for(auto i = 0; i < M; ++i)
-        create_connection();
-      return true;
-    });
-    ASSERT_TRUE(success);
-    ASSERT_TRUE(index == M);
-    ASSERT_TRUE(shared_state->get_connections_count() == M * M);
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto N = 8;
@@ -288,6 +264,38 @@ TEST(test_epee_connection, test_lifetime)
     ASSERT_TRUE(index == N * N);
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
 
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    tags_t tags(1);
+    for(auto &t: tags)
+      t = create_connection();
+    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+    success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
+      if (!index)
+        for (const auto &t: tags)
+          shared_state->close(t);
+
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++index;
+
+      for(auto i = 0; i < 1; ++i)
+        create_connection();
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(index == 1);
+    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+
+    success = shared_state->foreach_connection([&index, shared_state](context_t& context){
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++index;
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(index == 1);
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    
     while (shared_state->sock_count);
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto DELAY = 30;
