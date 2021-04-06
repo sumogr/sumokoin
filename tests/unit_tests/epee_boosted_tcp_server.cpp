@@ -41,8 +41,8 @@
 
 namespace
 {
-  const uint32_t test_server_port = 5616;
-  const std::string test_server_host("127.0.0.3");
+  const uint32_t test_server_port = 5626;
+  const std::string test_server_host("127.0.0.1");
 
   struct test_connection_context : public epee::net_utils::connection_context_base
   {
@@ -198,7 +198,7 @@ TEST(test_epee_connection, test_lifetime)
     });
   }
 
-  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.3"), 5211);
+  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 5262);
   server_t server(epee::net_utils::e_connection_type_P2P);
   server.init_server(endpoint.port(),
     endpoint.address().to_string(),
@@ -254,51 +254,6 @@ TEST(test_epee_connection, test_lifetime)
     ASSERT_TRUE(shared_state->get_connections_count() == N * N);
 
     index = 0;
-    bool success = shared_state->foreach_connection([&index, shared_state](context_t& context){
-      shared_state->close(context.m_connection_id);
-      context.m_remote_address.get_zone();
-      ++index;
-      return true;
-    });
-    ASSERT_TRUE(success);
-    ASSERT_TRUE(index == N * N);
-    ASSERT_TRUE(shared_state->get_connections_count() == 0);
-
-    ASSERT_TRUE(shared_state->get_connections_count() == 0);
-    constexpr auto N = 1;
-    tags_t tags(N);
-    for(auto &t: tags)
-      t = create_connection();
-    ASSERT_TRUE(shared_state->get_connections_count() == N);
-    size_t index = 0;
-    bool success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
-      if (!index)
-        for (const auto &t: tags)
-          shared_state->close(t);
-
-      shared_state->close(context.m_connection_id);
-      context.m_remote_address.get_zone();
-      ++index;
-
-      for(auto i = 0; i < N; ++i)
-        create_connection();
-      return true;
-    });
-    ASSERT_TRUE(success);
-    ASSERT_TRUE(index == N);
-    ASSERT_TRUE(shared_state->get_connections_count() == N * N);
-
-    index = 0;
-    bool success = shared_state->foreach_connection([&index, shared_state](context_t& context){
-      shared_state->close(context.m_connection_id);
-      context.m_remote_address.get_zone();
-      ++index;
-      return true;
-    });
-    ASSERT_TRUE(success);
-    ASSERT_TRUE(index == N * N);
-    ASSERT_TRUE(shared_state->get_connections_count() == 0);
-
     success = shared_state->foreach_connection([&index, shared_state](context_t& context){
       shared_state->close(context.m_connection_id);
       context.m_remote_address.get_zone();
@@ -306,9 +261,9 @@ TEST(test_epee_connection, test_lifetime)
       return true;
     });
     ASSERT_TRUE(success);
-    ASSERT_TRUE(index == 1);
+    ASSERT_TRUE(index == N * N);
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
-    
+
     while (shared_state->sock_count);
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto DELAY = 30;
