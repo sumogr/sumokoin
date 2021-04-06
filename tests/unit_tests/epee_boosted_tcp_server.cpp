@@ -231,7 +231,7 @@ TEST(test_epee_connection, test_lifetime)
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     auto tag = create_connection();
-    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+    ASSERT_TRUE(shared_state->get_connections_count() > 0);
     bool success = shared_state->for_connection(tag, [shared_state](context_t& context){
       shared_state->close(context.m_connection_id);
       context.m_remote_address.get_zone();
