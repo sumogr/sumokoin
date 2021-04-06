@@ -254,7 +254,7 @@ TEST(test_epee_connection, test_lifetime)
     ASSERT_TRUE(shared_state->get_connections_count() == N * N);
 
     index = 0;
-    success = shared_state->foreach_connection([&index, shared_state](context_t& context){
+    bool success = shared_state->foreach_connection([&index, shared_state](context_t& context){
       shared_state->close(context.m_connection_id);
       context.m_remote_address.get_zone();
       ++index;
