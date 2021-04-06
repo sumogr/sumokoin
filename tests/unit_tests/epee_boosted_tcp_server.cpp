@@ -265,11 +265,13 @@ TEST(test_epee_connection, test_lifetime)
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
-    tags_t tags(1);
+    constexpr auto N = 1;
+    tags_t tags(N);
     for(auto &t: tags)
       t = create_connection();
-    ASSERT_TRUE(shared_state->get_connections_count() == 1);
-    success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
+    ASSERT_TRUE(shared_state->get_connections_count() == N);
+    size_t index = 0;
+    bool success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
       if (!index)
         for (const auto &t: tags)
           shared_state->close(t);
@@ -278,13 +280,24 @@ TEST(test_epee_connection, test_lifetime)
       context.m_remote_address.get_zone();
       ++index;
 
-      for(auto i = 0; i < 1; ++i)
+      for(auto i = 0; i < N; ++i)
         create_connection();
       return true;
     });
     ASSERT_TRUE(success);
-    ASSERT_TRUE(index == 1);
-    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+    ASSERT_TRUE(index == N);
+    ASSERT_TRUE(shared_state->get_connections_count() == N * N);
+
+    index = 0;
+    bool success = shared_state->foreach_connection([&index, shared_state](context_t& context){
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      ++index;
+      return true;
+    });
+    ASSERT_TRUE(success);
+    ASSERT_TRUE(index == N * N);
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
 
     success = shared_state->foreach_connection([&index, shared_state](context_t& context){
       shared_state->close(context.m_connection_id);
