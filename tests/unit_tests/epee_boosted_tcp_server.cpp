@@ -41,8 +41,8 @@
 
 namespace
 {
-  const uint32_t test_server_port = 5626;
-  const std::string test_server_host("127.0.0.1");
+  const uint32_t test_server_port = 5621;
+  const std::string test_server_host("127.0.0.2");
 
   struct test_connection_context : public epee::net_utils::connection_context_base
   {
@@ -198,7 +198,7 @@ TEST(test_epee_connection, test_lifetime)
     });
   }
 
-  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 5262);
+  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 5261);
   server_t server(epee::net_utils::e_connection_type_P2P);
   server.init_server(endpoint.port(),
     endpoint.address().to_string(),
@@ -228,6 +228,16 @@ TEST(test_epee_connection, test_lifetime)
         auto tag = context.m_connection_id;
         return tag;
     };
+
+    ASSERT_TRUE(shared_state->get_connections_count() == 0);
+    auto tag = create_connection();
+    ASSERT_TRUE(shared_state->get_connections_count() == 1);
+    bool success = shared_state->for_connection(tag, [shared_state](context_t& context){
+      shared_state->close(context.m_connection_id);
+      context.m_remote_address.get_zone();
+      return true;
+    });
+    ASSERT_TRUE(success);
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto N = 8;
