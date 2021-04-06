@@ -1,21 +1,21 @@
-// Copyright (c) 2014-2021, The Monero Project
-//
+// Copyright (c) 2014-2020, The Monero Project
+// 
 // All rights reserved.
-//
+// 
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
-//
+// 
 // 1. Redistributions of source code must retain the above copyright notice, this list of
 //    conditions and the following disclaimer.
-//
+// 
 // 2. Redistributions in binary form must reproduce the above copyright notice, this list
 //    of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-//
+// 
 // 3. Neither the name of the copyright holder nor the names of its contributors may be
 //    used to endorse or promote products derived from this software without specific
 //    prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
@@ -25,7 +25,7 @@
 // INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
 // STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+// 
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
 #include <boost/chrono/chrono.hpp>
@@ -41,7 +41,7 @@
 
 namespace
 {
-  const uint32_t test_server_port = 5630;
+  const uint32_t test_server_port = 5616;
   const std::string test_server_host("127.0.0.3");
 
   struct test_connection_context : public epee::net_utils::connection_context_base
@@ -198,7 +198,7 @@ TEST(test_epee_connection, test_lifetime)
     });
   }
 
-  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.4"), 5162);
+  endpoint_t endpoint(boost::asio::ip::address::from_string("127.0.0.3"), 5261);
   server_t server(epee::net_utils::e_connection_type_P2P);
   server.init_server(endpoint.port(),
     endpoint.address().to_string(),
@@ -232,25 +232,25 @@ TEST(test_epee_connection, test_lifetime)
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
     constexpr auto M = 1;
     tags_t tags(M);
-    for(auto &r: tags)
-      r = create_connection();
+    for(auto &t: tags)
+      t = create_connection();
     ASSERT_TRUE(shared_state->get_connections_count() == M);
-    size_t ind = 0;
-    success = shared_state->foreach_connection([&ind, shared_state, &tags, &create_connection](context_t& context){
-      if (!ind)
-        for (const auto &r: tags)
-          shared_state->close(r);
+    size_t index = 0;
+    success = shared_state->foreach_connection([&index, shared_state, &tags, &create_connection](context_t& context){
+      if (!index)
+        for (const auto &t: tags)
+          shared_state->close(t);
 
       shared_state->close(context.m_connection_id);
       context.m_remote_address.get_zone();
-      ++ind;
+      ++index;
 
-      for(auto k = 0; i < M; ++k)
+      for(auto i = 0; i < M; ++i)
         create_connection();
       return true;
     });
     ASSERT_TRUE(success);
-    ASSERT_TRUE(ind == M);
+    ASSERT_TRUE(index == M);
     ASSERT_TRUE(shared_state->get_connections_count() == M * M);
 
     ASSERT_TRUE(shared_state->get_connections_count() == 0);
