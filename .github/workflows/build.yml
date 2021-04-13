@@ -58,7 +58,7 @@ jobs:
             osx_sdk: "10.11"
           - name: "Freebsd cross"
             host: "x86_64-unknown-freebsd"
-            packages: "clang gperf cmake python3-zmq libdbus-1-dev libharfbuzz-dev"
+            packages: "clang-9 gperf cmake python3-zmq libdbus-1-dev libharfbuzz-dev"
     name: ${{ matrix.toolchain.name }}
     steps:
     - uses: actions/checkout@v1
