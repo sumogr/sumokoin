@@ -23,7 +23,7 @@ jobs:
         make -j 3
 
   cross-compile-all-archs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-16.04
     env:
       CCACHE_COMPRESS: 1
       CCACHE_TEMPDIR: /tmp/.ccache-temp
@@ -58,7 +58,7 @@ jobs:
             osx_sdk: "10.11"
           - name: "Freebsd cross"
             host: "x86_64-unknown-freebsd"
-            packages: "clang-9 gperf cmake python3-zmq libdbus-1-dev libharfbuzz-dev"
+            packages: "gperf cmake python3-zmq libdbus-1-dev libharfbuzz-dev"
     name: ${{ matrix.toolchain.name }}
     steps:
     - uses: actions/checkout@v1
@@ -93,6 +93,15 @@ jobs:
         cd /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
         sudo tar -xf Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
         cd /home/runner/work/sumokoin/sumokoin
+    - name: prepare freebsd       
+      if: ${{ matrix.toolchain.host == 'x86_64-unknown-freebsd' }}
+      run: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo apt-add-repository -y "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+        sudo apt-get update
+        sudo apt-get install -y clang-8
+        sudo update-alternatives --install /usr/bin/clang   clang   /usr/bin/clang-8    1000
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-8  1000
     - name: prepare w64-mingw32
       if: ${{ matrix.toolchain.host == 'x86_64-w64-mingw32' || matrix.toolchain.host == 'i686-w64-mingw32' }}
       run: |
