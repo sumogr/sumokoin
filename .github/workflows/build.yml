@@ -23,7 +23,7 @@ jobs:
         make -j 3
 
   cross-compile-all-archs:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     env:
       CCACHE_COMPRESS: 1
       CCACHE_TEMPDIR: /tmp/.ccache-temp
@@ -93,7 +93,7 @@ jobs:
         cd /home/runner/work/sumokoin/sumokoin/contrib/depends/SDKs
         sudo tar -xf Xcode-11.3.1-11C505-extracted-SDK-with-libcxx-headers.tar.gz
         cd /home/runner/work/sumokoin/sumokoin
-    - name: prepare freebsd       
+    - name: prepare freebsd
       if: ${{ matrix.toolchain.host == 'x86_64-unknown-freebsd' }}
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
