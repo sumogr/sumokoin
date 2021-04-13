@@ -343,9 +343,17 @@ jobs:
         name: linux64-release-binaries
         path: build/**/bin/
 
-  cross-build-linux-x32-binaries-on-bionic:
-   runs-on: ubuntu-18.04
-   steps:
+  cross-build-linux-i686:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain:
+          - name: "i686 Linux"
+            host: "i686-pc-linux-gnu"
+            packages: "gperf cmake g++-multilib python3-zmq"
+    name: ${{ matrix.toolchain.name }}
+    steps:
     - uses: actions/checkout@v1
     - name: set apt conf
       run: |
@@ -353,12 +361,13 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: install dependencies
-      run: sudo apt update; sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache gperf cmake g++-multilib python3-zmq
+      run: sudo apt update; sudo apt -y install build-essential libtool cmake autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache ${{ matrix.toolchain.packages }}
     - name: build
-      run:  make depends target=i686-pc-linux-gnu -j3
-    - uses: actions/upload-artifact@v2
+      run:  make depends target=${{ matrix.toolchain.host }} -j 3
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
       with:
-        name: linux-i686-binaries
+        name: linuxi686-release-binaries
         path: build/**/bin/
         
   cross-build-armv7-binaries-on-bionic:
