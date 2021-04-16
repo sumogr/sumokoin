@@ -27,7 +27,6 @@ jobs:
         tar xf gcc-10.1.0.tar.xz
         cd gcc-10.1.0
         contrib/download_prerequisites
-        cd ~
         mkdir build && cd build
         ../gcc-10.1.0/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-10.1.0 --enable-checking=release --enable-languages=c,c++,fortran,asm  --program-suffix=-10.1
         make -j 4
