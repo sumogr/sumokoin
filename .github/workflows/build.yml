@@ -22,12 +22,20 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev cmake g++-7-multilib bc gcc pkg-config libtool autoconf automake gperf
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc
+        sudo apt -y install bc libtool autoconf automake gperf build-essential wget m4 flex bison
+        wget https://ftpmirror.gnu.org/gcc/gcc-10.1.0/gcc-10.1.0.tar.xz
+        tar xf gcc-10.1.0.tar.xz
+        cd gcc-10.1.0
+        contrib/download_prerequisites
+        cd ~
+        mkdir build && cd build
+        ../gcc-10.1.0/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-10.1.0 --enable-checking=release --enable-languages=c,c++,fortran,asm  --program-suffix=-10.1
+        make -j 4
+        sudo make install-strip
+        export export PATH=/usr/local/gcc-10.1.0/bin:$PATH
+        export LD_LIBRARY_PATH=/usr/local/gcc-10.1.0/lib64:$LD_LIBRARY_PATH
     - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 3 march=i686
+      run: make depends target=i686-linux-gnu -j 3 
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
