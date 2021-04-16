@@ -28,7 +28,7 @@ jobs:
         cd gcc-10.1.0
         contrib/download_prerequisites
         mkdir build
-        ./configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-10.1.0 --enable-checking=release --enable-languages=c,c++,fortran,asm  --program-suffix=-10.1
+        ./configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-10.1.0 --enable-checking=release --enable-languages=c,c++ --program-suffix=-10.1
         make -j 4
         sudo make install-strip
         export export PATH=/usr/local/gcc-10.1.0/bin:$PATH
