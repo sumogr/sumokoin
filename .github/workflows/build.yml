@@ -3,211 +3,9 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  build-macos-native:
-    runs-on: macOS-latest
-    env:
-      CCACHE_COMPRESS: 1
-      CCACHE_TEMPDIR: /tmp/.ccache-temp
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: /Users/runner/Library/Caches/ccache
-        key: ccache-macos-build-${{ github.sha }}
-        restore-keys: ccache-macos-build-
-    - name: install dependencies
-      run: brew install boost hidapi zmq libpgm ldns expat libunwind-headers protobuf ccache
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make -j 3
 
-  build-windows-native-msys2:
-    runs-on: windows-latest
-    env:
-      CCACHE_COMPRESS: 1
-      CCACHE_TEMPDIR: C:\Users\runneradmin\.ccache-temp
-      CCACHE_DIR: C:\Users\runneradmin\.ccache
-    defaults:
-      run:
-        shell: msys2 {0}
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: C:\Users\runneradmin\.ccache
-        key: ccache-windows-build-${{ github.sha }}
-        restore-keys: ccache-windows-build-
-    - uses: msys2/setup-msys2@v2
-      with:
-        update: true
-        install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-ccache mingw-w64-x86_64-libunwind mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb git
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make release-static-win64 -j 3
-
-  build-ubuntu-bionic-native:
-    runs-on: ubuntu-18.04
-    env:
-      CCACHE_COMPRESS: 1
-      CCACHE_TEMPDIR: /tmp/.ccache-temp
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: ~/.ccache
-        key: ccache-ubuntu-bionic-build-${{ github.sha }}
-        restore-keys: ccache-ubuntu-bionic-build-
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make -j 3
-
-  build-bionic-debug-native:
-    runs-on: ubuntu-18.04
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: ~/.ccache
-        key: ccache-ubuntu-debug-build-${{ github.sha }}
-        restore-keys: ccache-ubuntu-debug-build-
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make -j 3
-
-  build-ubuntu-focal-fossa-native:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: ~/.ccache
-        key: ccache-ubuntu-focal-build-${{ github.sha }}
-        restore-keys: ccache-ubuntu-focal-build-
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make -j 3
-
-  build-ubuntu-focal-fossa-native-with-clang-10:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: ~/.ccache
-        key: ccache-ubuntu-focal-build-${{ github.sha }}
-        restore-keys: ccache-ubuntu-focal-build-
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential clang-10 cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
-    - name: build sumokoin
-      run: |
-        export CC=/usr/bin/clang
-        export CXX=/usr/bin/clang++
-        ccache --max-size=150M
-        make -j 3
-
-  build-ubuntu-bionic-static-native:
-    runs-on: ubuntu-18.04
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/cache@v2
-      with:
-        path: ~/.ccache
-        key: ccache-ubuntu-bionic-static-build-${{ github.sha }}
-        restore-keys: ccache-ubuntu-bionic-static-build-
-    - name: remove bundled boost
-      run: sudo rm -rf /usr/local/share/boost
-    - name: set apt conf
-      run: |
-        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: sudo apt update
-    - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
-    - name: build boost 1_74
-      run: |
-        wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
-        tar -xvf boost_1_74_0.tar.bz2
-        rm -f /usr/boost_1_74_0.tar.bz2
-        cd boost_1_74_0
-        sudo ./bootstrap.sh
-        sudo ./b2 install -j 3
-        cd ..
-    - name: build zmq
-      run: |
-        git clone https://github.com/zeromq/libzmq.git
-        cd libzmq
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        sudo ldconfig
-        cd ..
-    - name: build libunwind
-      run: |
-        git clone https://github.com/libunwind/libunwind
-        cd libunwind
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make -j 3
-        sudo make install
-        cd ..
-    - name: build sumokoin
-      run: |
-        ccache --max-size=150M
-        make release-static -j 3
-
-  test-ubuntu:
-    needs: build-ubuntu-bionic-native
-    runs-on: ubuntu-18.04
+  cross-build-linux-x32-binaries-on-xenial:
+    runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
@@ -218,12 +16,20 @@ jobs:
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
     - name: update apt
-      run: sudo apt update
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev
-    - name: install requests
-      run: pip install requests
-    - name: tests
-      env:
-        CTEST_OUTPUT_ON_FAILURE: ON
-      run: make release-test -j 3
+      run: |
+        sudo apt -y install dpkg-dev cmake g++-7-multilib bc gcc pkg-config libtool autoconf automake gperf
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
+        sudo update-alternatives --config gcc
+    - name: cross compile sumokoin bins for linux i686
+      run: make depends target=i686-linux-gnu -j 3 -march=i686
+    - name: upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-i686-release-binaries
+        path: build/**/bin/
