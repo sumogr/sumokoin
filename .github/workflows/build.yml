@@ -22,7 +22,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install bc libtool autoconf automake gperf build-essential wget m4 flex bison
+        sudo apt -y install bc libc6-dev-i386 g++-multilib libtool autoconf automake gperf build-essential wget m4 flex bison
         wget https://ftpmirror.gnu.org/gcc/gcc-10.1.0/gcc-10.1.0.tar.xz
         tar xf gcc-10.1.0.tar.xz
         cd gcc-10.1.0
