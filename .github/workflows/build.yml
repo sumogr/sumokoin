@@ -27,7 +27,7 @@ jobs:
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
     - name: cross compile sumokoin bins for linux i686
-      run: make depends target=i686-linux-gnu -j 3 -march=i686
+      run: make depends target=i686-linux-gnu -j 3 march=i686
     - name: upload binaries
       uses: actions/upload-artifact@v2
       with:
