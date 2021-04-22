@@ -361,7 +361,6 @@ jobs:
         sudo apt update 
     - name: install i386 arch
       run: |
-	sudo apt -y install dpkg-dev
 	sudo dpkg --add-architecture i386
         sudo apt update 
         sudo apt-get upgrade
