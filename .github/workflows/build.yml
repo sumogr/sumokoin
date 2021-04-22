@@ -343,8 +343,8 @@ jobs:
         name: linux64-release-binaries
         path: build/**/bin/
 
-  cross-build-linux-i686-binaries-on-xenial:
-    runs-on: ubuntu-16.04
+  cross-build-linux-i686-binaries-on-focal-fossa:
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
@@ -354,17 +354,10 @@ jobs:
         echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
         echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
-    - name: update apt
-      run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt update 
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install cmake g++-7 gcc pkg-config libtool autoconf automake gperf bc g++-7-multilib
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-7
-        sudo update-alternatives --config gcc
+        sudo apt update 
+        sudo apt -y install cmake g++-7 gcc pkg-config libtool autoconf automake gperf bc g++-multilib
     - name: cross compile sumokoin bins for linux x32
       run: make depends target=i686-linux-gnu -j 3
     - name: upload binaries
