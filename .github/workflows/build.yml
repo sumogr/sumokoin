@@ -359,6 +359,8 @@ jobs:
         sudo apt-get install -y software-properties-common
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update 
+    - name: install i386 arch
+      run: |
 	sudo apt -y install dpkg-dev
 	sudo dpkg –add-architecture i386
         sudo apt update 
