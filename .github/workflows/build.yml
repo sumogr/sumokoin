@@ -344,7 +344,7 @@ jobs:
         path: build/**/bin/
 
   cross-build-linux-i686-binaries-on-xenial:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: remove bundled boost
@@ -362,7 +362,7 @@ jobs:
     - name: install i386 arch
       run: |
 	sudo apt install dpkg-dev
-	dpkg --add-architecture i386
+	sudo dpkg --add-architecture i386
         sudo apt-get update 
         sudo apt-get upgrade
     - name: install sumokoin dependencies
