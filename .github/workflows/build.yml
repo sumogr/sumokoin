@@ -361,7 +361,7 @@ jobs:
         sudo apt update
     - name: install sumokoin dependencies
       run: |
-        sudo apt -y install dpkg-dev cmake g++-7 gcc pkg-config libtool autoconf automake gperf bc g++-7-multilib libstdc++-6-dev:i386
+        sudo apt -y install dpkg-dev cmake g++-7 gcc pkg-config libtool autoconf automake gperf bc g++-7-multilib libstdc++-6-dev-i386-cross
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
                         --slave /usr/bin/g++ g++ /usr/bin/g++-7
         sudo update-alternatives --config gcc
