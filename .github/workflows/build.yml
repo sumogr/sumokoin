@@ -154,7 +154,9 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libnorm1 libzmq5 libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
+      run: |
+        sudo apt -y install libnorm1 libzmq5 
+        sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
     - name: build sumokoin
       run: |
         ccache --max-size=150M
