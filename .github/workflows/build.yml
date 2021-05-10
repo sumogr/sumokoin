@@ -28,6 +28,8 @@ jobs:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*              
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -113,6 +115,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*          
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -144,6 +148,8 @@ jobs:
         path: ~/.ccache
         key: ccache-ubuntu-bionic-build-${{ github.sha }}
         restore-keys: ccache-ubuntu-bionic-build-
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*              
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -171,6 +177,8 @@ jobs:
         path: ~/.ccache
         key: ccache-ubuntu-debug-build-${{ github.sha }}
         restore-keys: ccache-ubuntu-debug-build-
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*              
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -248,6 +256,8 @@ jobs:
         path: ~/.ccache
         key: ccache-ubuntu-bionic-static-build-${{ github.sha }}
         restore-keys: ccache-ubuntu-bionic-static-build-
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*              
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -296,6 +306,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*          
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -349,6 +361,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*          
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -372,6 +386,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*          
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -395,6 +411,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*          
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
@@ -419,6 +437,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*    
     - name: remove bundled boost
       run: sudo rm -rf /usr/local/share/boost
     - name: set apt conf
