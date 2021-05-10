@@ -77,7 +77,7 @@ jobs:
     - uses: msys2/setup-msys2@v2
       with:
         update: true
-        install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-ccache mingw-w64-x86_64-libunwind mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb git
+        install: mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-ccache mingw-w64-x86_64-libunwind mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-libusb git
     - name: build sumokoin
       run: |
         ccache --max-size=150M
@@ -100,9 +100,7 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt update
     - name: install sumokoin dependencies
-      run: |
-        sudo apt-get update
-        sudo apt -y install make automake cmake curl libtool binutils-gold g++-mingw-w64-i686 pkg-config python3 gperf 
+      run: sudo apt -y install make automake cmake curl libtool binutils-gold g++-mingw-w64-i686 pkg-config python3 gperf 
     - name: cross compile sumokoin bins for windows-32bit
       run: make depends target=i686-w64-mingw32 -j 3
     - name: upload binaries
@@ -125,9 +123,7 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: |
-        sudo apt-get update     
-        sudo apt -y install python3 g++-mingw-w64-x86-64 wine1.6 bc gperf autoconf automake libtool build-essential cmake graphviz doxygen libunwind8-dev pkg-config libssl-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
+      run: sudo apt -y install python3 g++-mingw-w64-x86-64 wine1.6 bc gperf autoconf automake libtool build-essential cmake graphviz doxygen libunwind8-dev pkg-config libssl-dev libnorm1 libusb-1.0-0-dev libpgm-dev ccache
     - name: cross compile sumokoin windows binaries
       run: make depends target=x86_64-w64-mingw32 -j 3
     - name: upload binaries
@@ -158,9 +154,7 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: |
-        sudo apt-get update 
-        sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
+      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm1 libusb-1.0-0-dev libpgm-dev ccache
     - name: build sumokoin
       run: |
         ccache --max-size=150M
@@ -185,7 +179,7 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev ccache
+      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm1 libusb-1.0-0-dev libpgm-dev ccache
     - name: build sumokoin
       run: |
         ccache --max-size=150M
@@ -262,7 +256,7 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
+      run: sudo apt -y install build-essential cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm1 libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
     - name: build boost 1_74
       run: |
         wget https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2
@@ -433,7 +427,7 @@ jobs:
     - name: update apt
       run: sudo apt update
     - name: install sumokoin dependencies
-      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev
+      run: sudo apt -y install build-essential cmake libboost-all-dev miniupnpc libunbound-dev libevent-dev graphviz doxygen libunwind8-dev pkg-config libssl-dev libzmq3-dev libsodium-dev libhidapi-dev libnorm1 libusb-1.0-0-dev libpgm-dev
     - name: install requests
       run: pip install requests
     - name: tests
