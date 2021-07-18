@@ -16,7 +16,7 @@ jobs:
         key: ccache-macos-build-${{ github.sha }}
         restore-keys: ccache-macos-build-
     - name: install dependencies
-      run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost@1.74 hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
+      run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost@1.60 hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
     - name: build sumokoin
       run: |
         ccache --max-size=150M
