@@ -3,21 +3,58 @@ name: Continuous_Integration_Testing
 on: [push, pull_request]
 
 jobs:
-  build-macos-native:
-    runs-on: macOS-latest
-    env:
-      CCACHE_COMPRESS: 1
-      CCACHE_TEMPDIR: /tmp/.ccache-temp
+  build-ubuntu-bionic-static-native:
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - uses: actions/cache@v2
       with:
-        path: /Users/runner/Library/Caches/ccache
-        key: ccache-macos-build-${{ github.sha }}
-        restore-keys: ccache-macos-build-
-    - name: install dependencies
-      run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
+        path: ~/.ccache
+        key: ccache-ubuntu-bionic-static-build-${{ github.sha }}
+        restore-keys: ccache-ubuntu-bionic-static-build-
+    - name: remove bundled zmq & libnorm & cmake & build-essential
+      run:  sudo apt-get remove --purge --auto-remove libzmq5 libnorm1 libboost* cmake* build-essential*              
+    - name: remove bundled boost
+      run: sudo rm -rf /usr/local/share/boost
+    - name: set apt conf
+      run: |
+        echo "Acquire::Retries \"3\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::http::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+        echo "Acquire::ftp::Timeout \"120\";" | sudo tee -a /etc/apt/apt.conf.d/80-custom
+    - name: update apt
+      run: sudo apt update
+    - name: install sumokoin dependencies
+      run: sudo apt -y install build-essential cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
+    - name: build libunwind
+      run: |
+        wget https://github.com/libunwind/libunwind/releases/download/v1.5/libunwind-1.5.0.tar.gz
+        tar -xf libunwind-1.5.0.tar.gz
+        cd libunwind-1.5.0
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        cd ..      
+    - name: build boost 1_74
+      run: |
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.bz2
+        tar -xvf boost_1_74_0.tar.bz2
+        rm -f /usr/boost_1_74_0.tar.bz2
+        cd boost_1_74_0
+        sudo ./bootstrap.sh
+        sudo ./b2 install -j 3
+        cd ..
+    - name: build zmq
+      run: |
+        git clone https://github.com/zeromq/libzmq.git
+        cd libzmq
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make -j 3
+        sudo make install
+        sudo ldconfig
+        cd ..
     - name: build sumokoin
       run: |
         ccache --max-size=150M
-        make -j 3
+        make release-static -j 3
