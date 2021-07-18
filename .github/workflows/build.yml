@@ -27,14 +27,13 @@ jobs:
       run: sudo apt -y install build-essential cmake miniupnpc libunbound-dev libevent-dev graphviz doxygen pkg-config libssl-dev libsodium-dev libhidapi-dev libnorm-dev libusb-1.0-0-dev libpgm-dev libudev-dev ccache libtool autoconf automake python libtinfo5 ccache
     - name: build libunwind
       run: |
-        wget https://github.com/libunwind/libunwind/releases/download/v1.5/libunwind-1.5.0.tar.gz
-        tar -xf libunwind-1.5.0.tar.gz
-        cd libunwind-1.5.0
-        sudo ./autogen.sh
+        git clone https://github.com/libunwind/libunwind
+        cd libunwind
+        sudo autoreconf -i
         sudo ./configure
         sudo make -j 3
         sudo make install
-        cd ..      
+        cd ..
     - name: build boost 1_74
       run: |
         wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.bz2
