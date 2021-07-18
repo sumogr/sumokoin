@@ -16,7 +16,7 @@ jobs:
         key: ccache-macos-build-${{ github.sha }}
         restore-keys: ccache-macos-build-
     - name: install dependencies
-      run: brew install Homebrew/homebrew-core/boost@1.69
+      run: brew install Homebrew/homebrew-core/Formula/boost@1.69
     - name: build sumokoin
       run: |
         ccache --max-size=150M
