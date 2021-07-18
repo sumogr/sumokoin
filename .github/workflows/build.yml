@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build-macos-native:
-    runs-on: macos-11
+    runs-on: macos-10.15
     env:
       CCACHE_COMPRESS: 1
       CCACHE_TEMPDIR: /tmp/.ccache-temp
@@ -16,7 +16,7 @@ jobs:
         key: ccache-macos-build-${{ github.sha }}
         restore-keys: ccache-macos-build-
     - name: install dependencies
-      run: HOMEBREW_NO_AUTO_UPDATE=1 brew install boost hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
+      run: HOMEBREW_NO_AUTO_UPDATE=1 brew install hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf ccache
     - name: build sumokoin
       run: |
         ccache --max-size=150M
